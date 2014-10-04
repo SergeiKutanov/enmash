@@ -1,0 +1,4 @@
+enmash_pages:
+    resource: "@EnmashPagesBundle/Controller/"
+    type:     annotation
+    prefix:   /
