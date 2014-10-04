@@ -10,3 +10,6 @@ security:
 
         default:
             anonymous: ~
+
+    acl:
+        connection: default
