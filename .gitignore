@@ -25,6 +25,7 @@
 # Assets and user uploads
 /web/bundles/
 /web/uploads/
+/web/vendor/
 
 # PHPUnit
 /app/phpunit.xml
@@ -34,4 +35,4 @@
 /composer.phar
 
 # .idea folder
-.idea/
+/.idea/
