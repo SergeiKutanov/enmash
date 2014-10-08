@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -88,6 +88,8 @@ sonata_block:
     blocks:
         sonata.user.block.menu:
         sonata.user.block.account:
+        sonata.admin.block.admin_list:
+            contexts: [admin]
 
 fos_user:
     db_driver:      orm # can be orm or odm
@@ -100,3 +102,7 @@ fos_user:
 
     service:
         user_manager: sonata.user.orm.user_manager
+
+sonata_admin:
+    security:
+        handler: sonata.admin.security.handler.role
