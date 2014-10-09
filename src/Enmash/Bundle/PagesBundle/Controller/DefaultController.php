@@ -16,4 +16,12 @@ class DefaultController extends Controller
     {
         return array('name' => $name);
     }
+
+    /**
+     * @Route("/private/index")
+     */
+    public function privateIndexAction() {
+        die('private part');
+    }
+
 }
