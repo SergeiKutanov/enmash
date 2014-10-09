@@ -90,11 +90,13 @@ sonata_block:
         sonata.user.block.account:
         sonata.admin.block.admin_list:
             contexts: [admin]
+        sonata.block.service.text:
 
 fos_user:
     db_driver:      orm # can be orm or odm
     firewall_name:  main
-    user_class:     Application\Sonata\UserBundle\Entity\User
+#    user_class:     Application\Sonata\UserBundle\Entity\User
+    user_class: Enmash\Bundle\UserControlBundle\Entity\User
 
     group:
         group_class:   Application\Sonata\UserBundle\Entity\Group
