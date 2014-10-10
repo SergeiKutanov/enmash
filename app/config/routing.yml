@@ -1,3 +1,8 @@
+enmash_store:
+    resource: "@EnmashStoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 enmash_user_control:
     resource: "@EnmashUserControlBundle/Controller/"
     type:     annotation

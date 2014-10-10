@@ -9,7 +9,7 @@ use Sonata\UserBundle\Entity\BaseUser;
  * User
  *
  * @ORM\Entity
- * @ORM\Table(name="fos_user_user")
+ * @ORM\Table(name="users")
  */
 class User extends BaseUser
 {
