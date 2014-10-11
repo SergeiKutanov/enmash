@@ -1,0 +1,29 @@
+<div id="banners-carousel" class="banners-carousel slide" data-ride="carousel">
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+
+        <div class="item active">
+            <div class="col-xs-3" data-section-id="1" style="background-image: url('{{ asset("bundles/enmashpages/images/banner1.png") }}')">
+                <a href="#"></a>
+                {% include 'EnmashPagesBundle:Pages:Blocks/index/indexbanner.html.twig' with {'id': 1, 'title': 'title', 'text': 'hey-hey', 'img': asset('bundles/enmashpages/images/banner1.png') } %}
+            </div>
+            <div class="col-xs-3" data-section-id="2" style="background-image: url('{{ asset("bundles/enmashpages/images/banner2.png") }}')">
+                <a href="#"></a>
+                {% include 'EnmashPagesBundle:Pages:Blocks/index/indexbanner.html.twig' with {'id': 2, 'title': 'title', 'text': 'hey-hey', 'img': asset('bundles/enmashpages/images/banner2.png') } %}
+            </div>
+            <div class="col-xs-3" style="background-image: url('{{ asset("bundles/enmashpages/images/banner3.png") }}')"><a href="#"></a></div>
+            <div class="col-xs-3" style="background-image: url('{{ asset("bundles/enmashpages/images/banner4.png") }}')"><a href="#"></a></div>
+        </div>
+
+        <div class="item">
+            <div class="col-xs-3" style="background-image: url('{{ asset("bundles/enmashpages/images/banner2.png") }}')"><a href="#"></a></div>
+            <div class="col-xs-3" style="background-image: url('{{ asset("bundles/enmashpages/images/banner4.png") }}')"><a href="#"></a></div>
+            <div class="col-xs-3" style="background-image: url('{{ asset("bundles/enmashpages/images/banner1.png") }}')"><a href="#"></a></div>
+            <div class="col-xs-3" style="background-image: url('{{ asset("bundles/enmashpages/images/banner3.png") }}')"><a href="#"></a></div>
+        </div>
+
+    </div>
+
+</div>
+<hr>

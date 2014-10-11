@@ -1,1 +1,30 @@
 {% extends 'EnmashPagesBundle:Base:public_base.html.twig' %}
+
+    {% block jumbotron %}
+        {#top jumbotron slider#}
+        {% include('EnmashPagesBundle:Pages:Blocks/index/jumboslider.html.twig') %}
+    {% endblock %}
+
+    {% block content %}
+
+        {% include('EnmashPagesBundle:Pages:Blocks/index/about.html.twig') %}
+
+        {% include('EnmashPagesBundle:Pages:Blocks/index/retail_chain.html.twig') %}
+
+        {% include('EnmashPagesBundle:Pages:Blocks/index/wholesale.html.twig') %}
+
+        {% include('EnmashPagesBundle:Pages:Blocks/index/banners.html.twig') %}
+
+    {% endblock %}
+
+    {% block js %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/enmashpages/js/titlebanners.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#banners-carousel').titleBanners();
+        });
+
+
+    </script>
+    {% endblock %}

@@ -1,0 +1,380 @@
+/*---------------------------------global stuff-------------------------------*/
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab&subset=latin,cyrillic);
+
+html, body {
+    font-family: 'Roboto Slab', serif;
+    height: 100%;
+}
+
+p {
+    font-size: 1.3em;
+}
+
+h2 {
+    margin-bottom: 30px;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.btn {
+    border-radius: 0;
+}
+
+.btn-warning, .btn-warning:hover, .btn-warning:active, .btn-warning:focus {
+    color: #000000;
+}
+
+hr {
+    border-top-color: #888888;
+}
+
+.nav-tabs {
+    border-color: #888888;
+    margin-bottom: 20px;
+}
+
+.nav-tabs>li>a {
+    border-radius: initial;
+    border-bottom-width: 3px;
+    font-size: 1.5em;
+    color: #333399;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li:hover>a, .nav-tabs>li.active:hover>a {
+    border-color: transparent;
+    border-bottom: 3px solid #333399;
+    background-color: initial;
+}
+
+/*-------------------------top menu css------------------------------*/
+#top-menu a {
+    color: #000000;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.navbar {
+    border-top: 5px solid #333399;
+    border-bottom: 1px solid #333399;
+    background-color: #dddddd;
+    margin-bottom: 0;
+    /*height: 100px;*/
+}
+
+.navbar-brand {
+    height: initial;
+}
+
+.navbar-brand img {
+    height: 25px;
+}
+
+#top-menu ul.navbar-nav a {
+    color: #000000;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#top-menu ul.navbar-nav {
+    margin-bottom: 10px;
+}
+
+#top-menu ul.navbar-nav li {
+    border-right: 1px solid #000000;
+    border-bottom: 3px solid rgba(51, 51, 153, 0.0);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#top-menu ul.navbar-nav li:hover, #top-menu ul.navbar-nav li:focus {
+    border-bottom-color: rgba(51, 51, 153, 1);
+}
+
+#top-menu ul.navbar-nav li.active {
+    border-bottom: 3px solid #333399;
+}
+
+#top-menu .nav>li>a:hover, #top-menu .nav>li>a:focus {
+    background-color: initial;
+}
+
+#top-menu ul.navbar-nav li:last-child {
+    border-right: none;
+}
+
+#search-box {
+    margin-top: 10px;
+    text-align: right;
+}
+
+#search-box ul li {
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
+
+#search-box ul li:first-child {
+    border-right: 1px solid #000000;
+}
+
+#search-box ul li:last-child {
+    padding: 0;
+}
+
+#find-store-link span{
+    color: #333399;
+}
+
+#find-store-link:hover span {
+    color: #CC9933;
+}
+
+#top-menu li.find-button a {
+    display: block;
+    background-color: #555;
+    padding: 0 7px;
+    line-height: 26px;
+}
+
+#top-menu li.find-button a:hover {
+    background-color: #222222;
+}
+
+#top-menu li.find-button a span {
+    color: #FFFFFF;
+}
+
+/*-----------------------carousel--------------------------------*/
+#carousel {
+    padding-top: 100px;
+}
+
+#carousel, .carousel-inner {
+    height: 100%;
+}
+
+#carousel .full-screen {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+
+.carousel-inner .container {
+    text-align: center;
+}
+
+.carousel-inner .container img {
+    width: 70%;
+    margin-top: 100px;
+}
+
+#carousel .carousel-caption {
+    background-color: rgba(0, 0, 0, .5);
+}
+
+#carousel .carousel-caption p {
+    font-weight: 700;
+    font-size: 2em;
+    padding: 20px;
+}
+
+/*---------------------about section-----------------------------*/
+#about {
+    margin-top: 30px;
+    background-image: url('../images/logo_grey.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+/*---------------------retail chain section----------------------*/
+#retail-chain > div:last-child, #wholesale-block > div:nth-child(4) {
+    margin-top: 20px;
+}
+
+#vladimir-region {
+    overflow: auto;
+    background-image: url('../images/logo_grey.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 85% center;
+}
+
+#ivanovo-region p {
+    margin-top: 20px;
+}
+
+#ivanovo-region a.store-link {
+    display: inline-block;
+    height: 200px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 200px;
+    border-radius: 100px;
+    text-decoration: none;
+}
+
+#ivanovo-region a.store-link:hover:after {
+    opacity: 1;
+}
+
+#ivanovo-region a.store-link:after {
+    content: '';
+    display: block;
+    background-color: rgba(0, 0, 0, .5);
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 1.3em;
+    opacity: 0;
+    color: #FFFFFF;
+    padding-top: 70px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#ivanovo-region a.store-link.store1 {
+    background-image: url('../images/store1.jpg');
+}
+
+#ivanovo-region a.store-link.store1:after {
+    content: 'ул. Мостостроевкая, д. 8'
+}
+
+#ivanovo-region a.store-link.store2:after {
+    content: 'ул. Мостостроевкая, д. 9'
+}
+
+#ivanovo-region a.store-link.store3:after {
+    content: 'ул. Мостостроевкая, д. 10'
+}
+
+#ivanovo-region a.store-link.store2 {
+    background-image: url('../images/store2.jpg');
+}
+
+#ivanovo-region a.store-link.store3 {
+    background-image: url('../images/store3.jpg');
+}
+
+/*------------------wholesale block------------------------------*/
+#wholesale-block #logo-img {
+    height: 400px;
+    background-color: #333366;
+    background-image: url('../images/logo_grey.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: -60% center;
+}
+
+#wholesale-block #logo-img img {
+    width: 100%;
+}
+
+/*---------------------title banners-----------------------------*/
+#banners-carousel .carousel-inner .item > div {
+    height: 300px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#banners-carousel .carousel-inner .item > div > a {
+    display: block;
+    height: 100%;
+}
+
+/*------------------footer--------------------------------------*/
+#footer {
+    background-color: #dddddd;
+    padding: 30px 0px;
+}
+
+#footer ul {
+    font-size: 1.3em;
+    list-style: none;
+    display: inline-block;
+}
+
+#footer ul li:first-child {
+    font-weight: 700;
+}
+
+#footer ul li a {
+    color: #000000;
+    border-bottom: 1px solid rgba(51, 51, 51, 0);
+    text-decoration: none;
+    font-size: .8em;
+    -webkit-transition: all 0.5s;-moz-transition: all 0.5s;-ms-transition: all 0.5s;-o-transition: all 0.5s;transition: all 0.5s;
+}
+
+#footer ul li a:hover {
+    border-bottom-color: rgba(51, 51, 131, 1);
+}
+
+/*---------------------index page banners---------------------------*/
+.index-banner {
+    position: fixed;
+    background-color: rgba(0, 0, 0, .8);
+    top: 0;
+    left: 0;
+    color: #ffffff;
+    z-index: 1999;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.index-banner h3 {
+    font-weight: 800;
+}
+
+.index-banner .row > div:first-child {
+    margin-top: 100px;
+}
+
+.index-banner .row, .index-banner .row div[class*='col-'] {
+    height: 100%;
+}
+
+.index-banner .close-btn {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    z-index: 99;
+}
+
+.index-banner .close-btn span {
+    color: #ffffff;
+    font-size: 1.5em;
+    -webkit-transition: all 0.5s;-moz-transition: all 0.5s;-ms-transition: all 0.5s;-o-transition: all 0.5s;transition: all 0.5s;
+    cursor: pointer;
+}
+
+.index-banner .close-btn:hover span {
+    -webkit-transform: rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);
+}
+
+.index-banner div.full-screen-img {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
