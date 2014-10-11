@@ -53,6 +53,17 @@ hr {
     background-color: initial;
 }
 
+/*body .modal {*/
+    /* new custom width */
+    /*width: 70%;*/
+    /* must be half of the width, minus scrollbar on the left (30px) */
+    /*margin-left: 15%;*/
+/*}*/
+
+/*body .modal-dialog {*/
+    /*width: 100%;*/
+/*}*/
+
 /*-------------------------top menu css------------------------------*/
 #top-menu a {
     color: #000000;
@@ -384,4 +395,10 @@ hr {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+/*---------------------maps----------------------------------*/
+#find-store-map #map-canvas{
+    height: 450px;
+    width: 100%;
 }

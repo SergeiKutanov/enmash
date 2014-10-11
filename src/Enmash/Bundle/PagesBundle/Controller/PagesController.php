@@ -10,9 +10,15 @@ namespace Enmash\Bundle\PagesBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class PagesController extends Controller{
 
@@ -23,6 +29,31 @@ class PagesController extends Controller{
      */
     public function indexAction() {
         return array();
+    }
+
+    /**
+     * @Route("/getStoresCoordinates", name="get-stores-coordinates")
+     * @Method("POST")
+     */
+    public function getStoresAction() {
+        $em = $this->getDoctrine()->getManager();
+
+        $stores = $em
+            ->getRepository('EnmashStoreBundle:Store')
+            ->findAll();
+
+        $data = array();
+        foreach ($stores as $store) {
+            /* @var $store \Enmash\Bundle\StoreBundle\Entity\Store */
+            $data[] = array(
+                'address'   => $store->getAddress(),
+                'longitude' => $store->getLongitude(),
+                'latitude'  => $store->getLatitude(),
+                'contact'   => $store->getContact()
+            );
+        }
+
+        return new JsonResponse($data);
     }
 
 } 
