@@ -19,7 +19,6 @@
         });
 
         this.$items.find('div.close-btn').each(function(i, v){
-            console.log(v);
             $(v).on('click', function(){
                 $(this).parent().fadeOut();
             });
