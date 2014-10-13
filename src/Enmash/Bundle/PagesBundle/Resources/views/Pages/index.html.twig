@@ -13,11 +13,11 @@
 
         {% include('EnmashPagesBundle:Pages:Blocks/index/about.html.twig') %}
 
+        {% include('EnmashPagesBundle:Pages:Blocks/index/banners.html.twig') %}
+
         {% include('EnmashPagesBundle:Pages:Blocks/index/retail_chain.html.twig') %}
 
         {% include('EnmashPagesBundle:Pages:Blocks/index/wholesale.html.twig') %}
-
-        {% include('EnmashPagesBundle:Pages:Blocks/index/banners.html.twig') %}
 
     {% endblock %}
 
@@ -88,8 +88,6 @@
                     markers[this.pointId].info.open(map, this);
                 });
             }
-
-            console.log(markers);
 
             google.maps.event.addListener(map, 'bounds_changed', function() {
                 google.maps.event.trigger(map, 'resize');

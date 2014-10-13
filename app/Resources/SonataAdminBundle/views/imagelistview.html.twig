@@ -1,0 +1,10 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+
+    <div>
+        {#<img src="{{ image.webPath | imagine_filter('gallery_element_admin') }}" />#}
+        {#<img src="{{ value.thumbpath }}">#}
+        {% thumbnail value, 'small' %}
+    </div>
+{% endblock %}

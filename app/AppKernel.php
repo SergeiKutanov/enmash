@@ -33,6 +33,12 @@ class AppKernel extends Kernel
             new \Sonata\AdminBundle\SonataAdminBundle(),
             new Enmash\Bundle\UserControlBundle\EnmashUserControlBundle(),
             new Enmash\Bundle\StoreBundle\EnmashStoreBundle(),
+            new Sonata\MediaBundle\SonataMediaBundle(),
+            new \JMS\SerializerBundle\JMSSerializerBundle(),
+            new \Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
+            new \Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
+            new \Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+            new \Sonata\FormatterBundle\SonataFormatterBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

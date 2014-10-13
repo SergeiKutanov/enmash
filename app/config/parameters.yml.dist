@@ -19,3 +19,6 @@ parameters:
     debug_toolbar:          true
     debug_redirects:        false
     use_assetic_controller: true
+
+    # sonata media bundle
+    sonata_media_bundle_server_path: http://test.local:8000/enmash.local/web/uploads/media
