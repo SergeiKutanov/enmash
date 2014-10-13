@@ -169,9 +169,9 @@ hr {
 
 #cheap-banner {
     position: absolute;
-    left: 65%;
-    z-index: -1;
-    top: 0;
+    right: 40px;
+    z-index: 1;
+    top: 50px;
 }
 
 /*-----------------------carousel--------------------------------*/

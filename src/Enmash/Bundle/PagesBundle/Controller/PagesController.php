@@ -32,7 +32,7 @@ class PagesController extends Controller{
     }
 
     /**
-     * @Route("/getStoresCoordinates", name="get-stores-coordinates")
+     * @Route("/getStoresCoordinates", name="getStoresCoordinates")
      * @Method("POST")
      */
     public function getStoresAction() {
