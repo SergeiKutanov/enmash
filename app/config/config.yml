@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     # store bundle admin entities
     - { resource: @EnmashStoreBundle/Resources/config/services.yml  }
+    # pages bundle admin entities
     - { resource: @EnmashPagesBundle/Resources/config/services.yml  }
 
 framework:

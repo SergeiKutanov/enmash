@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xs-3">
                 <div class="navbar-header">
-                    <a class="navbar-brand">
+                    <a class="navbar-brand" href="{{ path('index-page') }}">
                         {% image '@EnmashPagesBundle/Resources/public/images/logo.png' %}
                         <img src="{{ asset_url }}" alt="Логотип Энергомаш" />
                         {% endimage %}
@@ -35,11 +35,11 @@
         <div class="row">
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">О КОМПАНИИ</a></li>
-                    <li><a href="#about">МАГАЗИНЫ</a></li>
-                    <li><a href="#contact">СЛУЖБЫ СБЫТА</a></li>
-                    <li><a href="#contact">БОНУСЫ И СКИДКИ</a></li>
-                    <li><a href="#contact">КОНТАКТЫ</a></li>
+                    <li class="active"><a href="#about">О КОМПАНИИ</a></li>
+                    <li><a href="#stores">МАГАЗИНЫ</a></li>
+                    <li><a href="#wholesale">СЛУЖБЫ СБЫТА</a></li>
+                    <li><a href="#">БОНУСЫ И СКИДКИ</a></li>
+                    <li><a href="#">КОНТАКТЫ</a></li>
                 </ul>
             </div>
         </div>
