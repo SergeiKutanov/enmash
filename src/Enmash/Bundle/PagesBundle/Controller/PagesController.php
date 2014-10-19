@@ -9,9 +9,14 @@
 namespace Enmash\Bundle\PagesBundle\Controller;
 
 
+use Application\Sonata\MediaBundle\Entity\GalleryHasMedia;
+use Enmash\Bundle\StoreBundle\Entity\Store;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -25,35 +30,103 @@ class PagesController extends Controller{
     /**
      * @Route("/", name="index-page")
      * @Method("GET")
-     * @Template("EnmashPagesBundle:Pages:index.html.twig")
      */
     public function indexAction() {
-        return array();
+
+        return $this->render(
+            'EnmashPagesBundle:Pages:index.html.twig'
+        );
+
+    }
+
+    /**
+     * @Route("/stores", name="stores-page")
+     * @Method("GET")
+     */
+    public function storesAction() {
+
+        $em = $this->getDoctrine()->getManager();
+        $stores = $em
+            ->getRepository('EnmashStoreBundle:Store')
+            ->getOnlyOneTypeOfStores(Store::RETAIL_TYPE);
+
+        if (!$stores) {
+            throw new NotFoundHttpException('No stores found');
+        }
+
+        return $this->render(
+            'EnmashPagesBundle:Pages:stores.html.twig',
+            array(
+                'stores'    => $stores
+            )
+        );
+    }
+
+    /**
+     * @Route("/wholesale-stores", name="wholesale-stores-page")
+     * @Method("GET")
+     */
+    public function whilesaleStoresAction() {
+
+        $em = $this->getDoctrine()->getManager();
+        $stores = $em
+            ->getRepository('EnmashStoreBundle:Store')
+            ->getOnlyOneTypeOfStores(Store::WHOLESALE_TYPE);
+
+        if (!$stores) {
+            throw new NotFoundHttpException('No stores found');
+        }
+
+        return $this->render(
+            'EnmashPagesBundle:Pages:wholesalestores.html.twig',
+            array(
+                'stores'    => $stores
+            )
+        );
     }
 
     /**
      * @Route("/getStoresCoordinates", name="getStoresCoordinates")
      * @Method("POST")
      */
-    public function getStoresAction() {
+    public function getStoresAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
+
+        $type = $request->get('type', null);
 
         $stores = $em
             ->getRepository('EnmashStoreBundle:Store')
-            ->findAll();
+            ->getOnlyOneTypeOfStores($type);
 
         $data = array();
         foreach ($stores as $store) {
+            $path = "#store_" . $store->getId();
+            if ($store->getStoreType() == Store::RETAIL_TYPE || $store->getStoreType() == Store::BOTH_TYPE) {
+                $path = $this
+                        ->generateUrl('stores-page') . $path;
+            } elseif ($store->getStoreType() == Store::WHOLESALE_TYPE) {
+                $path = $this
+                        ->generateUrl('wholesale-stores-page') . $path;
+            }
+
             /* @var $store \Enmash\Bundle\StoreBundle\Entity\Store */
             $data[] = array(
                 'address'   => $store->getAddress(),
                 'longitude' => $store->getLongitude(),
                 'latitude'  => $store->getLatitude(),
-                'contact'   => $store->getContact()
+                'contact'   => $store->getContact(),
+                'schedule'  => $store->getSchedule(),
+                'link'      => "#store_" . $store->getId(),
+                'uri'       => $path
             );
+
+
+
         }
 
         return new JsonResponse($data);
     }
+
+
 
 } 

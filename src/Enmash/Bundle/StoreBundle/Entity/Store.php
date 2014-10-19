@@ -8,10 +8,14 @@ use Doctrine\ORM\Mapping as ORM;
  * Store
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Enmash\Bundle\StoreBundle\Entity\StoreRepository")
  */
 class Store
 {
+    const RETAIL_TYPE = 1;
+    const WHOLESALE_TYPE = 2;
+    const BOTH_TYPE = 3;
+
     /**
      * @var integer
      *
@@ -55,6 +59,51 @@ class Store
      * @ORM\Column(name="longitude", type="float")
      */
     private $longitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="schedule", type="string", length=255)
+     */
+    private $schedule;
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="publish", type="boolean")
+     */
+    private $publish;
+
+
+    /**
+     * @var StoreImage
+     * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Gallery", cascade={"persist"}, fetch="LAZY")
+     */
+    protected $storeImages;
+
+//    /**
+//     * @ORM\OneToMany(targetEntity="StoreImage", mappedBy="store")
+//     */
+//    private $storeImages;
+
+    /**
+     * @var string
+     * @ORM\Column(name="info", type="text")
+     */
+    protected $info;
+
+    /**
+     * @var int
+     * @ORM\Column(name="store_type", type="integer")
+     */
+    protected $storeType;
+
+    public static function getstoreTypeList() {
+        return array(
+            self::RETAIL_TYPE       => 'Розничный магазин',
+            self::WHOLESALE_TYPE    => 'Служба сбыта',
+            self::BOTH_TYPE         => 'Розница и служба сбыта'
+        );
+    }
 
 
     /**
@@ -180,5 +229,130 @@ class Store
     public function getLongitude()
     {
         return $this->longitude;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->publish = false;
+        $this->storeImages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->storeType = self::BOTH_TYPE;
+    }
+
+
+    /**
+     * Set storeImages
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Gallery $storeImages
+     * @return Store
+     */
+    public function setStoreImages(\Application\Sonata\MediaBundle\Entity\Gallery $storeImages = null)
+    {
+        $this->storeImages = $storeImages;
+
+        return $this;
+    }
+
+    /**
+     * Get storeImages
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Gallery 
+     */
+    public function getStoreImages()
+    {
+        return $this->storeImages;
+    }
+
+    /**
+     * Set schedule
+     *
+     * @param string $schedule
+     * @return Store
+     */
+    public function setSchedule($schedule)
+    {
+        $this->schedule = $schedule;
+
+        return $this;
+    }
+
+    /**
+     * Get schedule
+     *
+     * @return string 
+     */
+    public function getSchedule()
+    {
+        return $this->schedule;
+    }
+
+    /**
+     * Set publish
+     *
+     * @param boolean $publish
+     * @return Store
+     */
+    public function setPublish($publish)
+    {
+        $this->publish = $publish;
+
+        return $this;
+    }
+
+    /**
+     * Get publish
+     *
+     * @return boolean 
+     */
+    public function getPublish()
+    {
+        return $this->publish;
+    }
+
+    /**
+     * Set info
+     *
+     * @param string $info
+     * @return Store
+     */
+    public function setInfo($info)
+    {
+        $this->info = $info;
+
+        return $this;
+    }
+
+    /**
+     * Get info
+     *
+     * @return string 
+     */
+    public function getInfo()
+    {
+        return $this->info;
+    }
+
+    /**
+     * Set storeType
+     *
+     * @param integer $storeType
+     * @return Store
+     */
+    public function setStoreType($storeType)
+    {
+        $this->storeType = $storeType;
+
+        return $this;
+    }
+
+    /**
+     * Get storeType
+     *
+     * @return integer 
+     */
+    public function getStoreType()
+    {
+        return $this->storeType;
     }
 }

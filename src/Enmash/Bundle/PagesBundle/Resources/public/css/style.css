@@ -53,6 +53,11 @@ hr {
     background-color: initial;
 }
 
+.no-offset{
+    margin-left: 0;
+    margin-right: 0;
+}
+
 /*body .modal {*/
     /* new custom width */
     /*width: 70%;*/
@@ -398,7 +403,28 @@ hr {
 }
 
 /*---------------------maps----------------------------------*/
-#find-store-map #map-canvas{
+#find-store-map #find-store-map-canvas{
     height: 450px;
     width: 100%;
+}
+
+/*--------------stores page----------------------------------*/
+a.offset-anchor{
+    position: relative;
+    top: -100px;
+    visibility: hidden;
+    display: block;
+}
+
+#map-container {
+    height: 100%;
+}
+
+#bigmap {
+    height: 100%;
+    padding-top: 100px;
+}
+
+#bigmap #map-canvas{
+    height: 100%;
 }

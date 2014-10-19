@@ -15,7 +15,9 @@
 </head>
 <body>
 
-    {% block modals %}{% endblock %}
+    {% block modals %}
+        {% include('EnmashPagesBundle:Pages:Blocks/modals/findstoremap.html.twig') %}
+    {% endblock %}
 
     {% block top_menu %}
     {#top menu#}
@@ -36,6 +38,32 @@
     {% block js %}
     <script type="text/javascript" src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="{{ asset('bundles/enmashpages/js/functions.js') }}"></script>
+
+        <script type="text/javascript">
+
+            $(document).ready(function(){
+
+                var map = null;
+
+                $('#find-store-map').on('shown.bs.modal', function(e){
+                    if (map == null) {
+                        $.ajax({
+                            method: 'POST',
+                            data: {
+                                'type' : $('#find-store-map').attr('data-type')
+                            },
+                            url: $('#find-store-map').attr('data-map-points-path'),
+                            success: function(data) {
+                                initializeFindStoreMap(data);
+                            }
+                        });
+                    }
+                })
+            });
+
+        </script>
     {% endblock %}
 </body>
 </html>

@@ -151,6 +151,14 @@ sonata_media:
                 small: { width: 100 , quality: 70}
                 big:   { width: 500 , quality: 70}
 
+        storeimage:
+            providers:
+                - sonata.media.provider.image
+
+            formats:
+                small: { width: 100 , quality: 70}
+                big:   { width: 500 , quality: 70}
+
     cdn:
         server:
             path: "%sonata_media_bundle_server_path%" # http://media.sonata-project.org/

@@ -16,3 +16,9 @@ services:
         arguments: [~, Enmash\Bundle\StoreBundle\Entity\Store, EnmashStoreBundle:StoreAdmin]
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: Store}
+
+    enmash_store.admin.store_image:
+        class: Enmash\Bundle\StoreBundle\Admin\StoreImageAdmin
+        arguments: [~, Enmash\Bundle\StoreBundle\Entity\StoreImage, SonataAdminBundle:CRUD, @sonata.media.pool ]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: StoreImage}

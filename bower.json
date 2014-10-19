@@ -2,6 +2,7 @@
     "name": "enmash",
     "version": "1.0.0",
     "dependencies": {
-        "bootstrap": "latest"
+        "bootstrap": "latest",
+        "blueimp-bootstrap-image-gallery": "latest"
     }
 }

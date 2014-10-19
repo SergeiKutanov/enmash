@@ -1,0 +1,49 @@
+{% extends 'EnmashPagesBundle:Base:public_base.html.twig' %}
+
+    {% block customcss %}
+        {{ parent() }}
+        <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+        <link rel="stylesheet" href="{{ asset('vendor/blueimp-bootstrap-image-gallery/css/bootstrap-image-gallery.min.css') }}">
+    {% endblock %}
+
+    {% block jumbotron %}
+        {% include 'EnmashPagesBundle:Pages:Blocks/stores/bigmap.html.twig' with {'storeType' : constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::WHOLESALE_TYPE')} %}
+    {% endblock %}
+
+    {% block content %}
+
+        {% include 'EnmashPagesBundle:Pages:Blocks/gallerymodal.html.twig' %}
+
+        {% for store in stores %}
+            {% include 'EnmashPagesBundle:Pages:Blocks/stores/store.html.twig' with {'store': store} %}
+        {% endfor %}
+
+    {% endblock %}
+
+    {% block js %}
+        {{ parent() }}
+        <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+        <script src="{{ asset('vendor/blueimp-bootstrap-image-gallery/js/bootstrap-image-gallery.min.js') }}"></script>
+        <script type="text/javascript">
+
+            $(document).ready(function(){
+
+                var map = null;
+
+                if (map == null) {
+                    $.ajax({
+                        method: 'POST',
+                        data: {
+                            'type': $('#bigmap').attr('data-type')
+                        },
+                        url: $('#bigmap').attr('data-path'),
+                        success: function(data) {
+                            initializeBigMap(data);
+                        }
+                    });
+                }
+
+            });
+
+        </script>
+    {% endblock %}
