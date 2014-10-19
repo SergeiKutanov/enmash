@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "dependencies": {
         "bootstrap": "latest",
-        "blueimp-bootstrap-image-gallery": "latest"
+        "blueimp-bootstrap-image-gallery": "latest",
+        "skrollr": "latest"
     }
 }

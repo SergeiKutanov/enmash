@@ -40,6 +40,18 @@ class PagesController extends Controller{
     }
 
     /**
+     * @Route("/about", name="about-page")
+     * @Method("GET")
+     */
+    public function aboutAction() {
+
+        return $this->render(
+            'EnmashPagesBundle:Pages:about.html.twig'
+        );
+
+    }
+
+    /**
      * @Route("/stores", name="stores-page")
      * @Method("GET")
      */
