@@ -4,6 +4,7 @@
     "dependencies": {
         "bootstrap": "latest",
         "blueimp-bootstrap-image-gallery": "latest",
-        "skrollr": "latest"
+        "skrollr": "latest",
+        "lite-accordion": "latest"
     }
 }

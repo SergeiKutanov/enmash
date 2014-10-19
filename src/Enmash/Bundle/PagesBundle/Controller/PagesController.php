@@ -33,8 +33,30 @@ class PagesController extends Controller{
      */
     public function indexAction() {
 
+        //todo think of a better way to find store's location for landing page tab
+        $em = $this->getDoctrine()->getManager();
+        $stores = $em
+            ->getRepository('EnmashStoreBundle:Store')
+            ->findBy(
+                array(
+                    'publish'   => true
+                )
+            );
+        $sortedStores = array(
+            'vladimir'  => array()
+        );
+        foreach ($stores as $store) {
+            /* @var $store Store */
+            if (strpos($store->getAddress(), 'Владимир') !== false) {
+                $sortedStores['vladimir'][] = $store;
+            }
+        }
+
         return $this->render(
-            'EnmashPagesBundle:Pages:index.html.twig'
+            'EnmashPagesBundle:Pages:index.html.twig',
+            array(
+                'stores'    => $sortedStores
+            )
         );
 
     }

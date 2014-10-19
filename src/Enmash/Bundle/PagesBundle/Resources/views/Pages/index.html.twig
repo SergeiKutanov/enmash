@@ -1,11 +1,19 @@
 {% extends 'EnmashPagesBundle:Base:public_base.html.twig' %}
 
+    {% block customcss %}
+        {{ parent() }}
+        <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+        <link rel="stylesheet" href="{{ asset('vendor/blueimp-bootstrap-image-gallery/css/bootstrap-image-gallery.min.css') }}">
+    {% endblock %}
+
     {% block jumbotron %}
         {#top jumbotron slider#}
         {% include('EnmashPagesBundle:Pages:Blocks/index/jumboslider.html.twig') %}
     {% endblock %}
 
     {% block content %}
+
+        {% include 'EnmashPagesBundle:Pages:Blocks/gallerymodal.html.twig' %}
 
         {% include('EnmashPagesBundle:Pages:Blocks/index/about.html.twig') %}
 
@@ -19,7 +27,8 @@
 
     {% block js %}
     {{ parent() }}
-    {#<script src="https://maps.googleapis.com/maps/api/js"></script>#}
+    <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+    <script src="{{ asset('vendor/blueimp-bootstrap-image-gallery/js/bootstrap-image-gallery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/enmashpages/js/titlebanners.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function(){
