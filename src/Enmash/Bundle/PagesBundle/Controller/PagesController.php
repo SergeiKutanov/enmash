@@ -10,6 +10,8 @@ namespace Enmash\Bundle\PagesBundle\Controller;
 
 
 use Application\Sonata\MediaBundle\Entity\GalleryHasMedia;
+use Doctrine\DBAL\Connection;
+use Enmash\Bundle\StoreBundle\Entity\Product;
 use Enmash\Bundle\StoreBundle\Entity\Store;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;

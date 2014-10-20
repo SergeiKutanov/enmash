@@ -236,7 +236,7 @@ class Store
     public function __construct()
     {
         $this->publish = false;
-        $this->storeImages = new \Doctrine\Common\Collections\ArrayCollection();
+//        $this->storeImages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->storeType = self::BOTH_TYPE;
     }
 

@@ -54,3 +54,11 @@ DirectoryIndex app.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
+
+# Выключить обработку модулем mod_charset
+<IfModule mod_charset.c>
+  CharsetDisable On
+</IfModule>
+# Выставить кодировку по умолчанию стандартными средствами apache
+AddDefaultCharset UTF-8
+php_value default_charset utf-8
