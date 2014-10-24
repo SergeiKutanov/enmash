@@ -11,6 +11,7 @@ namespace Enmash\Bundle\PagesBundle\Controller;
 
 use Application\Sonata\MediaBundle\Entity\GalleryHasMedia;
 use Doctrine\DBAL\Connection;
+use Enmash\Bundle\PagesBundle\Entity\Article;
 use Enmash\Bundle\StoreBundle\Entity\Product;
 use Enmash\Bundle\StoreBundle\Entity\Store;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -26,6 +27,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class PagesController extends Controller{
 
@@ -54,10 +56,20 @@ class PagesController extends Controller{
             }
         }
 
+        $featuredArticles = $em
+            ->getRepository('EnmashPagesBundle:Article')
+            ->findBy(
+                array(
+                    'publish'   => true,
+                    'featured'  => true
+                )
+            );
+
         return $this->render(
             'EnmashPagesBundle:Pages:index.html.twig',
             array(
-                'stores'    => $sortedStores
+                'stores'    => $sortedStores,
+                'articles'  => $featuredArticles
             )
         );
 
@@ -144,6 +156,44 @@ class PagesController extends Controller{
     }
 
     /**
+     * @Route("/articles", name="articles-page")
+     * @Method("GET")
+     */
+    public function articlesPage() {
+        $em = $this->getDoctrine()->getManager();
+        $articles = $em
+            ->getRepository('EnmashPagesBundle:Article')
+            ->findBy(
+                array(
+                    'publish'   => true
+                ),
+                array(
+                    'createdAt'   => 'asc'
+                )
+            );
+        return $this->render(
+            'EnmashPagesBundle:Pages:articles.html.twig',
+            array(
+                'articles'  => $articles
+            )
+        );
+    }
+
+    /**
+     * @Route("/article/{slug}", name="article-page")
+     * @Method("GET")
+     * @ParamConverter("article", class="EnmashPagesBundle:Article", options={"mapping": {"slug": "slug"}})
+     */
+    public function articlePageAction(Article $article) {
+        return $this->render(
+            'EnmashPagesBundle:Pages:article.html.twig',
+            array(
+                'article'   => $article
+            )
+        );
+    }
+
+    /**
      * @Route("/getStoresCoordinates", name="getStoresCoordinates")
      * @Method("POST")
      */
@@ -198,8 +248,16 @@ class PagesController extends Controller{
      * @Route("/test")
      */
     public function testAction() {
+
+        $article = new Article();
+        $article->setTitle('Заголовок статьи');
+        $article->setAbstract('abstract');
+        $article->setBody('body');
+        $article->setPublish(true);
+
         $em = $this->getDoctrine()->getManager();
-        $product = $em->getRepository('EnmashStoreBundle:Product')->find(2);
+        $em->persist($article);
+        $em->flush();
     }
 
 } 

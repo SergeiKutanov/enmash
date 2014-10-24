@@ -1,0 +1,13 @@
+<div class="row">
+    {% for article in articles %}
+    <div class="col-xs-12 col-md-4">
+        <h3>{{ article.title }}</h3>
+        <div class="col-xs-12">
+            {{ article.abstract | raw }}
+        </div>
+        <div class="col-xs-12 text-right">
+            <a href="{{ path('article-page', {'slug': article.slug}) }}">Читать далее</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>

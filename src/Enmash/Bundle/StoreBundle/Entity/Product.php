@@ -85,6 +85,17 @@ class Product
 //    }
 
     /**
+     * @ORM\ManyToMany(targetEntity="Enmash\Bundle\PagesBundle\Entity\Article", mappedBy="products")
+     **/
+    private $articles;
+
+    public function __toString() {
+        if ($this->getId()) {
+            return $this->getSku() . ' - ' . $this->getCategory()->getName() . ' - ' . $this->getName();
+        }
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -259,6 +270,10 @@ class Product
      */
     public function __construct()
     {
+        $this->sku = 0000;
+        $this->mansku = 0000;
+        $this->name = 'Название товара';
+        $this->acronym = 'Сокр. назв. тов.';
         $this->parameters = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -293,5 +308,38 @@ class Product
     public function getParameters()
     {
         return $this->parameters;
+    }
+
+    /**
+     * Add articles
+     *
+     * @param \Enmash\Bundle\PagesBundle\Entity\Article $articles
+     * @return Product
+     */
+    public function addArticle(\Enmash\Bundle\PagesBundle\Entity\Article $articles)
+    {
+        $this->articles[] = $articles;
+
+        return $this;
+    }
+
+    /**
+     * Remove articles
+     *
+     * @param \Enmash\Bundle\PagesBundle\Entity\Article $articles
+     */
+    public function removeArticle(\Enmash\Bundle\PagesBundle\Entity\Article $articles)
+    {
+        $this->articles->removeElement($articles);
+    }
+
+    /**
+     * Get articles
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getArticles()
+    {
+        return $this->articles;
     }
 }

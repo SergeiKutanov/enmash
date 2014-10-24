@@ -23,6 +23,8 @@
 
         {% include('EnmashPagesBundle:Pages:Blocks/index/wholesale.html.twig') %}
 
+        {% include 'EnmashPagesBundle:Pages:Blocks/index/featuredarticles.html.twig' with {'articles': articles} %}
+
     {% endblock %}
 
     {% block js %}
@@ -33,7 +35,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-            var slideTimeout = 10000;
+            var slideTimeout = 5000;
 
             $('#banners-carousel').titleBanners();
 
@@ -45,7 +47,10 @@
             });
 
             setTimeout(function(){
-                $("button.go-down a")[0].click();
+                var scrollPosition = $(window).scrollTop();
+                if (scrollPosition == 0) {
+                    $("button.go-down a")[0].click();
+                }
             }, slideTimeout);
 
         });

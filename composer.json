@@ -25,7 +25,8 @@
         "knplabs/knp-menu-bundle": "~1.1",
         "sonata-project/media-bundle": "~2.3",
         "sonata-project/formatter-bundle": "~2.3",
-        "jms/serializer-bundle": "~0.13"
+        "jms/serializer-bundle": "~0.13",
+        "gedmo/doctrine-extensions": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

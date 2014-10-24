@@ -380,6 +380,7 @@ button.go-down:hover span{
 #footer {
     background-color: #dddddd;
     padding: 30px 0px;
+    margin-top: 20px;
 }
 
 #footer ul {

@@ -1,0 +1,12 @@
+{% extends 'EnmashPagesBundle:Base:public_base.html.twig' %}
+
+{% block content %}
+<div class="row pusher">
+    <div class="col-xs-12">
+        <h1>Статьи</h1>
+    </div>
+</div>
+{% for article in articles %}
+    {% include 'EnmashPagesBundle:Pages:Blocks/Articles/articlepreview.html.twig' with {'article': article} %}
+{% endfor %}
+{% endblock %}

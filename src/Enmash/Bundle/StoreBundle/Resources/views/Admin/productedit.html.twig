@@ -10,9 +10,13 @@
     <script type="text/javascript">
         $(document).ready(function(){
             var categoryInput = $("input[id*=_category]");
+            console.log(categoryInput);
             if (categoryInput.length > 0) {
                 categoryInput.bind('change', function(event) {
                     var submitBtn = $("button[name='btn_update_and_edit']");
+                    if (submitBtn.length == 0) {
+                        submitBtn = $("button[name='btn_create_and_edit']");
+                    }
                     $(submitBtn).click();
                 });
             }

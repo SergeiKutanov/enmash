@@ -1,0 +1,34 @@
+{% extends 'EnmashPagesBundle:Base:public_base.html.twig' %}
+
+{% block content %}
+<div class="row pusher">
+    <div class="col-xs-12">
+        <h1>{{ article.title }}</h1>
+    </div>
+    <div class="col-xs-12">
+        {{ article.abstract | raw }}
+    </div>
+    <div class="col-xs-12">
+        {{ article.body | raw }}
+    </div>
+</div>
+
+{% if article.connectedArticles | length > 0 %}
+<div class="row">
+    <div class="col-xs-12">
+        <h2>Связанные статьи</h2>
+    </div>
+</div>
+{% for connectedArticle in article.connectedArticles %}
+    {% include 'EnmashPagesBundle:Pages:Blocks/Articles/articlepreview.html.twig' with {'article': connectedArticle} %}
+{% endfor %}
+{% endif %}
+
+<div class="row">
+    {% for product in article.products %}
+        <div class="col-xs-4">
+            <h3>{{ product.name }}</h3>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

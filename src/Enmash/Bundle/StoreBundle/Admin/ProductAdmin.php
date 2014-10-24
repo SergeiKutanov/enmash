@@ -112,6 +112,18 @@ class ProductAdmin extends Admin
     }
 
     public function prePersist($object) {
+
+        $category = $object->getCategory();
+
+        $parameters = $category->getParameters();
+
+        foreach ($parameters as $parameter) {
+            $productParameter = new ProductParameter();
+            $productParameter->setCategoryParameter($parameter);
+            $object->addParameter($productParameter);
+
+        }
+
         $this->fixRelations($object);
     }
 

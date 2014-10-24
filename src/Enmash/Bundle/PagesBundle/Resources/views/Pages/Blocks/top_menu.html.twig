@@ -39,6 +39,7 @@
                     <li {% if app.request.get('_route') == 'stores-page' %}class="active"{% endif %}><a href="{{ path('stores-page') }}">МАГАЗИНЫ</a></li>
                     <li {% if app.request.get('_route') == 'wholesale-stores-page' %}class="active"{% endif %}><a href="{{ path('wholesale-stores-page') }}">СЛУЖБЫ СБЫТА</a></li>
                     <li><a href="#">БОНУСЫ И СКИДКИ</a></li>
+                    <li {% if app.request.get('_route') == 'articles-page' %}class="active"{% endif %}><a href="{{ path('articles-page') }}">ПОЛЕЗНЫЕ СТАТЬИ</a></li>
                     <li {% if app.request.get('_route') == 'contacts-page' %}class="active"{% endif %}><a href="{{ path('contacts-page') }}">КОНТАКТЫ</a></li>
                 </ul>
             </div>
