@@ -1,3 +1,6 @@
+.sonata-ba-field.sonata-ba-field-standard-natural {
+    overflow: auto;
+}
 /*---------------------------------global stuff-------------------------------*/
 @import url(http://fonts.googleapis.com/css?family=Roboto+Slab&subset=latin,cyrillic);
 
@@ -268,7 +271,7 @@ button.go-down:hover span{
 
 #about {
     margin-top: 30px;
-    background-image: url('../images/logo_grey.png');
+    background-image: url('../../bundles/enmashpages/images/logo_grey.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -281,7 +284,7 @@ button.go-down:hover span{
 
 #vladimir-region {
     overflow: auto;
-    background-image: url('../images/logo_grey.png');
+    background-image: url('../../bundles/enmashpages/images/logo_grey.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 85% center;
@@ -326,7 +329,7 @@ button.go-down:hover span{
 }
 
 #ivanovo-region a.store-link.store1 {
-    background-image: url('../images/store1.jpg');
+    background-image: url('../../bundles/enmashpages/images/store1.jpg');
 }
 
 #ivanovo-region a.store-link.store1:after {
@@ -342,18 +345,18 @@ button.go-down:hover span{
 }
 
 #ivanovo-region a.store-link.store2 {
-    background-image: url('../images/store2.jpg');
+    background-image: url('../../bundles/enmashpages/images/store2.jpg');
 }
 
 #ivanovo-region a.store-link.store3 {
-    background-image: url('../images/store3.jpg');
+    background-image: url('../../bundles/enmashpages/images/store3.jpg');
 }
 
 /*------------------wholesale block------------------------------*/
 #wholesale-block #logo-img {
     height: 400px;
     background-color: #FFFFFF;
-    background-image: url('../images/logo_grey.png');
+    background-image: url('../../bundles/enmashpages/images/logo_grey.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: -60% center;

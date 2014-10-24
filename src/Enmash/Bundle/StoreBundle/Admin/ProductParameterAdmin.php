@@ -6,10 +6,9 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class CategoryAdmin extends Admin
+class ProductParameterAdmin extends Admin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -18,7 +17,7 @@ class CategoryAdmin extends Admin
     {
         $datagridMapper
             ->add('id')
-            ->add('name')
+            ->add('value')
         ;
     }
 
@@ -28,9 +27,8 @@ class CategoryAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-//            ->add('id')
-            ->add('name')
-            ->add('parentCategory')
+            ->add('id')
+            ->add('value')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -46,34 +44,23 @@ class CategoryAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
-        //todo add some link to create new parameter
         $formMapper
             ->add(
-                'parentCategory',
-                'sonata_type_model_list',
+                'categoryParameter',
+                'sonata_type_model',
                 array(
-                    'required'  => false
+                    'btn_add'   => false,
+                    'disabled'  => true
                 )
             )
-            ->add('name')
             ->add(
-                'parameters',
-//                'sonata_type_collection',
-//                null,
-                'sonata_type_model_autocomplete',
+                'value',
+                null,
                 array(
-                    'property'      => 'name',
-                    'placeholder'   => 'Фильтры',
-                    'multiple'      => true
-                ),
-                array(
-//                    'edit'      => 'inline',
-//                    'inline'    => 'table'
+                    'required'  => true
                 )
             )
-            ;
-
-//        var_dump($formMapper->get('parameters')); die();
+        ;
     }
 
     /**
@@ -83,18 +70,7 @@ class CategoryAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('name')
-            ->add('parentCategory')
-            ->add('subCategories')
+            ->add('value')
         ;
-    }
-
-    protected function configureRoutes(RouteCollection $collection) {
-        parent::configure();
-        //todo think of a way to make this route POST only
-        $collection->add(
-            'api_parameters_for_category',
-            'getParametersForCategory'
-        );
     }
 }

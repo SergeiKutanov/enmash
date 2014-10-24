@@ -40,13 +40,6 @@ class Store
     private $address;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="contact", type="string", length=255)
-     */
-    private $contact;
-
-    /**
      * @var float
      *
      * @ORM\Column(name="latitude", type="float")
@@ -97,14 +90,26 @@ class Store
      */
     protected $storeType;
 
+    /**
+     * @ORM\OneToMany(targetEntity="StoreContact", mappedBy="store", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $contacts;
+
     public static function getstoreTypeList() {
         return array(
-            self::RETAIL_TYPE       => 'Розничный магазин',
-            self::WHOLESALE_TYPE    => 'Служба сбыта',
-            self::BOTH_TYPE         => 'Розница и служба сбыта'
+            self::RETAIL_TYPE       => self::getStoreTypeString(self::RETAIL_TYPE),
+            self::WHOLESALE_TYPE    => self::getStoreTypeString(self::WHOLESALE_TYPE),
+            self::BOTH_TYPE         => self::getStoreTypeString(self::BOTH_TYPE)
         );
     }
 
+    public static function getStoreTypeString($type) {
+        switch ($type) {
+            case self::RETAIL_TYPE : return 'Розничный магазин';
+            case self::WHOLESALE_TYPE : return 'Служба сбыта';
+            case self::BOTH_TYPE: return 'Розничный магазин и служба сбыта';
+        }
+    }
 
     /**
      * Get id
@@ -160,29 +165,6 @@ class Store
     public function getAddress()
     {
         return $this->address;
-    }
-
-    /**
-     * Set contact
-     *
-     * @param string $contact
-     * @return Store
-     */
-    public function setContact($contact)
-    {
-        $this->contact = $contact;
-
-        return $this;
-    }
-
-    /**
-     * Get contact
-     *
-     * @return string 
-     */
-    public function getContact()
-    {
-        return $this->contact;
     }
 
     /**
@@ -354,5 +336,38 @@ class Store
     public function getStoreType()
     {
         return $this->storeType;
+    }
+
+    /**
+     * Add contacts
+     *
+     * @param \Enmash\Bundle\StoreBundle\Entity\StoreContact $contacts
+     * @return Store
+     */
+    public function addContact(\Enmash\Bundle\StoreBundle\Entity\StoreContact $contacts)
+    {
+        $this->contacts[] = $contacts;
+
+        return $this;
+    }
+
+    /**
+     * Remove contacts
+     *
+     * @param \Enmash\Bundle\StoreBundle\Entity\StoreContact $contacts
+     */
+    public function removeContact(\Enmash\Bundle\StoreBundle\Entity\StoreContact $contacts)
+    {
+        $this->contacts->removeElement($contacts);
+    }
+
+    /**
+     * Get contacts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getContacts()
+    {
+        return $this->contacts;
     }
 }

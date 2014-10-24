@@ -35,10 +35,9 @@
                                                 <td>Часы работы</td>
                                                 <td>{{ store.schedule }}</td>
                                             </tr>
-                                            <tr>
-                                                <td>Контакты</td>
-                                                <td>{{ store.contact }}</td>
-                                            </tr>
+                                            {% if store.contacts | length > 0 %}
+                                            {% include 'EnmashPagesBundle:Pages:Blocks/storecontacts.html.twig' with {'store': store} %}
+                                            {% endif %}
                                         </table>
                                     </div>
                                     {% if store.storeImages | length > 0 %}

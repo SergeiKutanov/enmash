@@ -35,7 +35,6 @@ class StoreAdmin extends Admin
 //            ->add('id')
             ->addIdentifier('name')
             ->add('address')
-            ->add('contact')
 //            ->add('latitude')
 //            ->add('longitude')
             ->add('_action', 'actions', array(
@@ -63,7 +62,6 @@ class StoreAdmin extends Admin
                 ))
             ->add('schedule')
             ->add('address')
-            ->add('contact')
             ->add('latitude')
             ->add('longitude')
             ->add('info', 'ckeditor', array(
@@ -76,6 +74,17 @@ class StoreAdmin extends Admin
                         )
                     )
                 ))
+            ->add(
+                'contacts',
+                'sonata_type_collection',
+                array(
+                    'required'  => false
+                ),
+                array(
+                    'edit'  => 'inline',
+                    'inline'=> 'table'
+                )
+            )
             ->add(
                 'storeImages',
                 'sonata_type_model_list',
@@ -105,10 +114,25 @@ class StoreAdmin extends Admin
             ->add('id')
             ->add('name')
             ->add('address')
-            ->add('contact')
             ->add('latitude')
             ->add('longitude')
         ;
+    }
+
+    public function prePersist($object) {
+        $this->fixRelations($object);
+    }
+
+    public function preUpdate($object) {
+        $this->fixRelations($object);
+    }
+
+    protected function fixRelations($object) {
+        /* @var $object Store */
+        foreach ($object->getContacts() as $contact) {
+            /* @var $contact \Enmash\Bundle\StoreBundle\Entity\StoreContact */
+            $contact->setStore($object);
+        }
     }
 
 }

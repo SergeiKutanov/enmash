@@ -122,6 +122,28 @@ class PagesController extends Controller{
     }
 
     /**
+     * @Route("/contacts", name="contacts-page")
+     * @Method("GET")
+     */
+    public function contactsPageAction() {
+        $em = $this->getDoctrine()->getManager();
+        $stores = $em
+            ->getRepository('EnmashStoreBundle:Store')
+            ->findBy(
+                array(
+                    'publish'   => true
+                )
+            );
+
+        return $this->render(
+            'EnmashPagesBundle:Pages:contacts.html.twig',
+            array(
+                'stores'    => $stores
+            )
+        );
+    }
+
+    /**
      * @Route("/getStoresCoordinates", name="getStoresCoordinates")
      * @Method("POST")
      */
@@ -145,12 +167,21 @@ class PagesController extends Controller{
                         ->generateUrl('wholesale-stores-page') . $path;
             }
 
+            $contactString = 'Тел.: ';
+            foreach ($store->getContacts() as $contact) {
+                if ($contact->getPhone()) {
+                    //todo remove trailing coma
+                    $contactString .= $contact->getPhone() . ', ';
+                }
+            }
+
+
             /* @var $store \Enmash\Bundle\StoreBundle\Entity\Store */
             $data[] = array(
                 'address'   => $store->getAddress(),
                 'longitude' => $store->getLongitude(),
                 'latitude'  => $store->getLatitude(),
-                'contact'   => $store->getContact(),
+                'contact'   => $contactString,
                 'schedule'  => $store->getSchedule(),
                 'link'      => "#store_" . $store->getId(),
                 'uri'       => $path
@@ -163,6 +194,12 @@ class PagesController extends Controller{
         return new JsonResponse($data);
     }
 
-
+    /**
+     * @Route("/test")
+     */
+    public function testAction() {
+        $em = $this->getDoctrine()->getManager();
+        $product = $em->getRepository('EnmashStoreBundle:Product')->find(2);
+    }
 
 } 

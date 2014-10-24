@@ -4,10 +4,12 @@ services:
         arguments: [~, Enmash\Bundle\StoreBundle\Entity\Product, EnmashStoreBundle:ProductAdmin]
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: Product}
+        calls:
+            - [ setTemplate, [edit, EnmashStoreBundle:Admin:productedit.html.twig] ]
 
     enmash_store.admin.category:
         class: Enmash\Bundle\StoreBundle\Admin\CategoryAdmin
-        arguments: [~, Enmash\Bundle\StoreBundle\Entity\Category, SonataAdminBundle:CRUD]
+        arguments: [~, Enmash\Bundle\StoreBundle\Entity\Category, EnmashStoreBundle:StoreAdmin]
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: Category}
 
@@ -22,3 +24,27 @@ services:
         arguments: [~, Enmash\Bundle\StoreBundle\Entity\StoreImage, SonataAdminBundle:CRUD, @sonata.media.pool ]
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: StoreImage}
+
+    enmash_store.admin.manufacturer:
+        class: Enmash\Bundle\StoreBundle\Admin\ManufacturerAdmin
+        arguments: [~, Enmash\Bundle\StoreBundle\Entity\Manufacturer, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Manufacturer}
+
+    enmash_store.admin.category_parameter:
+        class: Enmash\Bundle\StoreBundle\Admin\CategoryParameterAdmin
+        arguments: [~, Enmash\Bundle\StoreBundle\Entity\CategoryParameter, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: CategoryParameter}
+
+    enmash_store.admin.product_parameter:
+        class: Enmash\Bundle\StoreBundle\Admin\ProductParameterAdmin
+        arguments: [~, Enmash\Bundle\StoreBundle\Entity\ProductParameter, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: ProductParameter}
+
+    enmash_store.admin.store_contact:
+        class: Enmash\Bundle\StoreBundle\Admin\StoreContactAdmin
+        arguments: [~, Enmash\Bundle\StoreBundle\Entity\StoreContact, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: StoreContact}

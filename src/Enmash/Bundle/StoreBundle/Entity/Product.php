@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * Product
- *
+ * @ORM\HasLifecycleCallbacks()
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Enmash\Bundle\StoreBundle\Entity\ProductRepository")
  */
@@ -56,6 +56,33 @@ class Product
      */
     private $category;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Manufacturer", inversedBy="products")
+     * @ORM\JoinColumn(name="manufacturer_id", referencedColumnName="id")
+     */
+    private $manufacturer;
+
+    /**
+     * @var StoreImage
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Gallery", cascade={"persist"}, fetch="LAZY")
+     */
+    protected $productImages;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ProductParameter", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $parameters;
+
+//    /**
+//     * @ORM\PrePersist
+//     * @ORM\PreUpdate
+//     */
+//    public function restoreRelations() {
+//        foreach ($this->getParameters() as $parameter) {
+//            /* @var $parameter ProductParameter */
+//            $parameter->setProduct($this);
+//        }
+//    }
 
     /**
      * Get id
@@ -65,6 +92,16 @@ class Product
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get sku
+     *
+     * @return string
+     */
+    public function getSku()
+    {
+        return $this->sku;
     }
 
     /**
@@ -81,13 +118,13 @@ class Product
     }
 
     /**
-     * Get sku
+     * Get name
      *
-     * @return string 
+     * @return string
      */
-    public function getSku()
+    public function getName()
     {
-        return $this->sku;
+        return $this->name;
     }
 
     /**
@@ -104,13 +141,13 @@ class Product
     }
 
     /**
-     * Get name
+     * Get acronym
      *
-     * @return string 
+     * @return string
      */
-    public function getName()
+    public function getAcronym()
     {
-        return $this->name;
+        return $this->acronym;
     }
 
     /**
@@ -127,13 +164,13 @@ class Product
     }
 
     /**
-     * Get acronym
+     * Get mansku
      *
-     * @return string 
+     * @return string
      */
-    public function getAcronym()
+    public function getMansku()
     {
-        return $this->acronym;
+        return $this->mansku;
     }
 
     /**
@@ -150,13 +187,13 @@ class Product
     }
 
     /**
-     * Get mansku
+     * Get category
      *
-     * @return string 
+     * @return \Enmash\Bundle\StoreBundle\Entity\Category
      */
-    public function getMansku()
+    public function getCategory()
     {
-        return $this->mansku;
+        return $this->category;
     }
 
     /**
@@ -173,12 +210,88 @@ class Product
     }
 
     /**
-     * Get category
+     * Set manufacterer
      *
-     * @return \Enmash\Bundle\StoreBundle\Entity\Category 
+     * @param \Enmash\Bundle\StoreBundle\Entity\Manufacturer $manufacterer
+     * @return Product
      */
-    public function getCategory()
+    public function setManufacturer(\Enmash\Bundle\StoreBundle\Entity\Manufacturer $manufacturer = null)
     {
-        return $this->category;
+        $this->manufacturer = $manufacturer;
+
+        return $this;
+    }
+
+    /**
+     * Get manufacterer
+     *
+     * @return \Enmash\Bundle\StoreBundle\Entity\Manufacturer 
+     */
+    public function getManufacturer()
+    {
+        return $this->manufacturer;
+    }
+
+    /**
+     * Set productImages
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Gallery $productImages
+     * @return Product
+     */
+    public function setProductImages(\Application\Sonata\MediaBundle\Entity\Gallery $productImages = null)
+    {
+        $this->productImages = $productImages;
+
+        return $this;
+    }
+
+    /**
+     * Get productImages
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Gallery 
+     */
+    public function getProductImages()
+    {
+        return $this->productImages;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->parameters = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add parameters
+     *
+     * @param \Enmash\Bundle\StoreBundle\Entity\ProductParameter $parameters
+     * @return Product
+     */
+    public function addParameter(\Enmash\Bundle\StoreBundle\Entity\ProductParameter $parameters)
+    {
+        $this->parameters[] = $parameters;
+
+        return $this;
+    }
+
+    /**
+     * Remove parameters
+     *
+     * @param \Enmash\Bundle\StoreBundle\Entity\ProductParameter $parameters
+     */
+    public function removeParameter(\Enmash\Bundle\StoreBundle\Entity\ProductParameter $parameters)
+    {
+        $this->parameters->removeElement($parameters);
+    }
+
+    /**
+     * Get parameters
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
     }
 }

@@ -32,7 +32,22 @@
     <script type="text/javascript" src="{{ asset('bundles/enmashpages/js/titlebanners.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function(){
+
+            var slideTimeout = 10000;
+
             $('#banners-carousel').titleBanners();
+
+            $('button.go-down a').click(function(e){
+                e.preventDefault();
+                $('html, body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 500);
+            });
+
+            setTimeout(function(){
+                $("button.go-down a")[0].click();
+            }, slideTimeout);
+
         });
     </script>
     {% endblock %}

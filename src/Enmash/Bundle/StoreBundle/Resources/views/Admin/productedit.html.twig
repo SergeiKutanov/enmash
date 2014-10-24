@@ -1,0 +1,21 @@
+{% extends 'SonataAdminBundle:CRUD:edit.html.twig' %}
+
+{% block form %}
+    {{ parent() }}
+    <input type="hidden" id="category-param-retrieve-endpoint" value="{{ path('admin_enmash_store_category_api_parameters_for_category') }}" />
+{% endblock%}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var categoryInput = $("input[id*=_category]");
+            if (categoryInput.length > 0) {
+                categoryInput.bind('change', function(event) {
+                    var submitBtn = $("button[name='btn_update_and_edit']");
+                    $(submitBtn).click();
+                });
+            }
+        });
+    </script>
+{% endblock %}

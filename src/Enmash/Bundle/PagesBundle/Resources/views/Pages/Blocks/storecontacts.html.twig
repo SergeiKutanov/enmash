@@ -1,0 +1,22 @@
+<tr>
+    <td>Контакты</td>
+    <td>
+        {% for contact in store.contacts %}
+            <ul class="list-unstyled text-left">
+                {% if contact.name %}
+                    <li>{{ contact.name }}</li>
+                {% endif %}
+                {% if contact.phone %}
+                    <li>Тел.: {{ contact.phone }}</li>
+                {% endif %}
+                {% if contact.email %}
+                    <li>Email: {{ contact.email }}</li>
+                {% endif %}
+                {% if contact.skype %}
+                    <li></li>
+                    <li>Skype: <a href="skype:{{ contact.skype }}?call"> <img src="http://mystatus.skype.com/smallicon/{{ contact.skype }}" border="0"></a></li>
+                {% endif %}
+            </ul>
+        {% endfor %}
+    </td>
+</tr>

@@ -1,0 +1,31 @@
+{% extends 'EnmashPagesBundle:Base:public_base.html.twig' %}
+
+{% block content %}
+<div class="row pusher">
+    <div class="col-xs-12">
+        <h1>Контакты</h1>
+    </div>
+    <div class="col-xs-12">
+        <table class="table table-striped">
+            {% for store in stores %}
+            <tr>
+                <td>Адрес</td>
+                <td>{{ store.address }}</td>
+            </tr>
+            <tr>
+                <td>Тип</td>
+                <td>{{ store.getStoreTypeString(store.storeType) }}</td>
+            </tr>
+            {% if store.contacts | length > 0 %}
+            {% include 'EnmashPagesBundle:Pages:Blocks/storecontacts.html.twig' with {'store': store} %}
+            {% endif %}
+            <tr>
+                <td colspan="2">
+                    <hr>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

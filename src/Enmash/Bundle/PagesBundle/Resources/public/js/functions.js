@@ -56,7 +56,8 @@ function initializeBigMap(stores) {
     var mapOptions = {
         center: new google.maps.LatLng(56.093126, 40.360195),
         zoom: 8,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        scrollwheel: false
     }
 
     //init the map
