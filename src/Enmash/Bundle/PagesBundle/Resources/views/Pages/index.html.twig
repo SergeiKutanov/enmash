@@ -39,7 +39,7 @@
 
             $('#banners-carousel').titleBanners();
 
-            $('button.go-down a').click(function(e){
+            $('div.go-down a').click(function(e){
                 e.preventDefault();
                 $('html, body').animate({
                     scrollTop: $(this.hash).offset().top
@@ -49,7 +49,7 @@
             setTimeout(function(){
                 var scrollPosition = $(window).scrollTop();
                 if (scrollPosition == 0) {
-                    $("button.go-down a")[0].click();
+                    $("div.go-down a")[0].click();
                 }
             }, slideTimeout);
 
