@@ -22,7 +22,6 @@ class ProductAdmin extends Admin
         $datagridMapper
             ->add('id')
             ->add('sku')
-            ->add('name')
             ->add('acronym')
             ->add('mansku')
         ;
@@ -36,7 +35,6 @@ class ProductAdmin extends Admin
         $listMapper
             ->add('id')
             ->add('sku')
-            ->add('name')
             ->add('acronym')
             ->add('mansku')
             ->add('_action', 'actions', array(
@@ -65,7 +63,6 @@ class ProductAdmin extends Admin
             )
             ->add('sku')
             ->add('mansku')
-            ->add('name')
             ->add('acronym')
             ->add(
                 'parameters',
@@ -105,7 +102,6 @@ class ProductAdmin extends Admin
         $showMapper
             ->add('id')
             ->add('sku')
-            ->add('name')
             ->add('acronym')
             ->add('mansku')
         ;

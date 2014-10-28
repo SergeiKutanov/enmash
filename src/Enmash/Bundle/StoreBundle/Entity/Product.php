@@ -32,13 +32,6 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
-     */
-    private $name;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="acronym", type="string", length=255)
      */
     private $acronym;
@@ -91,7 +84,7 @@ class Product
 
     public function __toString() {
         if ($this->getId()) {
-            return $this->getSku() . ' - ' . $this->getCategory()->getName() . ' - ' . $this->getName();
+            return $this->getSku() . ' - ' . $this->getCategory()->getName() . ' - ' . $this->getAcronym();
         }
     }
 
@@ -124,29 +117,6 @@ class Product
     public function setSku($sku)
     {
         $this->sku = $sku;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Product
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
 
         return $this;
     }
