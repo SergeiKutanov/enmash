@@ -22,6 +22,10 @@ a:hover {
     border-radius: 0;
 }
 
+h1 a, h2 a, h3 a, h1 a:hover, h2 a:hover, h3 a:hover {
+    color: #000000;
+}
+
 .btn-warning, .btn-warning:hover, .btn-warning:active, .btn-warning:focus {
     color: #000000;
 }

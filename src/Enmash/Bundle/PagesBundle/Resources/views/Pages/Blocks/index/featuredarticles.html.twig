@@ -1,7 +1,7 @@
 <div class="row">
     {% for article in articles %}
     <div class="col-xs-12 col-md-4">
-        <h3>{{ article.title }}</h3>
+        <h3><a href="{{ path('article-page', {'slug': article.slug}) }}">{{ article.title }}</a></h3>
         <div>
             {{ article.abstract | raw }}
         </div>
