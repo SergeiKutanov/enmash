@@ -234,7 +234,8 @@ class PagesController extends Controller{
                 'contact'   => $contactString,
                 'schedule'  => $store->getSchedule(),
                 'link'      => "#store_" . $store->getId(),
-                'uri'       => $path
+                'uri'       => $path,
+                'storeType' => $store->getStoreTypeString($store->getStoreType())
             );
 
 
