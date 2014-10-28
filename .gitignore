@@ -41,3 +41,6 @@ vendor.zip
 web.zip
 .git.zip
 src.zip
+web/catalog/catalog.ods
+enmash.local.zip
+web/css/*
