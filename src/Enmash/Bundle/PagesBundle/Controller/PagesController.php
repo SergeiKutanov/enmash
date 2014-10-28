@@ -65,11 +65,14 @@ class PagesController extends Controller{
                 )
             );
 
+        $cheapBannerPath = $this->container->getParameter('cheap_banner_folder') . DIRECTORY_SEPARATOR .$this->container->getParameter('cheap_banner_filename');
+
         return $this->render(
             'EnmashPagesBundle:Pages:index.html.twig',
             array(
-                'stores'    => $sortedStores,
-                'articles'  => $featuredArticles
+                'stores'            => $sortedStores,
+                'articles'          => $featuredArticles,
+                'cheapbannerpath'   => $cheapBannerPath
             )
         );
 

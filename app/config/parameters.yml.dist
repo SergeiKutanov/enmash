@@ -22,3 +22,7 @@ parameters:
 
     # sonata media bundle
     sonata_media_bundle_server_path: http://test.local:8000/enmash.local/web/uploads/media
+
+    #cheap banner
+    cheap_banner_folder: cheapbanner
+    cheap_banner_filename: plakat.jpg
