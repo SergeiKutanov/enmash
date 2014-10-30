@@ -48,7 +48,7 @@ class CatalogImportCommand extends ContainerAwareCommand {
         $catalogImporter = $this
             ->getContainer()
             ->get('enmash_store.catalog_importer');
-        $catalogImporter->importCategories(); die();
+        $catalogImporter->importFullCatalog(); die();
 
         $this->em = $this->getContainer()
             ->get('doctrine')

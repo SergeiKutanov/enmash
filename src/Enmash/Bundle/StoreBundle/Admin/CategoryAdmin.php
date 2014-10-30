@@ -62,6 +62,7 @@ class CategoryAdmin extends Admin
 //                null,
                 'sonata_type_model_autocomplete',
                 array(
+                    'required'      => false,
                     'property'      => 'name',
                     'placeholder'   => 'Фильтры',
                     'multiple'      => true

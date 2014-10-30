@@ -22,6 +22,7 @@ class CatalogImporter {
     const TREE_LEVEL_1_LIST_NAME = 'TreeLevel1';
     const TREE_LEVEL_2_LIST_NAME = 'TreeLevel2';
     const TREE_LEVEL_3_LIST_NAME = 'TreeLevel3';
+    const TREE_FULL_LIST = 'Tree';
 
     //cell coordinates
     const MANUFACTURERS_NAME_COLUMN = 0;
@@ -43,6 +44,61 @@ class CatalogImporter {
     public function __construct($em, $container) {
         $this->em = $em;
         $this->container = $container;
+    }
+
+    public function importFullCatalog(\PHPExcel $file = null) {
+        if (!$file) {
+            $file = $this->getFile();
+        }
+
+        //importing three level categories
+        $this->importFirstLevelTree($file);
+        $this->importSubLevelCategories($file, self::TREE_LEVEL_2_LIST_NAME);
+        $this->importSubLevelCategories($file, self::TREE_LEVEL_3_LIST_NAME);
+
+        //removing unused categories (i.e. those which are not in ods file)
+        $this->removeUnusedCategories($file);
+
+        //importing manufacturers
+        $this->importManufacturers($file);
+
+        //removing unused manufacturers
+        $this->removeUnusedManufacturers($file);
+
+
+    }
+
+    public function removeUnusedManufacturers(\PHPExcel $file = null) {
+        if (!$file) {
+            $file = $this->getFile();
+        }
+
+        $file->setActiveSheetIndexByName(self::MANUFACTURERS_LIST_NAME);
+        $sheet = $file->getActiveSheet();
+
+        $manufacturersArray = array();
+        $rowIndex = 2;
+        while ($sheet->cellExistsByColumnAndRow(self::MANUFACTURERS_NAME_COLUMN, $rowIndex)) {
+            $manufacturerName = $sheet
+                ->getCellByColumnAndRow(self::MANUFACTURERS_NAME_COLUMN, $rowIndex);
+            $manufacturersArray[] = $manufacturerName;
+            $rowIndex++;
+        }
+
+        $manufacturers = $this
+            ->em
+            ->getRepository('EnmashStoreBundle:Manufacturer')
+            ->findAll();
+
+        foreach ($manufacturers as $manufacturer) {
+            /* @var $manufacturer Manufacturer */
+            if (!in_array($manufacturer->getName(), $manufacturersArray)) {
+                $this->em->remove($manufacturer);
+            }
+        }
+
+        $this->em->flush();
+
     }
 
     public function importCategories(\PHPExcel $file = null) {
@@ -164,6 +220,46 @@ class CatalogImporter {
                 $this->em->persist($manufacturer);
             }
             $rowIndex++;
+        }
+
+        $this->em->flush();
+
+    }
+
+    public function removeUnusedCategories(\PHPExcel $file = null) {
+        if (!$file) {
+            $file = $this->getFile();
+        }
+
+        $file->setActiveSheetIndexByName(self::TREE_FULL_LIST);
+        $sheet = $file->getActiveSheet();
+
+        $categoriesArray = array();
+        $rowIndex = 1;
+        $columnIndex = 0;
+
+        while ($sheet->cellExistsByColumnAndRow($columnIndex, $rowIndex)) {
+            $categoryName = $sheet
+                ->getCellByColumnAndRow($columnIndex, $rowIndex)
+                ->getOldCalculatedValue();
+            $categoriesArray[] = $categoryName;
+            $rowIndex++;
+            if (!$sheet->cellExistsByColumnAndRow($columnIndex, $rowIndex)) {
+                $columnIndex++;
+                $rowIndex = 1;
+            }
+        }
+
+        $categories = $this
+            ->em
+            ->getRepository('EnmashStoreBundle:Category')
+            ->findAll();
+
+        foreach ($categories as $category) {
+            /* @var $category Category */
+            if (!in_array($category->getName(), $categoriesArray)) {
+                $this->em->remove($category);
+            }
         }
 
         $this->em->flush();
