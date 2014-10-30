@@ -9,6 +9,7 @@
 namespace Enmash\Bundle\StoreBundle\Command;
 
 
+use Enmash\Bundle\StoreBundle\Component\CatalogImporter;
 use Enmash\Bundle\StoreBundle\Entity\Manufacturer;
 use Enmash\Bundle\StoreBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -41,6 +42,13 @@ class CatalogImportCommand extends ContainerAwareCommand {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
+
+        //test stuff
+        /* @var $catalogImporter CatalogImporter */
+        $catalogImporter = $this
+            ->getContainer()
+            ->get('enmash_store.catalog_importer');
+        $catalogImporter->importCategories(); die();
 
         $this->em = $this->getContainer()
             ->get('doctrine')
