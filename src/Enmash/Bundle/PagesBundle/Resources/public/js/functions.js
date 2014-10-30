@@ -24,7 +24,7 @@ function initializeFindStoreMap(stores) {
         });
 
         var infoWindow = new google.maps.InfoWindow({
-            content: '<div style="line-height:1.35;overflow:hidden;white-space:nowrap;"><h4>'+store.address+'</h4><p>'+store.contact+'</p><p>'+store.schedule+'</p><p></p><a href="'+store.uri+'">Подробнее</a></p></div>'
+            content: '<div style="line-height:1.35;overflow:hidden;white-space:nowrap;"><h4>'+store.address+'</h4><p>'+store.storeType+'</p><p>'+store.contact+'</p><p>'+store.schedule+'</p><p></p><a href="'+store.uri+'">Подробнее</a></p></div>'
         });
 
         markers[i] = {
@@ -75,7 +75,7 @@ function initializeBigMap(stores) {
         });
 
         var infoWindow = new google.maps.InfoWindow({
-            content: '<div style="line-height:1.35;overflow:hidden;white-space:nowrap;"><h4>'+store.address+'</h4><p>'+store.contact+'</p><p>'+store.schedule+'</p><p><a href="'+store.link+'">Подробнее</a></p></div>'
+            content: '<div style="line-height:1.35;overflow:hidden;white-space:nowrap;"><h4>'+store.address+'</h4><p>'+store.storeType+'</p></p><p>'+store.contact+'</p><p>'+store.schedule+'</p><p><a href="'+store.link+'">Подробнее</a></p></div>'
         });
 
         markers[i] = {

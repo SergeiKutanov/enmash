@@ -187,7 +187,7 @@ hr {
 }
 
 /*-----------------------carousel--------------------------------*/
-button.go-down, button.go-down:focus{
+div.go-down, div.go-down:focus{
     position: absolute;
     display: block;
     width: 50px;
@@ -206,15 +206,15 @@ button.go-down, button.go-down:focus{
     transition: all 0.5s ease;
 }
 
-button.go-down a {
+div.go-down a {
     color: #FFFFFF;
 }
 
-button.go-down:hover{
+div.go-down:hover{
     background-color: rgba(0, 0, 0, .7);
 }
 
-button.go-down span {
+div.go-down span {
     position: relative;
     top: 0px;-webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -223,7 +223,7 @@ button.go-down span {
     transition: all 0.5s ease;
 }
 
-button.go-down:hover span{
+div.go-down:hover span{
     top: 10px;
 }
 
@@ -383,6 +383,8 @@ button.go-down:hover span{
 #footer {
     background-color: #dddddd;
     padding: 30px 0px;
+    margin-top: 20px;
+    border-top: 1px solid #555555;
 }
 
 #footer ul {
