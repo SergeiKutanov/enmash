@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12">
-        <h3>{{ article.title }}</h3>
+        <h3><a href="{{ path('article-page', {'slug': article.slug}) }}">{{ article.title }}</a></h3>
     </div>
     <div class="col-xs-12">
         {{ article.abstract | raw }}

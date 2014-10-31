@@ -169,6 +169,14 @@ sonata_media:
                 small: { width: 100 , quality: 70}
                 big:   { width: 500 , quality: 70}
 
+        articleimages:
+                    providers:
+                        - sonata.media.provider.image
+
+                    formats:
+                        small: { width: 100 , quality: 70}
+                        big:   { width: 500 , quality: 70}
+
     cdn:
         server:
             path: "%sonata_media_bundle_server_path%" # http://media.sonata-project.org/
@@ -194,4 +202,4 @@ ivory_ck_editor:
             filebrowserImageUploadRoute: admin_sonata_media_media_ckeditor_upload
             filebrowserImageUploadRouteParameters:
                 provider: sonata.media.provider.image
-                context: my-context # Optional, to upload in a custom context
+                context: articleimages # Optional, to upload in a custom context
