@@ -74,9 +74,26 @@ class ArticleAdmin extends Admin
                 array(
                     'config'    => array(
                         'toolbar'   => array(
-
                             array(
-                                'items' => array('Source', '-', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat')
+                                'items' => array(
+                                    'Source',
+                                    '-',
+                                    'JustifyLeft',
+                                    'JustifyCenter',
+                                    'JustifyRight',
+                                    'JustifyBlock',
+                                    '-',
+                                    'Bold',
+                                    'Italic',
+                                    'Underline',
+                                    'Strike',
+                                    'Subscript',
+                                    'Superscript',
+                                    '-',
+                                    'RemoveFormat')
+                            ),
+                            array(
+                                'Image'
                             )
                         )
                     )

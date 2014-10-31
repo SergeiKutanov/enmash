@@ -26,7 +26,8 @@
         "sonata-project/media-bundle": "~2.3",
         "sonata-project/formatter-bundle": "~2.3",
         "jms/serializer-bundle": "~0.13",
-        "gedmo/doctrine-extensions": "dev-master"
+        "gedmo/doctrine-extensions": "dev-master",
+        "tilleuls/ckeditor-sonata-media-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
