@@ -51,4 +51,4 @@ services:
 
     enmash_store.catalog_importer:
         class: Enmash\Bundle\StoreBundle\Component\CatalogImporter
-        arguments: [@doctrine.orm.entity_manager, @service_container]
+        arguments: [@doctrine.orm.entity_manager, @service_container, @kernel]
