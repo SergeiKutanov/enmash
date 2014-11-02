@@ -486,6 +486,10 @@ a.offset-anchor{
     height: 100%;
 }
 
+.back-to-map-arrow span{
+    font-size: 1.5em;
+}
+
 /*-------------------about page-------------------------------*/
 #est-year{
     display: inline-block;
