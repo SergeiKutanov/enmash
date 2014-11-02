@@ -1,11 +1,11 @@
-<div class="row">
+<div class="row featured-articles">
     {% for article in articles %}
     <div class="col-xs-12 col-md-4">
         <h3><a href="{{ path('article-page', {'slug': article.slug}) }}">{{ article.title }}</a></h3>
-        <div>
+        <div class="article-body">
             {{ article.abstract | raw }}
         </div>
-        <div class="text-right">
+        <div class="text-right read-more">
             <a href="{{ path('article-page', {'slug': article.slug}) }}">Читать далее</a>
         </div>
     </div>

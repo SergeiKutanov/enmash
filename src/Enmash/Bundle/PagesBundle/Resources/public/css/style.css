@@ -507,3 +507,33 @@ a.offset-anchor{
 #about-page-content p {
     margin: 40px 0;
 }
+
+/*------------------------articles page--------------------------*/
+.article-preview {
+    border-bottom: 1px solid #555555;
+}
+
+.featured-articles {
+    display: table-row;
+    width: 100%;
+}
+
+.featured-articles > div[class^=col-] {
+    display: table-cell;
+    float: none;
+    border-left: 1px solid #555555;
+}
+
+.featured-articles > div[class^=col-]:first-child {
+    border-left: none;
+}
+
+.featured-articles div.read-more {
+    position: absolute;
+    right: 15px;
+    bottom: 0;
+}
+
+.featured-articles .article-body {
+    margin-bottom: 30px;
+}
