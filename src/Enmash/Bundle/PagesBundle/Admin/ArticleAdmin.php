@@ -62,7 +62,32 @@ class ArticleAdmin extends Admin
                         'toolbar'   => array(
 
                             array(
-                                'items' => array('Source', '-', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat')
+                                'items' => array(
+                                    'Source',
+                                    '-',
+                                    'FontSize',
+                                    'TextColor',
+                                    '-',
+                                    'JustifyLeft',
+                                    'JustifyCenter',
+                                    'JustifyRight',
+                                    'JustifyBlock',
+                                    '-',
+                                    'Bold',
+                                    'Italic',
+                                    'Underline',
+                                    'Strike',
+                                    'Subscript',
+                                    'Superscript',
+                                    '-',
+                                    'NumberedList',
+                                    'BulletedList',
+                                    '-',
+                                    'RemoveFormat',
+                                    '-',
+                                    'Table',
+                                    'HorizontalRule'
+                                )
                             )
                         )
                     )
@@ -78,6 +103,9 @@ class ArticleAdmin extends Admin
                                 'items' => array(
                                     'Source',
                                     '-',
+                                    'FontSize',
+                                    'TextColor',
+                                    '-',
                                     'JustifyLeft',
                                     'JustifyCenter',
                                     'JustifyRight',
@@ -90,7 +118,14 @@ class ArticleAdmin extends Admin
                                     'Subscript',
                                     'Superscript',
                                     '-',
-                                    'RemoveFormat')
+                                    'NumberedList',
+                                    'BulletedList',
+                                    '-',
+                                    'RemoveFormat',
+                                    '-',
+                                    'Table',
+                                    'HorizontalRule'
+                                )
                             ),
                             array(
                                 'Image'
@@ -143,10 +178,32 @@ class ArticleAdmin extends Admin
 
     public function preUpdate($object)
     {
+        /* @var $object Article */
         $this->fixRelations($object);
     }
 
     protected function fixRelations(Article $object) {
+
+        //todo a stupid way to delete connected entitites. Got to find a better way
+        $em = $this->getModelManager()->getEntityManager($this->getClass());
+        $articles = $em->getRepository('EnmashPagesBundle:Article')->findAll();
+        foreach ($articles as $article) {
+            /* @var $article Article */
+            if (!is_null($article->getParentArticle())) {
+                if ($article->getParentArticle()->getId() == $object->getId()) {
+                    if (!$object->getConnectedArticles()->contains($article)) {
+                        $article->setParentArticle(null);
+                        $em->persist($article);
+                    }
+                }
+            }
+        }
+        $em->flush();
+
+        if (is_null($object->getConnectedArticles())) {
+            return;
+        }
+        
         foreach ($object->getConnectedArticles() as $article) {
             /* @var $article \Enmash\Bundle\PagesBundle\Entity\Article */
             $article->setParentArticle($object);

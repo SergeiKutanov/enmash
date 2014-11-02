@@ -4,8 +4,8 @@ function initializeFindStoreMap(stores) {
 
     //map options
     var mapOptions = {
-        center: new google.maps.LatLng(56.093126, 40.360195),
-        zoom: 8,
+        center: new google.maps.LatLng(56.536308, 41.327157),
+        zoom: 7,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
@@ -54,8 +54,8 @@ function initializeBigMap(stores) {
 
     //map options
     var mapOptions = {
-        center: new google.maps.LatLng(56.093126, 40.360195),
-        zoom: 8,
+        center: new google.maps.LatLng(56.536308, 41.327157),
+        zoom: 7,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         scrollwheel: false
     }
