@@ -117,7 +117,7 @@ class PagesController extends Controller{
      * @Route("/wholesale-stores", name="wholesale-stores-page")
      * @Method("GET")
      */
-    public function whilesaleStoresAction() {
+    public function wholesaleStoresAction() {
 
         $em = $this->getDoctrine()->getManager();
         $stores = $em
@@ -171,6 +171,7 @@ class PagesController extends Controller{
                     'publish'   => true
                 ),
                 array(
+                    'featured'    => 'desc',
                     'createdAt'   => 'asc'
                 )
             );

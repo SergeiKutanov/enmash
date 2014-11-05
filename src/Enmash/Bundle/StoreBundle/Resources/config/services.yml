@@ -48,3 +48,9 @@ services:
         arguments: [~, Enmash\Bundle\StoreBundle\Entity\StoreContact, SonataAdminBundle:CRUD]
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: StoreContact}
+
+    enmash_store.admin.special_offer:
+        class: Enmash\Bundle\StoreBundle\Admin\SpecialOfferAdmin
+        arguments: [~, Enmash\Bundle\StoreBundle\Entity\SpecialOffer, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: SpecialOffer}

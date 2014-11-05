@@ -32,6 +32,7 @@ class ArticleAdmin extends Admin
     {
         $listMapper
             ->add('id')
+            ->add('featured')
             ->add('title')
             ->add('createdAt')
             ->add('_action', 'actions', array(
