@@ -61,6 +61,13 @@ class SpecialOffer
     protected $image;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="width", type="integer", nullable=true)
+     */
+    private $width;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="type", type="integer")
@@ -238,5 +245,28 @@ class SpecialOffer
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set width
+     *
+     * @param integer $width
+     * @return SpecialOffer
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    /**
+     * Get width
+     *
+     * @return integer 
+     */
+    public function getWidth()
+    {
+        return $this->width;
     }
 }

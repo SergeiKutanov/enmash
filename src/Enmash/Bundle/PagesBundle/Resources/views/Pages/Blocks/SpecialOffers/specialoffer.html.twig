@@ -1,0 +1,16 @@
+<div class="item" style="width: {{ offer.width }}%">
+    <div class="offer-image" id="links">
+        <a href="{% path offer.image, 'big' %}" title="{{ offer.image.name }}" data-gallery="offer_{{ offer.id }}" >
+            <img src="{% path offer.image, 'small' %}" alt="{{ offer.image.name  }}">
+        </a>
+    </div>
+    <div class="offer-title">
+        <h3>{{ offer.title }}</h3>
+    </div>
+    {% if offer.body | length > 0 %}
+    <hr>
+    <div class="offer-body">
+        <p>{{ offer.body }}</p>
+    </div>
+    {% endif %}
+</div>

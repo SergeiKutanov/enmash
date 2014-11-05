@@ -58,9 +58,25 @@ class SpecialOfferAdmin extends Admin
             ->add('title')
             ->add('body')
             ->add(
+                'width',
+                'choice',
+                array(
+                    'required'  => false,
+                    'choices'   => array(
+                        '10'    => 10,
+                        '20'    => 20,
+                        '30'    => 30,
+                        '40'    => 40,
+                        '50'    => 50,
+                        '60'    => 60,
+                    )
+                )
+            )
+            ->add(
                 'image',
                 'sonata_media_type',
                 array(
+                    'required'  => false,
                     'provider'  => 'sonata.media.provider.image',
                     'context'   => 'specialoffer'
                 )

@@ -184,6 +184,25 @@ class PagesController extends Controller{
     }
 
     /**
+     * @Route("/specialoffers", name="special-offers-page")
+     * @Method("GET")
+     */
+    public function specialOfferPageAction() {
+
+        $em = $this->getDoctrine()->getManager();
+        $offers = $em
+            ->getRepository('EnmashStoreBundle:SpecialOffer')
+            ->findAll();
+
+        return $this->render(
+            'EnmashPagesBundle:Pages:specialoffers.html.twig',
+            array(
+                'offers'  => $offers
+            )
+        );
+    }
+
+    /**
      * @Route("/article/{slug}", name="article-page")
      * @Method("GET")
      * @ParamConverter("article", class="EnmashPagesBundle:Article", options={"mapping": {"slug": "slug"}})

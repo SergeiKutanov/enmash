@@ -541,3 +541,8 @@ a.offset-anchor{
 .featured-articles .article-body {
     margin-bottom: 30px;
 }
+
+/*----------------special offers page---------------------------*/
+#isotope-container .item img {
+    width: 100%;
+}
