@@ -74,6 +74,12 @@ class SpecialOffer
      */
     private $type;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Store")
+     * @ORM\JoinColumn(name="store_id", referencedColumnName="id")
+     */
+    private $store;
+
     public static function getTypeString($type) {
         switch ($type) {
             case self::TYPE_BONUS : return 'Бонус';
@@ -268,5 +274,28 @@ class SpecialOffer
     public function getWidth()
     {
         return $this->width;
+    }
+
+    /**
+     * Set store
+     *
+     * @param \Enmash\Bundle\StoreBundle\Entity\Store $store
+     * @return SpecialOffer
+     */
+    public function setStore(\Enmash\Bundle\StoreBundle\Entity\Store $store = null)
+    {
+        $this->store = $store;
+
+        return $this;
+    }
+
+    /**
+     * Get store
+     *
+     * @return \Enmash\Bundle\StoreBundle\Entity\Store 
+     */
+    public function getStore()
+    {
+        return $this->store;
     }
 }

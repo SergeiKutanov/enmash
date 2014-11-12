@@ -49,6 +49,9 @@
 
                 $('#find-store-map').on('shown.bs.modal', function(e){
                     if (map == null) {
+
+                        var iconPath = $('#find-store-map').attr('data-icon-path');
+
                         $.ajax({
                             method: 'POST',
                             data: {
@@ -56,7 +59,7 @@
                             },
                             url: $('#find-store-map').attr('data-map-points-path'),
                             success: function(data) {
-                                initializeFindStoreMap(data);
+                                initializeFindStoreMap(data, iconPath);
                             }
                         });
                     }

@@ -13,6 +13,7 @@ use Application\Sonata\MediaBundle\Entity\GalleryHasMedia;
 use Doctrine\DBAL\Connection;
 use Enmash\Bundle\PagesBundle\Entity\Article;
 use Enmash\Bundle\StoreBundle\Entity\Product;
+use Enmash\Bundle\StoreBundle\Entity\SpecialOffer;
 use Enmash\Bundle\StoreBundle\Entity\Store;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
@@ -190,14 +191,36 @@ class PagesController extends Controller{
     public function specialOfferPageAction() {
 
         $em = $this->getDoctrine()->getManager();
+        $discounts = $em
+            ->getRepository('EnmashStoreBundle:SpecialOffer')
+            ->findBy(
+                array(
+                    'type'  => SpecialOffer::TYPE_DISCOUNT,
+                )
+            );
+
         $offers = $em
             ->getRepository('EnmashStoreBundle:SpecialOffer')
-            ->findAll();
+            ->findBy(
+                array(
+                    'type'  => SpecialOffer::TYPE_SPECIAL_OFFER
+                )
+            );
+
+        $bonus = $em
+            ->getRepository('EnmashStoreBundle:SpecialOffer')
+            ->findOneBy(
+                array(
+                    'type'  => SpecialOffer::TYPE_BONUS
+                )
+            );
 
         return $this->render(
             'EnmashPagesBundle:Pages:specialoffers.html.twig',
             array(
-                'offers'  => $offers
+                'discounts'  => $discounts,
+                'offers'     => $offers,
+                'bonus'      => $bonus
             )
         );
     }

@@ -31,6 +31,9 @@
                 var map = null;
 
                 if (map == null) {
+
+                    var iconPath = $('#bigmap').attr('data-icon-path');
+
                     $.ajax({
                         method: 'POST',
                         data: {
@@ -38,7 +41,7 @@
                         },
                         url: $('#bigmap').attr('data-path'),
                         success: function(data) {
-                            initializeBigMap(data);
+                            initializeBigMap(data, iconPath);
                         }
                     });
                 }

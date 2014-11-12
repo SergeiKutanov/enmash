@@ -56,7 +56,48 @@ class SpecialOfferAdmin extends Admin
             ->add('startDate', 'sonata_type_date_picker')
             ->add('endDate', 'sonata_type_date_picker')
             ->add('title')
-            ->add('body')
+            ->add('store')
+            ->add(
+                'body',
+                'ckeditor',
+                array(
+                    'config'    => array(
+                        'toolbar'   => array(
+                            array(
+                                'items' => array(
+                                    'Source',
+                                    '-',
+                                    'FontSize',
+                                    'TextColor',
+                                    '-',
+                                    'JustifyLeft',
+                                    'JustifyCenter',
+                                    'JustifyRight',
+                                    'JustifyBlock',
+                                    '-',
+                                    'Bold',
+                                    'Italic',
+                                    'Underline',
+                                    'Strike',
+                                    'Subscript',
+                                    'Superscript',
+                                    '-',
+                                    'NumberedList',
+                                    'BulletedList',
+                                    '-',
+                                    'RemoveFormat',
+                                    '-',
+                                    'Table',
+                                    'HorizontalRule'
+                                )
+                            ),
+                            array(
+                                'Image'
+                            )
+                        )
+                    )
+                )
+            )
             ->add(
                 'width',
                 'choice',
@@ -93,5 +134,28 @@ class SpecialOfferAdmin extends Admin
             ->add('id')
             ->add('title')
         ;
+    }
+
+    public function prePersist($offer) {
+        $this->fixFewIssues($offer);
+    }
+
+    public function preUpdate($offer) {
+        $this->fixFewIssues($offer);
+    }
+
+    private function fixFewIssues(SpecialOffer $offer) {
+        switch ($offer->getType()) {
+            case SpecialOffer::TYPE_DISCOUNT:
+                $offer->setBody(strip_tags($offer->getBody()));
+                $offer->setStore(null);
+                break;
+            case SpecialOffer::TYPE_BONUS:
+                $offer->setStore(null);
+                break;
+            case SpecialOffer::TYPE_SPECIAL_OFFER:
+                $offer->setBody(strip_tags($offer->getBody()));
+                break;
+        }
     }
 }

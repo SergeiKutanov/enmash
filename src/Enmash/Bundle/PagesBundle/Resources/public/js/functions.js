@@ -1,5 +1,5 @@
 //find store map
-function initializeFindStoreMap(stores) {
+function initializeFindStoreMap(stores, markerPath) {
     var mapCanvas = document.getElementById('find-store-map-canvas');
 
     //map options
@@ -18,6 +18,7 @@ function initializeFindStoreMap(stores) {
         var point = new google.maps.Marker({
             position: new google.maps.LatLng(store.latitude, store.longitude),
             map: map,
+            icon: markerPath,
             animation: google.maps.Animation.DROP,
             title: store.address,
             pointId: i
@@ -49,7 +50,7 @@ function initializeFindStoreMap(stores) {
 }
 
 //find store map
-function initializeBigMap(stores) {
+function initializeBigMap(stores, markerPath) {
     var mapCanvas = document.getElementById('map-canvas');
 
     //map options
@@ -69,6 +70,7 @@ function initializeBigMap(stores) {
         var point = new google.maps.Marker({
             position: new google.maps.LatLng(store.latitude, store.longitude),
             map: map,
+            icon: markerPath,
             animation: google.maps.Animation.DROP,
             title: store.address,
             pointId: i
