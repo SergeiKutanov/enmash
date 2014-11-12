@@ -104,3 +104,20 @@ function initializeBigMap(stores, markerPath) {
     };
 
 }
+
+function showStoreOnMap(storeId, mapInfo) {
+
+    if (!mapInfo.map) {
+        alert('Map is not available');
+        return;
+    }
+    for (var i = 0; i < mapInfo.markers.length; i++) {
+        if (mapInfo.markers[i].point.pointId == storeId) {
+            mapInfo.map.panTo(mapInfo.markers[i].point.getPosition());
+            mapInfo.map.setZoom(15);
+            new google.maps.event.trigger(mapInfo.markers[i].point, 'click');
+            var body = $("html, body");
+            body.animate({scrollTop:0}, '500', 'swing');
+        }
+    }
+}
