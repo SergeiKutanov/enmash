@@ -73,7 +73,8 @@ function initializeBigMap(stores, markerPath) {
             icon: markerPath,
             animation: google.maps.Animation.DROP,
             title: store.address,
-            pointId: i
+            pointId: store.id,
+            index: i
         });
 
         var infoWindow = new google.maps.InfoWindow({
@@ -89,7 +90,7 @@ function initializeBigMap(stores, markerPath) {
         infoWindow = markers[i].infoWindow;
 
         google.maps.event.addListener(point, 'click', function(){
-            markers[this.pointId].info.open(map, this);
+            markers[this.index].info.open(map, this);
         });
     }
 
@@ -97,6 +98,9 @@ function initializeBigMap(stores, markerPath) {
         google.maps.event.trigger(map, 'resize');
     });
 
-    return map;
+    return {
+        map: map,
+        markers: markers
+    };
 
 }

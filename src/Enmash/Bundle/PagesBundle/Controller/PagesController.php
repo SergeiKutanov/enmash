@@ -281,7 +281,8 @@ class PagesController extends Controller{
                 'schedule'  => $store->getSchedule(),
                 'link'      => "#store_" . $store->getId(),
                 'uri'       => $path,
-                'storeType' => $store->getStoreTypeString($store->getStoreType())
+                'storeType' => $store->getStoreTypeString($store->getStoreType()),
+                'id'        => $store->getId()
             );
 
 
