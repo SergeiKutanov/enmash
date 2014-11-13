@@ -13,6 +13,7 @@ use Application\Sonata\MediaBundle\Entity\GalleryHasMedia;
 use Doctrine\DBAL\Connection;
 use Enmash\Bundle\PagesBundle\Entity\Article;
 use Enmash\Bundle\StoreBundle\Entity\Product;
+use Enmash\Bundle\StoreBundle\Entity\SpecialOffer;
 use Enmash\Bundle\StoreBundle\Entity\Store;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
@@ -117,7 +118,7 @@ class PagesController extends Controller{
      * @Route("/wholesale-stores", name="wholesale-stores-page")
      * @Method("GET")
      */
-    public function whilesaleStoresAction() {
+    public function wholesaleStoresAction() {
 
         $em = $this->getDoctrine()->getManager();
         $stores = $em
@@ -171,6 +172,7 @@ class PagesController extends Controller{
                     'publish'   => true
                 ),
                 array(
+                    'featured'    => 'desc',
                     'createdAt'   => 'asc'
                 )
             );
@@ -178,6 +180,47 @@ class PagesController extends Controller{
             'EnmashPagesBundle:Pages:articles.html.twig',
             array(
                 'articles'  => $articles
+            )
+        );
+    }
+
+    /**
+     * @Route("/specialoffers", name="special-offers-page")
+     * @Method("GET")
+     */
+    public function specialOfferPageAction() {
+
+        $em = $this->getDoctrine()->getManager();
+        $discounts = $em
+            ->getRepository('EnmashStoreBundle:SpecialOffer')
+            ->findBy(
+                array(
+                    'type'  => SpecialOffer::TYPE_DISCOUNT,
+                )
+            );
+
+        $offers = $em
+            ->getRepository('EnmashStoreBundle:SpecialOffer')
+            ->findBy(
+                array(
+                    'type'  => SpecialOffer::TYPE_SPECIAL_OFFER
+                )
+            );
+
+        $bonus = $em
+            ->getRepository('EnmashStoreBundle:SpecialOffer')
+            ->findOneBy(
+                array(
+                    'type'  => SpecialOffer::TYPE_BONUS
+                )
+            );
+
+        return $this->render(
+            'EnmashPagesBundle:Pages:specialoffers.html.twig',
+            array(
+                'discounts'  => $discounts,
+                'offers'     => $offers,
+                'bonus'      => $bonus
             )
         );
     }
@@ -238,7 +281,8 @@ class PagesController extends Controller{
                 'schedule'  => $store->getSchedule(),
                 'link'      => "#store_" . $store->getId(),
                 'uri'       => $path,
-                'storeType' => $store->getStoreTypeString($store->getStoreType())
+                'storeType' => $store->getStoreTypeString($store->getStoreType()),
+                'id'        => $store->getId()
             );
 
 

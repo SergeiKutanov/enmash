@@ -28,9 +28,12 @@
 
             $(document).ready(function(){
 
-                var map = null;
+                var mapInfo = null;
 
-                if (map == null) {
+                if (mapInfo == null) {
+
+                    var iconPath = $('#bigmap').attr('data-icon-path');
+
                     $.ajax({
                         method: 'POST',
                         data: {
@@ -38,10 +41,18 @@
                         },
                         url: $('#bigmap').attr('data-path'),
                         success: function(data) {
-                            initializeBigMap(data);
+                            mapInfo = initializeBigMap(data, iconPath);
                         }
                     });
                 }
+
+                //show store on map
+                $("a.show-store-on-map").click(function(e){
+                    e.preventDefault();
+                    var storeId = $(this).attr('data-store-id');
+
+                    showStoreOnMap(storeId, mapInfo);
+                });
 
             });
 

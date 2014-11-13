@@ -1,11 +1,11 @@
 //find store map
-function initializeFindStoreMap(stores) {
+function initializeFindStoreMap(stores, markerPath) {
     var mapCanvas = document.getElementById('find-store-map-canvas');
 
     //map options
     var mapOptions = {
-        center: new google.maps.LatLng(56.093126, 40.360195),
-        zoom: 8,
+        center: new google.maps.LatLng(56.536308, 41.327157),
+        zoom: 7,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     }
 
@@ -18,6 +18,7 @@ function initializeFindStoreMap(stores) {
         var point = new google.maps.Marker({
             position: new google.maps.LatLng(store.latitude, store.longitude),
             map: map,
+            icon: markerPath,
             animation: google.maps.Animation.DROP,
             title: store.address,
             pointId: i
@@ -49,13 +50,13 @@ function initializeFindStoreMap(stores) {
 }
 
 //find store map
-function initializeBigMap(stores) {
+function initializeBigMap(stores, markerPath) {
     var mapCanvas = document.getElementById('map-canvas');
 
     //map options
     var mapOptions = {
-        center: new google.maps.LatLng(56.093126, 40.360195),
-        zoom: 8,
+        center: new google.maps.LatLng(56.536308, 41.327157),
+        zoom: 7,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         scrollwheel: false
     }
@@ -69,9 +70,11 @@ function initializeBigMap(stores) {
         var point = new google.maps.Marker({
             position: new google.maps.LatLng(store.latitude, store.longitude),
             map: map,
+            icon: markerPath,
             animation: google.maps.Animation.DROP,
             title: store.address,
-            pointId: i
+            pointId: store.id,
+            index: i
         });
 
         var infoWindow = new google.maps.InfoWindow({
@@ -87,7 +90,7 @@ function initializeBigMap(stores) {
         infoWindow = markers[i].infoWindow;
 
         google.maps.event.addListener(point, 'click', function(){
-            markers[this.pointId].info.open(map, this);
+            markers[this.index].info.open(map, this);
         });
     }
 
@@ -95,6 +98,26 @@ function initializeBigMap(stores) {
         google.maps.event.trigger(map, 'resize');
     });
 
-    return map;
+    return {
+        map: map,
+        markers: markers
+    };
 
+}
+
+function showStoreOnMap(storeId, mapInfo) {
+
+    if (!mapInfo.map) {
+        alert('Map is not available');
+        return;
+    }
+    for (var i = 0; i < mapInfo.markers.length; i++) {
+        if (mapInfo.markers[i].point.pointId == storeId) {
+            mapInfo.map.panTo(mapInfo.markers[i].point.getPosition());
+            mapInfo.map.setZoom(15);
+            new google.maps.event.trigger(mapInfo.markers[i].point, 'click');
+            var body = $("html, body");
+            body.animate({scrollTop:0}, '500', 'swing');
+        }
+    }
 }

@@ -256,9 +256,15 @@ div.go-down:hover span{
     background-color: rgba(0, 0, 0, .5);
 }
 
+.jumbo-logo {
+    padding: 7px 15px 15px 15px;
+    background-color: rgba(0, 95, 141, .7);
+    border-radius: 5px;
+}
+
 #carousel .carousel-caption p {
     font-weight: 700;
-    font-size: 2em;
+    font-size: 1.5em;
     padding: 20px;
 }
 
@@ -465,6 +471,25 @@ div.go-down:hover span{
     width: 100%;
 }
 
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    font-size: 2em;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
 /*--------------stores page----------------------------------*/
 a.offset-anchor{
     position: relative;
@@ -484,6 +509,19 @@ a.offset-anchor{
 
 #bigmap #map-canvas{
     height: 100%;
+}
+
+.back-to-map-arrow span{
+    font-size: 1.5em;
+}
+
+#links {
+    text-align: justify;
+}
+
+.store-images #links a {
+    display: inline-block;
+    margin-bottom: 5px;
 }
 
 /*-------------------about page-------------------------------*/
@@ -506,4 +544,39 @@ a.offset-anchor{
 
 #about-page-content p {
     margin: 40px 0;
+}
+
+/*------------------------articles page--------------------------*/
+.article-preview {
+    border-bottom: 1px solid #555555;
+}
+
+.featured-articles {
+    display: table-row;
+    width: 100%;
+}
+
+.featured-articles > div[class^=col-] {
+    display: table-cell;
+    float: none;
+    border-left: 1px solid #555555;
+}
+
+.featured-articles > div[class^=col-]:first-child {
+    border-left: none;
+}
+
+.featured-articles div.read-more {
+    position: absolute;
+    right: 15px;
+    bottom: 0;
+}
+
+.featured-articles .article-body {
+    margin-bottom: 30px;
+}
+
+/*----------------special offers page---------------------------*/
+#isotope-container .item img {
+    width: 100%;
 }

@@ -52,3 +52,9 @@ services:
     enmash_store.catalog_importer:
         class: Enmash\Bundle\StoreBundle\Component\CatalogImporter
         arguments: [@doctrine.orm.entity_manager, @service_container, @kernel]
+
+    enmash_store.admin.special_offer:
+        class: Enmash\Bundle\StoreBundle\Admin\SpecialOfferAdmin
+        arguments: [~, Enmash\Bundle\StoreBundle\Entity\SpecialOffer, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: SpecialOffer}

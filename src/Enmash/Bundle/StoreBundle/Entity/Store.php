@@ -111,6 +111,10 @@ class Store
         }
     }
 
+    public function __toString() {
+        return $this->getName() . ' - ' . $this->getAddress();
+    }
+
     /**
      * Get id
      *

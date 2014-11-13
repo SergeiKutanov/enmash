@@ -1,4 +1,4 @@
-<div class="modal fade" id="find-store-map" data-map-points-path="{{ path('getStoresCoordinates') }}">
+<div class="modal fade" id="find-store-map" data-map-points-path="{{ path('getStoresCoordinates') }}" data-icon-path="{{ asset('bundles/enmashpages/images/logo_sm.png') }}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,7 +6,7 @@
                 <h4 class="modal-title">Найти магазин</h4>
             </div>
             <div class="modal-body">
-                <div id="find-store-map-canvas"></div>
+                <div id="find-store-map-canvas"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>

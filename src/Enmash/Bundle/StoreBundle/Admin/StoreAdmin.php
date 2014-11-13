@@ -129,9 +129,11 @@ class StoreAdmin extends Admin
 
     protected function fixRelations($object) {
         /* @var $object Store */
-        foreach ($object->getContacts() as $contact) {
-            /* @var $contact \Enmash\Bundle\StoreBundle\Entity\StoreContact */
-            $contact->setStore($object);
+        if (!is_null($object->getContacts())) {
+            foreach ($object->getContacts() as $contact) {
+                /* @var $contact \Enmash\Bundle\StoreBundle\Entity\StoreContact */
+                $contact->setStore($object);
+            }
         }
     }
 
