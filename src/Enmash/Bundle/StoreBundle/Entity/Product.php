@@ -82,6 +82,34 @@ class Product
      **/
     private $articles;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Product")
+     * @ORM\JoinTable(
+     *      name="product_analogs",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="product_id", referencedColumnName="id"),
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="analog_id", referencedColumnName="id")
+     *      }
+     * )
+     */
+    private $analogs;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Product")
+     * @ORM\JoinTable(
+     *      name="product_similar",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="product_id", referencedColumnName="id"),
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="similar_product_id", referencedColumnName="id")
+     *      }
+     * )
+     */
+    private $similars;
+
     public function __toString() {
         if ($this->getId()) {
             return $this->getSku() . ' - ' . $this->getCategory()->getName() . ' - ' . $this->getAcronym();
@@ -311,5 +339,71 @@ class Product
     public function getArticles()
     {
         return $this->articles;
+    }
+
+    /**
+     * Add analogs
+     *
+     * @param \Enmash\Bundle\StoreBundle\Entity\Product $analogs
+     * @return Product
+     */
+    public function addAnalog(\Enmash\Bundle\StoreBundle\Entity\Product $analogs)
+    {
+        $this->analogs[] = $analogs;
+
+        return $this;
+    }
+
+    /**
+     * Remove analogs
+     *
+     * @param \Enmash\Bundle\StoreBundle\Entity\Product $analogs
+     */
+    public function removeAnalog(\Enmash\Bundle\StoreBundle\Entity\Product $analogs)
+    {
+        $this->analogs->removeElement($analogs);
+    }
+
+    /**
+     * Get analogs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAnalogs()
+    {
+        return $this->analogs;
+    }
+
+    /**
+     * Add similars
+     *
+     * @param \Enmash\Bundle\StoreBundle\Entity\Product $similars
+     * @return Product
+     */
+    public function addSimilar(\Enmash\Bundle\StoreBundle\Entity\Product $similars)
+    {
+        $this->similars[] = $similars;
+
+        return $this;
+    }
+
+    /**
+     * Remove similars
+     *
+     * @param \Enmash\Bundle\StoreBundle\Entity\Product $similars
+     */
+    public function removeSimilar(\Enmash\Bundle\StoreBundle\Entity\Product $similars)
+    {
+        $this->similars->removeElement($similars);
+    }
+
+    /**
+     * Get similars
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSimilars()
+    {
+        return $this->similars;
     }
 }

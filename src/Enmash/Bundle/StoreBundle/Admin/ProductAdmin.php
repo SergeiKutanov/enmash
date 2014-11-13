@@ -91,7 +91,14 @@ class ProductAdmin extends Admin
                         'context'   => 'productimage'
                     )
                 )
-            );
+            )
+            ->add(
+                'analogs'
+            )
+            ->add(
+                'similars'
+            )
+        ;
     }
 
     /**

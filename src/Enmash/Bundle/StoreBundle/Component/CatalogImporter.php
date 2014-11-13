@@ -18,6 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class CatalogImporter {
 
@@ -40,7 +41,10 @@ class CatalogImporter {
     const PRODUCT_ACRONYM_COLUMN = 2;
     const PRODUCT_MAN_SKU = 3;
     const PRODUCT_MAN = 4;
+    const PRODUCT_ANALOGS_COLUMN = 5;
+    const PRODUCT_SIMILAR_COLUMN = 6;
     const PRODUCT_PHOTO = 7;
+
 
     const TREE_LEVEL_1_CATEGORY_NAME_COLUMN = 0;
     const TREE_SUBLEVEL_CATEGORY_NAME_COLUMN = 1;
@@ -77,6 +81,279 @@ class CatalogImporter {
         //removing unused manufacturers
         $this->removeUnusedManufacturers($file);
 
+
+    }
+
+    protected function getFile() {
+        /* @var $phpExcelObject \PHPExcel */
+        try {
+            $phpExcelObject = $this
+                ->container
+                ->get('phpexcel')
+                ->createPHPExcelObject(self::PATH . self::FILENAME);
+        } catch (\Exception $ex) {
+            return null;
+        }
+
+        return $phpExcelObject;
+
+    }
+
+    private function importFirstLevelTree(\PHPExcel $file) {
+        $file->setActiveSheetIndexByName(self::TREE_LEVEL_1_LIST_NAME);
+        $sheet = $file->getActiveSheet();
+
+        $categoriesRepository = $this->em->getRepository('EnmashStoreBundle:Category');
+        $rowIndex = 2;
+        while ($sheet->cellExistsByColumnAndRow(self::TREE_LEVEL_1_CATEGORY_NAME_COLUMN, $rowIndex)) {
+            $categoryTitle = $sheet
+                ->getCellByColumnAndRow(self::TREE_LEVEL_1_CATEGORY_NAME_COLUMN, $rowIndex)
+                ->getValue();
+            /* @var $category \Enmash\Bundle\StoreBundle\Entity\Category */
+            $category = $categoriesRepository->findByName($categoryTitle);
+            if (!$category) {
+                $category = new Category();
+                $category->setName($categoryTitle);
+                $this->em->persist($category);
+            }
+            $rowIndex++;
+        }
+        $this->em->flush();
+    }
+
+    protected function importAnalogsAndSimilarGoods(\PHPExcel $file) {
+        $file->setActiveSheetIndexByName(self::GOODS_LIST_NAME);
+        $sheet = $file->getActiveSheet();
+
+        $rowIndex = 2;
+        $goodsRepository = $this->em->getRepository('EnmashStoreBundle:Product');
+
+        while ($sheet->cellExistsByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex)) {
+            $productCode = $sheet
+                ->getCellByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex)
+                ->getValue();
+            $analogs = $sheet
+                ->getCellByColumnAndRow(self::PRODUCT_ANALOGS_COLUMN, $rowIndex)
+                ->getValue();
+            $similars = $sheet
+                ->getCellByColumnAndRow(self::PRODUCT_SIMILAR_COLUMN, $rowIndex)
+                ->getValue();
+            /* @var $good Product */
+            $good = $this
+                ->em
+                ->getRepository('EnmashStoreBundle:Product')
+                ->findOneBy(
+                    array(
+                        'sku'   => $productCode
+                    )
+                );
+            if (!$good) {
+                throw new NotFoundResourceException('Product not found while working on analogs');
+            }
+
+            if (count($good->getAnalogs()) > 0) {
+                foreach ($good->getAnalogs() as $analog) {
+                    $good->removeAnalog($analog);
+                }
+                $this->em->flush();
+            }
+
+            if (count($good->getSimilars()) > 0) {
+                foreach ($good->getSimilars() as $similar) {
+                    $good->removeSimilar($similar);
+                }
+                $this->em->flush();
+            }
+
+
+            if ($analogs) {
+                $analogs = explode(',', $analogs);
+                foreach ($analogs as $analog) {
+                    $analog = trim($analog);
+                    $analogGood = $this
+                        ->em
+                        ->getRepository('EnmashStoreBundle:Product')
+                        ->findOneBy(
+                            array(
+                                'sku'   => $analog
+                            )
+                        );
+                    if ($analogGood) {
+                        $good->addAnalog($analogGood);
+                    }
+                }
+            }
+
+            if ($similars) {
+                $similars = explode(',', $similars);
+                foreach ($similars as $similar) {
+                    $similar = trim($similar);
+                    $similarGood = $this
+                        ->em
+                        ->getRepository('EnmashStoreBundle:Product')
+                        ->findOneBy(
+                            array(
+                                'sku'   => $similar
+                            )
+                        );
+                    if ($similarGood) {
+                        $good->addSimilar($similarGood);
+                    }
+                }
+            }
+
+            $rowIndex++;
+            $this->em->flush();
+        }
+    }
+
+    private function importSubLevelCategories(\PHPExcel $file, $levelSheetName) {
+        if (!$file) {
+            $file = $this->getFile();
+        }
+
+        $file->setActiveSheetIndexByName($levelSheetName);
+        $sheet = $file->getActiveSheet();
+
+        $categoryRepository = $this->em->getRepository('EnmashStoreBundle:Category');
+        $rowIndex = 2;
+
+        while($sheet->cellExistsByColumnAndRow(self::TREE_SUBLEVEL_CATEGORY_NAME_COLUMN, $rowIndex)) {
+
+            $categoryTitle = $sheet
+                ->getCellByColumnAndRow(self::TREE_SUBLEVEL_CATEGORY_NAME_COLUMN, $rowIndex)
+                ->getValue();
+
+            $parentCategoryTitle = $sheet
+                ->getCellByColumnAndRow(self::TREE_SUBLEVEL_PARENT_CATEGORY_NAME_COLUMN, $rowIndex)
+                ->getValue();
+            $parentCategory = $categoryRepository
+                ->findOneByName($parentCategoryTitle);
+            if (!$parentCategory) {
+                throw new NotFoundHttpException('Parent category for ' . $categoryTitle . ' not found');
+            }
+
+            $category = $categoryRepository
+                ->findOneByName($categoryTitle);
+            if (!$category) {
+                $category = new Category();
+                $category->setName($categoryTitle);
+            }
+            $category->setParentCategory($parentCategory);
+            $this->em->persist($category);
+
+            $rowIndex++;
+        }
+
+        $this->em->flush();
+    }
+
+    public function removeUnusedCategories(\PHPExcel $file = null) {
+        if (!$file) {
+            $file = $this->getFile();
+        }
+
+        $file->setActiveSheetIndexByName(self::TREE_FULL_LIST);
+        $sheet = $file->getActiveSheet();
+
+        $categoriesArray = array();
+        $rowIndex = 1;
+        $columnIndex = 0;
+
+        while ($sheet->cellExistsByColumnAndRow($columnIndex, $rowIndex)) {
+            $categoryName = $sheet
+                ->getCellByColumnAndRow($columnIndex, $rowIndex)
+                ->getOldCalculatedValue();
+            $categoriesArray[] = $categoryName;
+            $rowIndex++;
+            if (!$sheet->cellExistsByColumnAndRow($columnIndex, $rowIndex)) {
+                $columnIndex++;
+                $rowIndex = 1;
+            }
+        }
+
+        $categories = $this
+            ->em
+            ->getRepository('EnmashStoreBundle:Category')
+            ->findAll();
+
+        foreach ($categories as $category) {
+            /* @var $category Category */
+            if (!in_array($category->getName(), $categoriesArray)) {
+                $this->em->remove($category);
+            }
+        }
+
+        $this->em->flush();
+
+    }
+
+    public function importManufacturers(\PHPExcel $file = null) {
+        if (!$file) {
+            $file = $this->getFile();
+        }
+
+        $file->setActiveSheetIndexByName(self::MANUFACTURERS_LIST_NAME);
+        $sheet = $file->getActiveSheet();
+
+        $manufactorersRepository = $this->em->getRepository('EnmashStoreBundle:Manufacturer');
+        $rowIndex = 2;
+        while ($sheet->cellExistsByColumnAndRow(self::MANUFACTURERS_NAME_COLUMN, $rowIndex)) {
+            $manufactorerTitle = $sheet
+                ->getCellByColumnAndRow(self::MANUFACTURERS_NAME_COLUMN, $rowIndex)
+                ->getValue();
+
+            $manufacturer = $manufactorersRepository
+                ->findOneByName($manufactorerTitle);
+
+            if (!$manufacturer) {
+                $manufacturer = new Manufacturer();
+                $manufacturer->setName($manufactorerTitle);
+
+                $manufacturerSite = $sheet
+                    ->getCellByColumnAndRow(self::MANUFACTURERS_SITE_COLUMN, $rowIndex)
+                    ->getValue();
+                $manufacturer->setWebsite($manufacturerSite);
+
+                $this->em->persist($manufacturer);
+            }
+            $rowIndex++;
+        }
+
+        $this->em->flush();
+
+    }
+
+    public function removeUnusedManufacturers(\PHPExcel $file = null) {
+        if (!$file) {
+            $file = $this->getFile();
+        }
+
+        $file->setActiveSheetIndexByName(self::MANUFACTURERS_LIST_NAME);
+        $sheet = $file->getActiveSheet();
+
+        $manufacturersArray = array();
+        $rowIndex = 2;
+        while ($sheet->cellExistsByColumnAndRow(self::MANUFACTURERS_NAME_COLUMN, $rowIndex)) {
+            $manufacturerName = $sheet
+                ->getCellByColumnAndRow(self::MANUFACTURERS_NAME_COLUMN, $rowIndex);
+            $manufacturersArray[] = $manufacturerName;
+            $rowIndex++;
+        }
+
+        $manufacturers = $this
+            ->em
+            ->getRepository('EnmashStoreBundle:Manufacturer')
+            ->findAll();
+
+        foreach ($manufacturers as $manufacturer) {
+            /* @var $manufacturer Manufacturer */
+            if (!in_array($manufacturer->getName(), $manufacturersArray)) {
+                $this->em->remove($manufacturer);
+            }
+        }
+
+        $this->em->flush();
 
     }
 
@@ -197,6 +474,8 @@ class CatalogImporter {
 
         }
 
+        $this->importAnalogsAndSimilarGoods($file);
+
     }
 
     protected function getPhoto($fileName) {
@@ -232,204 +511,6 @@ class CatalogImporter {
 
     }
 
-    public function removeUnusedManufacturers(\PHPExcel $file = null) {
-        if (!$file) {
-            $file = $this->getFile();
-        }
-
-        $file->setActiveSheetIndexByName(self::MANUFACTURERS_LIST_NAME);
-        $sheet = $file->getActiveSheet();
-
-        $manufacturersArray = array();
-        $rowIndex = 2;
-        while ($sheet->cellExistsByColumnAndRow(self::MANUFACTURERS_NAME_COLUMN, $rowIndex)) {
-            $manufacturerName = $sheet
-                ->getCellByColumnAndRow(self::MANUFACTURERS_NAME_COLUMN, $rowIndex);
-            $manufacturersArray[] = $manufacturerName;
-            $rowIndex++;
-        }
-
-        $manufacturers = $this
-            ->em
-            ->getRepository('EnmashStoreBundle:Manufacturer')
-            ->findAll();
-
-        foreach ($manufacturers as $manufacturer) {
-            /* @var $manufacturer Manufacturer */
-            if (!in_array($manufacturer->getName(), $manufacturersArray)) {
-                $this->em->remove($manufacturer);
-            }
-        }
-
-        $this->em->flush();
-
-    }
-
-    public function importCategories(\PHPExcel $file = null) {
-        if (!$file) {
-            $file = $this->getFile();
-        }
-
-        $this->importFirstLevelTree($file);
-        $this->importSubLevelCategories($file, self::TREE_LEVEL_2_LIST_NAME);
-        $this->importSubLevelCategories($file, self::TREE_LEVEL_3_LIST_NAME);
-
-    }
-
-    protected function getFile() {
-        /* @var $phpExcelObject \PHPExcel */
-        try {
-            $phpExcelObject = $this
-                ->container
-                ->get('phpexcel')
-                ->createPHPExcelObject(self::PATH . self::FILENAME);
-        } catch (\Exception $ex) {
-            return null;
-        }
-
-        return $phpExcelObject;
-
-    }
-
-    private function importFirstLevelTree(\PHPExcel $file) {
-        $file->setActiveSheetIndexByName(self::TREE_LEVEL_1_LIST_NAME);
-        $sheet = $file->getActiveSheet();
-
-        $categoriesRepository = $this->em->getRepository('EnmashStoreBundle:Category');
-        $rowIndex = 2;
-        while ($sheet->cellExistsByColumnAndRow(self::TREE_LEVEL_1_CATEGORY_NAME_COLUMN, $rowIndex)) {
-            $categoryTitle = $sheet
-                ->getCellByColumnAndRow(self::TREE_LEVEL_1_CATEGORY_NAME_COLUMN, $rowIndex)
-                ->getValue();
-            /* @var $category \Enmash\Bundle\StoreBundle\Entity\Category */
-            $category = $categoriesRepository->findByName($categoryTitle);
-            if (!$category) {
-                $category = new Category();
-                $category->setName($categoryTitle);
-                $this->em->persist($category);
-            }
-            $rowIndex++;
-        }
-        $this->em->flush();
-    }
-
-    private function importSubLevelCategories(\PHPExcel $file, $levelSheetName) {
-        if (!$file) {
-            $file = $this->getFile();
-        }
-
-        $file->setActiveSheetIndexByName($levelSheetName);
-        $sheet = $file->getActiveSheet();
-
-        $categoryRepository = $this->em->getRepository('EnmashStoreBundle:Category');
-        $rowIndex = 2;
-
-        while($sheet->cellExistsByColumnAndRow(self::TREE_SUBLEVEL_CATEGORY_NAME_COLUMN, $rowIndex)) {
-
-            $categoryTitle = $sheet
-                ->getCellByColumnAndRow(self::TREE_SUBLEVEL_CATEGORY_NAME_COLUMN, $rowIndex)
-                ->getValue();
-
-            $parentCategoryTitle = $sheet
-                ->getCellByColumnAndRow(self::TREE_SUBLEVEL_PARENT_CATEGORY_NAME_COLUMN, $rowIndex)
-                ->getValue();
-            $parentCategory = $categoryRepository
-                ->findOneByName($parentCategoryTitle);
-            if (!$parentCategory) {
-                throw new NotFoundHttpException('Parent category for ' . $categoryTitle . ' not found');
-            }
-
-            $category = $categoryRepository
-                ->findOneByName($categoryTitle);
-            if (!$category) {
-                $category = new Category();
-                $category->setName($categoryTitle);
-            }
-            $category->setParentCategory($parentCategory);
-            $this->em->persist($category);
-
-            $rowIndex++;
-        }
-
-        $this->em->flush();
-    }
-
-    public function importManufacturers(\PHPExcel $file = null) {
-        if (!$file) {
-            $file = $this->getFile();
-        }
-
-        $file->setActiveSheetIndexByName(self::MANUFACTURERS_LIST_NAME);
-        $sheet = $file->getActiveSheet();
-
-        $manufactorersRepository = $this->em->getRepository('EnmashStoreBundle:Manufacturer');
-        $rowIndex = 2;
-        while ($sheet->cellExistsByColumnAndRow(self::MANUFACTURERS_NAME_COLUMN, $rowIndex)) {
-            $manufactorerTitle = $sheet
-                ->getCellByColumnAndRow(self::MANUFACTURERS_NAME_COLUMN, $rowIndex)
-                ->getValue();
-
-            $manufacturer = $manufactorersRepository
-                ->findOneByName($manufactorerTitle);
-
-            if (!$manufacturer) {
-                $manufacturer = new Manufacturer();
-                $manufacturer->setName($manufactorerTitle);
-
-                $manufacturerSite = $sheet
-                    ->getCellByColumnAndRow(self::MANUFACTURERS_SITE_COLUMN, $rowIndex)
-                    ->getValue();
-                $manufacturer->setWebsite($manufacturerSite);
-
-                $this->em->persist($manufacturer);
-            }
-            $rowIndex++;
-        }
-
-        $this->em->flush();
-
-    }
-
-    public function removeUnusedCategories(\PHPExcel $file = null) {
-        if (!$file) {
-            $file = $this->getFile();
-        }
-
-        $file->setActiveSheetIndexByName(self::TREE_FULL_LIST);
-        $sheet = $file->getActiveSheet();
-
-        $categoriesArray = array();
-        $rowIndex = 1;
-        $columnIndex = 0;
-
-        while ($sheet->cellExistsByColumnAndRow($columnIndex, $rowIndex)) {
-            $categoryName = $sheet
-                ->getCellByColumnAndRow($columnIndex, $rowIndex)
-                ->getOldCalculatedValue();
-            $categoriesArray[] = $categoryName;
-            $rowIndex++;
-            if (!$sheet->cellExistsByColumnAndRow($columnIndex, $rowIndex)) {
-                $columnIndex++;
-                $rowIndex = 1;
-            }
-        }
-
-        $categories = $this
-            ->em
-            ->getRepository('EnmashStoreBundle:Category')
-            ->findAll();
-
-        foreach ($categories as $category) {
-            /* @var $category Category */
-            if (!in_array($category->getName(), $categoriesArray)) {
-                $this->em->remove($category);
-            }
-        }
-
-        $this->em->flush();
-
-    }
-
     protected function getConsoleApp() {
         $app = new Application($this->kernel);
         $app->setAutoExit(false);
@@ -448,6 +529,59 @@ class CatalogImporter {
         $error = $app->run($input, null);
 
         return $error;
+    }
+
+    public function removeUnusedStuff(\PHPExcel $file = null) {
+        if (!$file) {
+            $file = $this->getFile();
+        }
+
+        $this->removeUnusedGoods($file);
+        $this->removeUnusedCategories($file);
+        $this->removeUnusedManufacturers($file);
+    }
+
+    public function removeUnusedGoods(\PHPExcel $file = null) {
+        if (!$file) {
+            $file = $this->getFile();
+        }
+
+        $file->setActiveSheetIndexByName(self::GOODS_LIST_NAME);
+        $sheet = $file->getActiveSheet();
+
+        $goodsSkuArray = array();
+        $rowIndex = 2;
+        while ($sheet->cellExistsByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex)) {
+            $goodSku = $sheet
+                ->getCellByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex);
+            $goodsSkuArray[] = $goodSku;
+            $rowIndex++;
+        }
+
+        $goods = $this
+            ->em
+            ->getRepository('EnmashStoreBundle:Product')
+            ->findAll();
+
+        foreach ($goods as $good) {
+            /* @var $good Product  */
+            if (!in_array($good->getSku(), $goodsSkuArray)) {
+                $this->em->remove($good);
+            }
+        }
+        $this->em->flush();
+
+    }
+
+    public function importCategories(\PHPExcel $file = null) {
+        if (!$file) {
+            $file = $this->getFile();
+        }
+
+        $this->importFirstLevelTree($file);
+        $this->importSubLevelCategories($file, self::TREE_LEVEL_2_LIST_NAME);
+        $this->importSubLevelCategories($file, self::TREE_LEVEL_3_LIST_NAME);
+
     }
 
 } 

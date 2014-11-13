@@ -38,6 +38,7 @@ class CatalogImportCommand extends ContainerAwareCommand {
     const OPTION_MODE_MANUFACTURERS = 'manufacturers';
     const OPTION_MODE_CATEGORIES = 'categories';
     const OPTION_MODE_GOODS = 'goods';
+    const OPTION_MODE_CLEAR = 'clear';
 
     private $em;
     /* @var $catalogImporter CatalogImporter */
@@ -51,7 +52,7 @@ class CatalogImportCommand extends ContainerAwareCommand {
                 'mode',
                 'm',
                 InputArgument::OPTIONAL,
-                'Import type: ' . self::OPTION_MODE_ALL . '|' . self::OPTION_MODE_MANUFACTURERS . '|' . self::OPTION_MODE_CATEGORIES . '|' . self::OPTION_MODE_GOODS,
+                'Import type: ' . self::OPTION_MODE_ALL . '|' . self::OPTION_MODE_MANUFACTURERS . '|' . self::OPTION_MODE_CATEGORIES . '|' . self::OPTION_MODE_GOODS . '|' . self::OPTION_MODE_CLEAR,
                 self::OPTION_MODE_ALL
             )
         ;
@@ -103,6 +104,12 @@ class CatalogImportCommand extends ContainerAwareCommand {
                 $this
                     ->catalogImporter
                     ->importGoods($file);
+                break;
+            case self::OPTION_MODE_CLEAR:
+                $output->writeln('Removing unused stuff');
+                $this
+                    ->catalogImporter
+                    ->removeUnusedStuff($file);
                 break;
             default:
                 $output->writeln('Invalid mode');
