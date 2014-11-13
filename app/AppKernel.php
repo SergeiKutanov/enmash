@@ -41,8 +41,7 @@ class AppKernel extends Kernel
             new \Sonata\FormatterBundle\SonataFormatterBundle(),
 
             //php excel helpers
-            new \Liuggio\ExcelBundle\LiuggioExcelBundle()
-            new \Sonata\FormatterBundle\SonataFormatterBundle(),
+            new \Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new \CoopTilleuls\Bundle\CKEditorSonataMediaBundle\CoopTilleulsCKEditorSonataMediaBundle()
         );
 

@@ -35,7 +35,7 @@ class Category
     private $products;
 
     /**
-     * @OneToMany(targetEntity="Category", mappedBy="parentCategory", cascade={"persist", "remove"})
+     * @OneToMany(targetEntity="Category", mappedBy="parentCategory", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $subCategories;
 

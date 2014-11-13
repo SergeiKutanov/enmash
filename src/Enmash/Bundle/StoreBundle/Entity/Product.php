@@ -39,7 +39,7 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="mansku", type="string", length=15)
+     * @ORM\Column(name="mansku", type="string", length=15, nullable=true)
      */
     private $mansku;
 

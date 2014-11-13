@@ -13,6 +13,7 @@ use Enmash\Bundle\StoreBundle\Component\CatalogImporter;
 use Enmash\Bundle\StoreBundle\Entity\Manufacturer;
 use Enmash\Bundle\StoreBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use PHPExcel;
@@ -33,28 +34,30 @@ class CatalogImportCommand extends ContainerAwareCommand {
     const PRODUCT_MAN_SKU = 3;
     const PRODUCT_MAN = 4;
 
+    const OPTION_MODE_ALL = 'all';
+    const OPTION_MODE_MANUFACTURERS = 'manufacturers';
+    const OPTION_MODE_CATEGORIES = 'categories';
+    const OPTION_MODE_GOODS = 'goods';
+
     private $em;
+    /* @var $catalogImporter CatalogImporter */
+    private $catalogImporter;
 
     protected function configure() {
         $this
             ->setName('catalog:import')
-            ->setDescription('Import catalog from excel file');
+            ->setDescription('Import catalog from excel file')
+            ->addOption(
+                'mode',
+                'm',
+                InputArgument::OPTIONAL,
+                'Import type: ' . self::OPTION_MODE_ALL . '|' . self::OPTION_MODE_MANUFACTURERS . '|' . self::OPTION_MODE_CATEGORIES . '|' . self::OPTION_MODE_GOODS,
+                self::OPTION_MODE_ALL
+            )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-
-        //test stuff
-        /* @var $catalogImporter CatalogImporter */
-        $catalogImporter = $this
-            ->getContainer()
-            ->get('enmash_store.catalog_importer');
-        $catalogImporter->importGoods(); die();
-
-        $this->em = $this->getContainer()
-            ->get('doctrine')
-            ->getManager();
-
-        $output->write('Import started' . PHP_EOL);
 
         $file = $this->getFile();
 
@@ -64,12 +67,48 @@ class CatalogImportCommand extends ContainerAwareCommand {
             );
         }
 
-        $this->parseManufacturers($file);
+        $this->em = $this->getContainer()
+            ->get('doctrine')
+            ->getManager();
 
-        $this->parseGoods($file);
+        $this->catalogImporter = $this
+            ->getContainer()
+            ->get('enmash_store.catalog_importer');
 
+        $mode = $input->getOption('mode');
+        switch ($mode) {
+            case self::OPTION_MODE_ALL:
+                $output->writeln('Full catalog import started');
+                $output->writeln('Manufacturers catalog import started');
+                $this->catalogImporter->importManufacturers($file);
+                $output->writeln('Categories catalog import started');
+                $this->catalogImporter->importCategories($file);
+                $output->writeln('Goods catalog import started');
+                $this->catalogImporter->importGoods($file);
+                break;
+            case self::OPTION_MODE_MANUFACTURERS:
+                $output->writeln('Manufacturers catalog import started');
+                $this
+                    ->catalogImporter
+                    ->importManufacturers($file);
+                break;
+            case self::OPTION_MODE_CATEGORIES:
+                $output->writeln('Categories catalog import started');
+                $this
+                    ->catalogImporter
+                    ->importCategories($file);
+                break;
+            case self::OPTION_MODE_GOODS:
+                $output->writeln('Goods catalog import started');
+                $this
+                    ->catalogImporter
+                    ->importGoods($file);
+                break;
+            default:
+                $output->writeln('Invalid mode');
+                break;
+        }
         $output->writeln('Import is done');
-
     }
 
     protected function getFile() {
@@ -84,102 +123,6 @@ class CatalogImportCommand extends ContainerAwareCommand {
         }
 
         return $phpExcelObject;
-
-//
-//        var_dump($phpExcelObject->getActiveSheet()->getCellByColumnAndRow(0, 1)->getValue());
-
-    }
-
-    protected function parseLine(\PHPExcel_Worksheet $sheet, $lineNumber) {
-        try {
-
-            $productSku = $sheet
-                ->getCellByColumnAndRow(self::PRODUCT_CODE_COLUMN, $lineNumber)
-                ->getValue();
-
-            $product = $this->em
-                ->getRepository('EnmashStoreBundle:Product')
-                ->findOneBySku($productSku);
-
-            if (!$product) {
-                $product = new Product();
-                $product->setSku($productSku);
-            }
-
-            $product->setAcronym(
-                $sheet
-                    ->getCellByColumnAndRow(self::PRODUCT_ACRONYM_COLUMN, $lineNumber)
-                    ->getValue()
-            );
-
-            $product->setMansku(
-                $sheet
-                    ->getCellByColumnAndRow(self::PRODUCT_MAN_SKU, $lineNumber)
-                    ->getValue()
-            );
-
-            $manufacturerName = $sheet
-                ->getCellByColumnAndRow(self::PRODUCT_MAN, $lineNumber)
-                ->getValue();
-            $manufacturer = $this->em
-                ->getRepository('EnmashStoreBundle:Manufacturer')
-                ->findOneByName($manufacturerName);
-            if (!$manufacturer) {
-                throw new \Exception("Manufacturer for line: " . $lineNumber . ' not found');
-            }
-
-        } catch (\Exception $ex) {
-            return null;
-        }
-
-        $this->em->persist($product);
-        $this->em->flush();
-
-        return $product;
-    }
-
-    protected function parseManufacturers(PHPExcel $file) {
-        $file->setActiveSheetIndexByName(self::MANUFACTURERS_LIST_NAME);
-
-        $sheet = $file->getActiveSheet();
-
-        $manufactorersRepository = $this->em->getRepository('EnmashStoreBundle:Manufacturer');
-        $rowIndex = 2;
-        while ($sheet->cellExistsByColumnAndRow(self::MANUFACTURERS_NAME_COLUMN, $rowIndex)) {
-            $manufactorerTitle = $sheet
-                ->getCellByColumnAndRow(self::MANUFACTURERS_NAME_COLUMN, $rowIndex)
-                ->getValue();
-
-            $manufacturer = $manufactorersRepository
-                ->findOneByName($manufactorerTitle);
-
-            if (!$manufacturer) {
-                $manufacturer = new Manufacturer();
-                $manufacturer->setName($manufactorerTitle);
-
-                $manufacturerSite = $sheet
-                    ->getCellByColumnAndRow(self::MANUFACTURERS_SITE_COLUMN, $rowIndex)
-                    ->getValue();
-                $manufacturer->setWebsite($manufacturerSite);
-
-                $this->em->persist($manufacturer);
-            }
-            $rowIndex++;
-        }
-
-        $this->em->flush();
-
-    }
-
-    private function parseGoods(PHPExcel $file) {
-        $file->setActiveSheetIndexByName(self::GOODS_LIST_NAME);
-
-        $rowIndex = 2;
-        $goodsSheet = $file->getActiveSheet();
-        while ($goodsSheet->cellExistsByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex)) {
-            $this->parseLine($goodsSheet, $rowIndex);
-            $rowIndex++;
-        }
 
     }
 
