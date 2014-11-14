@@ -23,12 +23,11 @@
         <li data-target="#carousel" data-slide-to="0" class="active"></li>
         <li data-target="#carousel" data-slide-to="1"></li>
         <li data-target="#carousel" data-slide-to="2"></li>
-        <li data-target="#carousel" data-slide-to="3"></li>
     </ol>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
-        <div class="item active full-screen" style="background-image: url('{{ asset("bundles/enmashpages/images/jumbo1b.jpg") }}')">
+        <div class="item active full-screen" style="background-image: url('{{ asset("bundles/enmashpages/images/jumbo1btest.jpg") }}')">
             <div class="curtain"></div>
             <div class="container">
                 {% image '@EnmashPagesBundle/Resources/public/images/logo_energomash.png' %}
@@ -36,12 +35,12 @@
                 {% endimage %}
             </div>
             <div class="carousel-caption">
-                <p>Сеть магазинов <span>Электро<span class="inner-logo"></span>товары</span><br>
+                <p>Сеть магазинов <span class="logo-pic"></span><br>
                 20 магазинов и филиалов<br>
                 20 лет на рынке электротехники</p>
             </div>
         </div>
-        <div class="item full-screen" style="background-image: url('{{ asset("bundles/enmashpages/images/jumbo2b.jpg") }}')">
+        <div class="item full-screen" style="background-image: url('{{ asset("bundles/enmashpages/images/jumbo2btest.jpg") }}')">
             <div class="container">
                 {% image '@EnmashPagesBundle/Resources/public/images/title.png' %}
                 <img src="{{ asset_url }}" alt="Логотип Энергомаш" class="jumbo-logo"/>
@@ -54,7 +53,7 @@
                 </p>
             </div>
         </div>
-        <div class="item full-screen" style="background-image: url('{{ asset("bundles/enmashpages/images/jumbo3b.jpg") }}')">
+        <div class="item full-screen" style="background-image: url('{{ asset("bundles/enmashpages/images/jumbo3btest.jpg") }}')">
             <div class="container">
                 {% image '@EnmashPagesBundle/Resources/public/images/logo_energomash.png' %}
                 <img src="{{ asset_url }}" alt="Логотип Энергомаш" class="jumbo-logo"/>
@@ -65,16 +64,6 @@
                     Населению и для предприятий<br>
                     Наличный и безналичный расчет
                 </p>
-            </div>
-        </div>
-        <div class="item full-screen" style="background-image: url('{{ asset("bundles/enmashpages/images/jumbo4b.jpg") }}')">
-            <div class="container">
-                {% image '@EnmashPagesBundle/Resources/public/images/logo_energomash.png' %}
-                <img src="{{ asset_url }}" alt="Логотип Энергомаш" class="jumbo-logo"/>
-                {% endimage %}
-            </div>
-            <div class="carousel-caption">
-                <p>20 лет на рынке электротехники</p>
             </div>
         </div>
     </div>
