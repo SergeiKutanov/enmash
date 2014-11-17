@@ -253,7 +253,15 @@ div.go-down:hover span{
 }
 
 #carousel .carousel-caption {
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(51, 57, 153, .8);
+    text-shadow: 2px 2px #555;
+    box-shadow: 5px 5px 0px 0px rgba(51, 57, 153, .9);;
+    top: 10px;
+    bottom: initial;
+    left: 10px;
+    color: #fdda0a;
+    /*max-width: 30%; */
+    right: initial;
 }
 
 .jumbo-logo {
