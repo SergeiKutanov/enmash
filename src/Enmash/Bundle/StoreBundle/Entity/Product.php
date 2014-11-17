@@ -2,6 +2,7 @@
 
 namespace Enmash\Bundle\StoreBundle\Entity;
 
+use Application\Sonata\MediaBundle\Entity\Gallery;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne;
 
@@ -62,27 +63,16 @@ class Product
      */
     private $manufacturer;
 
-    /**1
-     * @var StoreImage
+    /**
+     * @var Gallery
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Gallery", cascade={"persist"}, fetch="LAZY")
      */
-    protected $productImages;
+    private $productImages;
 
     /**
      * @ORM\OneToMany(targetEntity="ProductParameter", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $parameters;
-
-//    /**
-//     * @ORM\PrePersist
-//     * @ORM\PreUpdate
-//     */
-//    public function restoreRelations() {
-//        foreach ($this->getParameters() as $parameter) {
-//            /* @var $parameter ProductParameter */
-//            $parameter->setProduct($this);
-//        }
-//    }
 
     /**
      * @ORM\ManyToMany(targetEntity="Enmash\Bundle\PagesBundle\Entity\Article", mappedBy="products")
@@ -124,6 +114,18 @@ class Product
     }
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->sku = 0000;
+        $this->mansku = 0000;
+        $this->name = 'Название товара';
+        $this->acronym = 'Сокр. назв. тов.';
+        $this->parameters = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -131,16 +133,6 @@ class Product
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Get sku
-     *
-     * @return string
-     */
-    public function getSku()
-    {
-        return $this->sku;
     }
 
     /**
@@ -157,13 +149,13 @@ class Product
     }
 
     /**
-     * Get acronym
+     * Get sku
      *
-     * @return string
+     * @return string 
      */
-    public function getAcronym()
+    public function getSku()
     {
-        return $this->acronym;
+        return $this->sku;
     }
 
     /**
@@ -180,13 +172,36 @@ class Product
     }
 
     /**
-     * Get mansku
+     * Get acronym
      *
-     * @return string
+     * @return string 
      */
-    public function getMansku()
+    public function getAcronym()
     {
-        return $this->mansku;
+        return $this->acronym;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Product
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -203,13 +218,13 @@ class Product
     }
 
     /**
-     * Get category
+     * Get mansku
      *
-     * @return \Enmash\Bundle\StoreBundle\Entity\Category
+     * @return string 
      */
-    public function getCategory()
+    public function getMansku()
     {
-        return $this->category;
+        return $this->mansku;
     }
 
     /**
@@ -226,9 +241,19 @@ class Product
     }
 
     /**
-     * Set manufacterer
+     * Get category
      *
-     * @param \Enmash\Bundle\StoreBundle\Entity\Manufacturer $manufacterer
+     * @return \Enmash\Bundle\StoreBundle\Entity\Category 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set manufacturer
+     *
+     * @param \Enmash\Bundle\StoreBundle\Entity\Manufacturer $manufacturer
      * @return Product
      */
     public function setManufacturer(\Enmash\Bundle\StoreBundle\Entity\Manufacturer $manufacturer = null)
@@ -239,47 +264,13 @@ class Product
     }
 
     /**
-     * Get manufacterer
+     * Get manufacturer
      *
      * @return \Enmash\Bundle\StoreBundle\Entity\Manufacturer 
      */
     public function getManufacturer()
     {
         return $this->manufacturer;
-    }
-
-    /**
-     * Set productImages
-     *
-     * @param \Application\Sonata\MediaBundle\Entity\Gallery $productImages
-     * @return Product
-     */
-    public function setProductImages(\Application\Sonata\MediaBundle\Entity\Gallery $productImages = null)
-    {
-        $this->productImages = $productImages;
-
-        return $this;
-    }
-
-    /**
-     * Get productImages
-     *
-     * @return \Application\Sonata\MediaBundle\Entity\Gallery 
-     */
-    public function getProductImages()
-    {
-        return $this->productImages;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->sku = 0000;
-        $this->mansku = 0000;
-        $this->name = 'Название товара';
-        $this->acronym = 'Сокр. назв. тов.';
-        $this->parameters = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -415,25 +406,25 @@ class Product
     }
 
     /**
-     * Set name
+     * Set productImages
      *
-     * @param string $name
+     * @param \Application\Sonata\MediaBundle\Entity\Gallery $productImages
      * @return Product
      */
-    public function setName($name)
+    public function setProductImages(\Application\Sonata\MediaBundle\Entity\Gallery $productImages = null)
     {
-        $this->name = $name;
+        $this->productImages = $productImages;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get productImages
      *
-     * @return string
+     * @return \Application\Sonata\MediaBundle\Entity\Gallery 
      */
-    public function getName()
+    public function getProductImages()
     {
-        return $this->name;
+        return $this->productImages;
     }
 }

@@ -38,12 +38,13 @@ class CatalogImporter {
 
     const PRODUCT_CODE_COLUMN = 0;
     const PRODUCT_CATEGORY_COLUMN = 1;
-    const PRODUCT_ACRONYM_COLUMN = 2;
-    const PRODUCT_MAN_SKU = 3;
-    const PRODUCT_MAN = 4;
-    const PRODUCT_ANALOGS_COLUMN = 5;
-    const PRODUCT_SIMILAR_COLUMN = 6;
-    const PRODUCT_PHOTO = 7;
+    const PRODUCT_NAME_COLUMN = 2;
+    const PRODUCT_ACRONYM_COLUMN = 3;
+    const PRODUCT_MAN_SKU = 4;
+    const PRODUCT_MAN = 5;
+    const PRODUCT_ANALOGS_COLUMN = 6;
+    const PRODUCT_SIMILAR_COLUMN = 7;
+    const PRODUCT_PHOTO = 8;
 
 
     const TREE_LEVEL_1_CATEGORY_NAME_COLUMN = 0;
@@ -393,6 +394,12 @@ class CatalogImporter {
                 throw new NotFoundHttpException('Category - ' . $productCategoryName . ' - for product - ' . $product->getSku() . ' - not found.');
             }
             $product->setCategory($category);
+
+            //product name
+            $productName = $sheet
+                ->getCellByColumnAndRow(self::PRODUCT_NAME_COLUMN, $rowIndex)
+                ->getValue();
+            $product->setName($productName);
 
             //product acronym
             $acronym = $sheet

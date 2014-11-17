@@ -63,7 +63,7 @@ class ProductAdmin extends Admin
             )
             ->add('sku')
             ->add('mansku')
-//            ->add('name')
+            ->add('name')
             ->add('acronym')
             ->add(
                 'parameters',
