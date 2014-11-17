@@ -63,6 +63,7 @@ class ProductAdmin extends Admin
             )
             ->add('sku')
             ->add('mansku')
+//            ->add('name')
             ->add('acronym')
             ->add(
                 'parameters',
@@ -84,7 +85,8 @@ class ProductAdmin extends Admin
                 'productImages',
                 'sonata_type_model_list',
                 array(
-                    'required'  => false
+                    'required'  => false,
+                    'by_reference' => false
                 ),
                 array(
                     'link_parameters'   => array(
@@ -93,10 +95,20 @@ class ProductAdmin extends Admin
                 )
             )
             ->add(
-                'analogs'
+                'analogs',
+                null,
+                array(
+                    'required'  => false,
+                    'by_reference' => false
+                )
             )
             ->add(
-                'similars'
+                'similars',
+                null,
+                array(
+                    'required'  => false,
+                    'by_reference' => false
+                )
             )
         ;
     }

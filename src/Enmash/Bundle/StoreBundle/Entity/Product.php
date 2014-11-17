@@ -39,6 +39,13 @@ class Product
     /**
      * @var string
      *
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="mansku", type="string", length=15, nullable=true)
      */
     private $mansku;
@@ -55,7 +62,7 @@ class Product
      */
     private $manufacturer;
 
-    /**
+    /**1
      * @var StoreImage
      * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Gallery", cascade={"persist"}, fetch="LAZY")
      */
@@ -405,5 +412,28 @@ class Product
     public function getSimilars()
     {
         return $this->similars;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Product
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }
