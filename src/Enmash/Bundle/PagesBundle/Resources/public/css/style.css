@@ -258,7 +258,7 @@ div.go-down:hover span{
     box-shadow: 5px 5px 0px 0px rgba(51, 57, 153, .9);;
     top: 10px;
     bottom: initial;
-    left: 10px;
+    /*left: 10px;*/
     color: #fdda0a;
     /*max-width: 30%; */
     right: initial;
