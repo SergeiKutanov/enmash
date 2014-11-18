@@ -5,7 +5,7 @@
             <h3>{{ banner.name }}</h3>
             <p>{{ banner.content | raw}}</p>
             {% if banner.additionalInfoFile %}
-            <p class="text-right"><a href="{% path banner.additionalInfoFile, 'reference' %}">Дополнительная информация</a></p>
+            <p class="text-right"><a href="{% path banner.additionalInfoFile, 'reference' %}" target="_blank">Дополнительная информация</a></p>
             {% endif %}
         </div>
         <div class="col-xs-12 col-md-6 full-screen-img" style="background-image: url({% path banner.photo, 'big' %})"></div>

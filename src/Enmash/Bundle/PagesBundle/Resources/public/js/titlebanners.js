@@ -11,18 +11,19 @@
             e.preventDefault();
             var sectionId = $(e.target).parent().attr('data-section-id');
             if (sectionId) {
-                var section = $(this).find('#bannersection' + sectionId);
+                var section = $(this).parent().find('#bannersection' + sectionId);
                 if (section) {
                     $(section).fadeIn();
                 }
             }
         });
 
-        this.$items.find('div.close-btn').parent().each(function(i, v){
-            $(v).on('click', function(){
+        this.$items.each(function(i, v){
+            $(v).parent().find('div.close-btn').on('click', function(e){
                 $(this).parent().fadeOut();
             });
         });
+
     }
 
     function Plugin(option) {
