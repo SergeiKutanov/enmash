@@ -63,6 +63,12 @@ class Banner
      */
     protected $photo;
 
+    /**
+     * @var \Application\Sonata\MediaBundle\Entity\Media
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"persist"}, fetch="LAZY")
+     */
+    protected $additionalInfoFile;
+
     public function __construct() {
         $this->startDate = new \DateTime();
         $this->endDate = new \DateTime();
@@ -211,5 +217,28 @@ class Banner
     public function getPhoto()
     {
         return $this->photo;
+    }
+
+    /**
+     * Set additionalInfoFile
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Media $additionalInfoFile
+     * @return Banner
+     */
+    public function setAdditionalInfoFile(\Application\Sonata\MediaBundle\Entity\Media $additionalInfoFile = null)
+    {
+        $this->additionalInfoFile = $additionalInfoFile;
+
+        return $this;
+    }
+
+    /**
+     * Get additionalInfoFile
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     */
+    public function getAdditionalInfoFile()
+    {
+        return $this->additionalInfoFile;
     }
 }

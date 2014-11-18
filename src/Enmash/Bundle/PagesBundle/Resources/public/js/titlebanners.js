@@ -6,7 +6,7 @@
     }
 
     TitleBanners.prototype.init = function() {
-        this.$items = this.$element.find('.item');
+        this.$items = this.$element.find('.item a.banner-opener');
         this.$items.on('click',  function(e){
             e.preventDefault();
             var sectionId = $(e.target).parent().attr('data-section-id');
@@ -18,7 +18,7 @@
             }
         });
 
-        this.$items.find('div.close-btn').each(function(i, v){
+        this.$items.find('div.close-btn').parent().each(function(i, v){
             $(v).on('click', function(){
                 $(this).parent().fadeOut();
             });

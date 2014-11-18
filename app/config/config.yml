@@ -145,6 +145,13 @@ sonata_media:
                 small: { width: 100 , quality: 70}
                 big:   { width: 500 , quality: 70}
 
+        bannerinfofile:
+            providers:
+                - sonata.media.provider.file
+            formats:
+                small: { width: 100 , quality: 70}
+                big:   { width: 500 , quality: 70}
+
         banner:
             providers:
                 - sonata.media.provider.image
@@ -170,20 +177,20 @@ sonata_media:
                 big:   { width: 500 , quality: 70}
 
         articleimages:
-                    providers:
-                        - sonata.media.provider.image
+            providers:
+                - sonata.media.provider.image
 
-                    formats:
-                        small: { width: 100 , quality: 70}
-                        big:   { width: 500 , quality: 70}
+            formats:
+                small: { width: 100 , quality: 70}
+                big:   { width: 500 , quality: 70}
 
         specialoffer:
-                    providers:
-                        - sonata.media.provider.image
+            providers:
+                - sonata.media.provider.image
 
-                    formats:
-                        small: { width: 250 , quality: 70}
-                        big:   { width: 800 , quality: 70}
+            formats:
+                small: { width: 250 , quality: 70}
+                big:   { width: 800 , quality: 70}
 
     cdn:
         server:

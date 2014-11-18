@@ -76,6 +76,15 @@ class BannerAdmin extends Admin
                     'required' => false
                 )
             )
+            ->add(
+                'additionalInfoFile',
+                'sonata_media_type',
+                array(
+                    'provider' => 'sonata.media.provider.file',
+                    'context'  => 'bannerinfofile',
+                    'required' => false
+                )
+            )
         ;
     }
 
