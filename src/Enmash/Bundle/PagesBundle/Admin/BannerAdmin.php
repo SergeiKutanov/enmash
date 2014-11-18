@@ -16,9 +16,7 @@ class BannerAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('id')
             ->add('name')
-            ->add('content')
             ->add('isPublished')
             ->add('startDate')
             ->add('endDate')
@@ -72,7 +70,7 @@ class BannerAdmin extends Admin
                 'sonata_media_type',
                 array(
                     'provider' => 'sonata.media.provider.image',
-                    'context'  => 'banner',
+                    'context'  => 'baner',
                     'required' => false
                 )
             )
