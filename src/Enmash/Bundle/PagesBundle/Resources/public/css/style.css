@@ -253,10 +253,11 @@ div.go-down:hover span{
 }
 
 #carousel .carousel-caption {
-    background-color: rgba(51, 57, 153, .8);
+    background-color: rgba(0, 124, 194, .7);
     text-shadow: 2px 2px #555;
-    box-shadow: 5px 5px 0px 0px rgba(51, 57, 153, .9);;
+    box-shadow: 5px 5px 0px 0px rgba(0, 124, 194, .9);
     top: 10px;
+    padding: 0;
     bottom: initial;
     /*left: 10px;*/
     color: #fdda0a;
@@ -285,7 +286,8 @@ div.go-down:hover span{
 #carousel .carousel-caption p {
     font-weight: 700;
     font-size: 1.5em;
-    padding: 20px;
+    padding: 5px;
+    margin: 0px;
 }
 
 /*---------------------about section-----------------------------*/
