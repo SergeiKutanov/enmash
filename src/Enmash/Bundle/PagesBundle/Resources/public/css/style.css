@@ -271,6 +271,17 @@ div.go-down:hover span{
     border-radius: 5px;
 }
 
+div.container.landing-map {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    bottom: 40px;
+    right: 0;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
 .logo-pic {
     display: inline-block;
     background-image: url('../images/logo_elgoods_white.png');
@@ -562,7 +573,7 @@ a.offset-anchor{
 }
 
 #about-page-content {
-    background-color: rgba(255,255,255, .5);
+    background-color: rgba(255,255,255, .8);
 }
 
 #about-page-content p {
