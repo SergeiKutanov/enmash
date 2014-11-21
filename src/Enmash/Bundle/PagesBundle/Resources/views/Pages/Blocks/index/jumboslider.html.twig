@@ -58,12 +58,12 @@
                 <p>20 филиалов и магазинов</p>
             </div>
         </div>
-        <div class="item {% if firstslide == 1 %}active{% endif %} full-screen"  style="background-image: url('{{ asset("bundles/enmashpages/images/map.jpg") }}')">
-            {#<div class="container">#}
-                {#{% image '@EnmashPagesBundle/Resources/public/images/title.png' %}#}
-                {#<img src="{{ asset_url }}" alt="Логотип Энергомаш" class="jumbo-logo"/>#}
+        <div class="item {% if firstslide == 1 %}active{% endif %} full-screen"  style="background-image: url('{{ asset("bundles/enmashpages/images/map_bg.jpg") }}')">
+            <div class="container landing-map" style="background-image: url('{{ asset("bundles/enmashpages/images/map.png") }}')">
+                {#{% image '@EnmashPagesBundle/Resources/public/images/map.png' %}#}
+                {#<img src="{{ asset_url }}" alt="Логотип Энергомаш" class="map-landing"/>#}
                 {#{% endimage %}#}
-            {#</div>#}
+            </div>
             <div class="carousel-caption">
                 <p>Тысячи изделий: от ламп до кабеля!</p>
             </div>
