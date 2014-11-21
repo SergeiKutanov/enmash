@@ -1,0 +1,17 @@
+{% extends 'knp_menu.html.twig' %}
+
+{% block root %}
+    {% set listAttributes = item.childrenAttributes %}
+    <div class="nav navbar-nav" id="catalog-menu">
+        <a href="{{ path('catalog-index-page') }}" class="border-menu">КАТАЛОГ ТОВАРОВ</a>
+        {{ block('list') -}}
+    </div>
+{% endblock %}
+
+{% block list %}
+    {% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
+        <ul class="top-level">
+            {{ block('children') }}
+        </ul>
+    {% endif %}
+{% endblock %}

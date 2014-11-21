@@ -80,7 +80,7 @@ class Product
     private $articles;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Product")
+     * @ORM\ManyToMany(targetEntity="Product", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\JoinTable(
      *      name="product_analogs",
      *      joinColumns={

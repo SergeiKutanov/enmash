@@ -34,6 +34,7 @@
         </div>
         <div class="row">
             <div class="collapse navbar-collapse">
+                {{ knp_menu_render('EnmashPagesBundle:Builder:catalogMainMenu', {'template': 'EnmashPagesBundle:Menu:topcatalogmenu.html.twig'}) }}
                 <ul class="nav navbar-nav">
                     <li {% if app.request.get('_route') == 'about-page' %}class="active"{% endif %}><a href="{{ path('about-page') }}">О КОМПАНИИ</a></li>
                     <li {% if app.request.get('_route') == 'stores-page' %}class="active"{% endif %}><a href="{{ path('stores-page') }}">МАГАЗИНЫ</a></li>

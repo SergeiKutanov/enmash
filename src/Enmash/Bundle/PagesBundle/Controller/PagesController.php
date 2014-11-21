@@ -76,13 +76,22 @@ class PagesController extends Controller{
                 )
             );
 
+        $catalog = $em
+            ->getRepository('EnmashStoreBundle:Category')
+            ->findBy(
+                array(
+                    'parentCategory'    => null
+                )
+            );
+
         return $this->render(
             'EnmashPagesBundle:Pages:index.html.twig',
             array(
                 'stores'            => $sortedStores,
                 'articles'          => $featuredArticles,
                 'cheapbannerpath'   => $cheapBannerPath,
-                'banners'           => $banners
+                'banners'           => $banners,
+                'catalog'           => $catalog
             )
         );
 

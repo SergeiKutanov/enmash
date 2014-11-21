@@ -4,6 +4,7 @@ namespace Enmash\Bundle\StoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Category
@@ -30,7 +31,13 @@ class Category
     private $name;
 
     /**
-     * @OneToMany(targetEntity="Product", mappedBy="category", cascade={"persist", "remove"})
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @OneToMany(targetEntity="Product", mappedBy="category", cascade={"persist", "remove"}, )
      */
     private $products;
 
@@ -224,5 +231,28 @@ class Category
     public function getParameters()
     {
         return $this->parameters;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Category
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

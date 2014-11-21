@@ -603,3 +603,100 @@ a.offset-anchor{
 #isotope-container .item img {
     width: 100%;
 }
+
+/* catalog menu */
+#catalog-menu a {
+    text-decoration: none;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#catalog-menu > a:first-child {
+    background-color: #007CC2;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+}
+
+#catalog-menu > a:first-child {
+    color: #fdda0a;
+    padding-right: 30px;
+    line-height: 30px;
+    display: inline-block;
+}
+
+.border-menu {
+    position: relative;
+    padding-left: 1.25em;
+}
+.border-menu:before {
+    content: "";
+    position: absolute;
+    top: 7px;
+    right: 5px;
+    width: 20px;
+    height: 17px;
+    border-top: 10px double #fdda0a;
+    border-bottom: 3px solid #fdda0a;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#catalog-menu:hover .border-menu:before {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+#catalog-menu > ul {
+    position: absolute;
+}
+
+#catalog-menu ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 10px 1px #333333;
+    padding: 10px 5px 10px 20px;
+}
+
+#catalog-menu ul li a {
+    color: #555555;
+    display: block;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+#catalog-menu ul li {
+    padding-right: 15px;
+}
+
+#catalog-menu ul li:hover > a {
+    color: #007CC2;
+}
+
+#catalog-menu ul.top-level {
+    box-shadow: 0px 5px 10px 1px #333333;
+    z-index: 99;
+    opacity: 0;
+    display: none;
+    -webkit-transition: all 0.5s ease
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#catalog-menu:hover ul.top-level {
+    opacity: 1;
+    display: block;
+}
