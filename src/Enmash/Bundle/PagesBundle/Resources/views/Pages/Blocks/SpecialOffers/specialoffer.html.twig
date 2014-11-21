@@ -1,5 +1,6 @@
 {#<div class="item" style="width: {{ offer.width }}%">#}
-<div class="item">
+<div class="col-xs-12 item">
+    <div >
     <div class="offer-image" id="links">
         <a href="{% path offer.image, 'big' %}" title="{{ offer.image.name }}" data-gallery="offer_{{ offer.id }}" >
             <img src="{% path offer.image, 'small' %}" alt="{{ offer.image.name  }}">
@@ -21,4 +22,4 @@
         <p class="asterisk">*Распространяется только в магазине <a href="{{ path('stores-page') }}#store_{{ offer.store.id }}">{{ offer.store }}</a></p>
     </div>
     {% endif %}
-</div>
+</div></div>

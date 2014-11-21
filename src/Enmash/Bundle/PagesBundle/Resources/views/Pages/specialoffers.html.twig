@@ -4,8 +4,10 @@
         {{ parent() }}
         <style>
 
+
+
             .isotope-container .item {
-                width: 23%;
+                /*width: 23%;*/
                 background-color: #EEEEEE;
                 margin: 5px;
                 border: 1px solid #555555;
@@ -30,11 +32,31 @@
             }
 
             .isotope-container .offer-title, #isotope-container .offer-body {
-                padding: 10px;
+                padding: 5px;
             }
 
             .isotope-container p.asterisk {
                 font-size: .9em;
+            }
+
+            @media (min-width: 992px) {
+
+                .isotope-container {
+                    display: table;
+                    border-spacing: 10px;
+                }
+                .isotope-container div[class^="col"] {
+                    display: table-cell;
+                    float: none;
+                    width: initial;
+                    vertical-align: top;
+                    padding: 0;
+                    width: 25%;
+                }
+
+                .isotope-container .table-row {
+                    display: table-row;
+                }
             }
         </style>
         <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
@@ -62,8 +84,17 @@
                 <h2>Специальные предложения</h2>
                 <div id="isotope-container" class="isotope-container">
                     {% for offer in offers %}
+                    {% if loop.index is divisibleby(5) or loop.index == 1 %}
+                    <div class="table-row">
+                    {% endif %}
                     {% include 'EnmashPagesBundle:Pages:Blocks/SpecialOffers/specialoffer.html.twig' with {'offer': offer}%}
+                    {% if loop.index is divisibleby(4) %}
+                    </div>
+                    {% endif %}
                     {% endfor %}
+                    {% if offers | length is not divisibleby(4) %}
+                </div>
+                    {% endif %}
                 </div>
                 <hr>
             </div>
@@ -74,9 +105,18 @@
                 <h2>Скидки</h2>
                 <div id="discount-isotope-container" class="isotope-container">
                     {% for discount in discounts %}
+                    {% if loop.index is divisibleby(5) or loop.index == 1 %}
+                    <div class="table-row">
+                    {% endif %}
                         {% include 'EnmashPagesBundle:Pages:Blocks/SpecialOffers/specialoffer.html.twig' with {'offer': discount} %}
+                    {% if loop.index is divisibleby(4) %}
+                        </div>
+                    {% endif %}
                     {% endfor %}
+                    {% if offers | length is not divisibleby(4) %}
                 </div>
+                    {% endif %}
+            </div>
             </div>
             {% endif %}
 
@@ -89,20 +129,20 @@
         <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
         <script src="{{ asset('vendor/blueimp-bootstrap-image-gallery/js/bootstrap-image-gallery.min.js') }}"></script>
         <script type="text/javascript">
-            $(document).ready(function(){
-                var $isotopeContainer = $('#isotope-container');
-                $isotopeContainer.isotope({
-                    itemSelector: '.item',
-                    layoutMode: 'masonry',
-                    gutter: 5
-                });
-
-                var $discountIsotopContainer = $('#discount-isotope-container');
-                $discountIsotopContainer.isotope({
-                    itemSelector: '.item',
-                    layoutMode: 'masonry',
-                    gutter: 5
-                });
-            });
+//            $(document).ready(function(){
+//                var $isotopeContainer = $('#isotope-container');
+//                $isotopeContainer.isotope({
+//                    itemSelector: '.item',
+//                    layoutMode: 'masonry',
+//                    gutter: 5
+//                });
+//
+//                var $discountIsotopContainer = $('#discount-isotope-container');
+//                $discountIsotopContainer.isotope({
+//                    itemSelector: '.item',
+//                    layoutMode: 'masonry',
+//                    gutter: 5
+//                });
+//            });
         </script>
     {% endblock %}
