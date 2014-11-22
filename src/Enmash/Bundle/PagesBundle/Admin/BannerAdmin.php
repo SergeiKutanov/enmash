@@ -2,6 +2,7 @@
 
 namespace Enmash\Bundle\PagesBundle\Admin;
 
+use Enmash\Bundle\PagesBundle\Entity\Banner;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -74,13 +75,27 @@ class BannerAdmin extends Admin
                     'required' => false
                 )
             )
+//            ->add(
+//                'additionalInfoFile',
+//                'sonata_media_type',
+//                array(
+//                    'provider' => 'sonata.media.provider.file',
+//                    'context'  => 'bannerinfofile',
+//                    'required' => false
+//                )
+//            )
             ->add(
-                'additionalInfoFile',
-                'sonata_media_type',
+                'additionalInfoFiles',
+                'sonata_type_model_list',
                 array(
-                    'provider' => 'sonata.media.provider.file',
-                    'context'  => 'bannerinfofile',
-                    'required' => false
+                    'required'  => false,
+                    'by_reference' => false
+                ),
+                array(
+                    'link_parameters'   => array(
+                        'provider'  => 'sonata.media.provider.file',
+                        'context'   => 'bannerinfofile'
+                    )
                 )
             )
         ;
@@ -100,4 +115,5 @@ class BannerAdmin extends Admin
             ->add('endDate')
         ;
     }
+
 }
