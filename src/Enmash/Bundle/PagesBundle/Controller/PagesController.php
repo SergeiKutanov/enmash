@@ -48,12 +48,18 @@ class PagesController extends Controller{
                 )
             );
         $sortedStores = array(
-            'vladimir'  => array()
+            'vladimir'          => array(),
+            'vladimir_region'   => array(),
+            'ivanovo_region'    => array()
         );
         foreach ($stores as $store) {
             /* @var $store Store */
             if (strpos($store->getAddress(), 'Владимир') !== false) {
                 $sortedStores['vladimir'][] = $store;
+            } elseif ((strpos($store->getAddress(), 'Иваново') !== false) || (strpos($store->getAddress(), 'Кинешма') !== false)) {
+                $sortedStores['ivanovo_region'][] = $store;
+            } else {
+                $sortedStores['vladimir_region'][] = $store;
             }
         }
 

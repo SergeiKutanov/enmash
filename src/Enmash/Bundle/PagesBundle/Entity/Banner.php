@@ -3,6 +3,7 @@
 namespace Enmash\Bundle\PagesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Sonata\MediaBundle\Model\Gallery;
 use Sonata\MediaBundle\Model\MediaInterface;
 
 /**
@@ -64,10 +65,10 @@ class Banner
     protected $photo;
 
     /**
-     * @var \Application\Sonata\MediaBundle\Entity\Media
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"persist"}, fetch="LAZY")
+     * @var Gallery
+     * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Gallery", cascade={"persist"}, fetch="LAZY")
      */
-    protected $additionalInfoFile;
+    protected $additionalInfoFiles;
 
     public function __construct() {
         $this->startDate = new \DateTime();
@@ -219,6 +220,7 @@ class Banner
         return $this->photo;
     }
 
+
     /**
      * Set additionalInfoFile
      *
@@ -240,5 +242,28 @@ class Banner
     public function getAdditionalInfoFile()
     {
         return $this->additionalInfoFile;
+    }
+
+    /**
+     * Set additionalInfoFiles
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Gallery $additionalInfoFiles
+     * @return Banner
+     */
+    public function setAdditionalInfoFiles(\Application\Sonata\MediaBundle\Entity\Gallery $additionalInfoFiles = null)
+    {
+        $this->additionalInfoFiles = $additionalInfoFiles;
+
+        return $this;
+    }
+
+    /**
+     * Get additionalInfoFiles
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Gallery 
+     */
+    public function getAdditionalInfoFiles()
+    {
+        return $this->additionalInfoFiles;
     }
 }
