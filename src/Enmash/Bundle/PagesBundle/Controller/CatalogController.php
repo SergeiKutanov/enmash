@@ -45,4 +45,14 @@ class CatalogController extends Controller
     public function showSingleCategoryAction(Category $category) {
         die();
     }
+
+    /**
+     * @Route("/polymer/elements/{name}", name="get_polymer_element")
+     * @Method("GET")
+     */
+    public function getPolymerElement($name) {
+        return $this->render(
+            'EnmashPagesBundle:Polymer:Elements/' . $name
+        );
+    }
 }
