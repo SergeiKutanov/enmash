@@ -591,4 +591,17 @@ class CatalogImporter {
 
     }
 
+    public function flushCategories() {
+        $categories = $this->em->getRepository('EnmashStoreBundle:Category')->findBy(
+            array(
+                'parentCategory'    => null
+            )
+        );
+        foreach($categories as $category) {
+            $this->em->remove($category);
+        }
+        $this->em->flush();
+//        var_dump(count($categories)); die();
+    }
+
 } 
