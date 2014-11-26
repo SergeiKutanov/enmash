@@ -8,13 +8,7 @@
         "lite-accordion": "latest",
         "isotope": "latest",
         "polymer": "Polymer/polymer",
-        "core-header-panel": "Polymer/core-header-panel",
-        "core-toolbar": "Polymer/core-toolbar",
-        "core-drawer-panel": "Polymer/core-drawer-panel",
-        "font-roboto": "Polymer/font-roboto",
-        "core-dropdown": "Polymer/core-dropdown",
-        "core-dropdown-menu": "Polymer/core-dropdown-menu",
-        "paper-dropdown": "Polymer/paper-dropdown",
-        "paper-menu-button": "Polymer/paper-menu-button"
+        "core-elements": "Polymer/core-elements",
+        "paper-elements": "Polymer/paper-elements"
     }
 }

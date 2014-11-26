@@ -1,0 +1,29 @@
+<link rel="import" href="{{ asset('vendor/polymer/polymer.html') }}">
+<link rel="import" href="{{ asset('vendor/core-ajax/core-ajax.html') }}">
+
+<polymer-element name="product-catalog-service" attributes="products url">
+    <template>
+        <core-ajax
+            auto
+            url="{{ '{{ url }}' }}"
+            method="POST"
+            on-core-response="{{ '{{ productsLoaded}}' }}"
+            handleAs="json">
+        </core-ajax>
+    </template>
+    <script>
+        Polymer({
+            created: function(){
+                this.products = [];
+            },
+            ready: function() {
+
+            },
+            productsLoaded: function(event, detail) {
+                console.log(detail.response.length);
+                this.products = detail.response;
+
+            }
+        });
+    </script>
+</polymer-element>

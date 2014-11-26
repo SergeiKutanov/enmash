@@ -3,11 +3,13 @@
 namespace Enmash\Bundle\PagesBundle\Controller;
 
 use Enmash\Bundle\StoreBundle\Entity\Category;
+use Enmash\Bundle\StoreBundle\Entity\Product;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/catalog")
@@ -44,6 +46,57 @@ class CatalogController extends Controller
      */
     public function showSingleCategoryAction(Category $category) {
         die();
+    }
+
+
+    /**
+     * @Route("/test/test")
+     * @Method("POST")
+     */
+    public function testCatalogAction() {
+        $em = $this->getDoctrine()->getManager();
+        $products = $em
+            ->getRepository('EnmashStoreBundle:Product')
+            ->findAll();
+        $products = array_slice($products, 0, 5);
+
+        $jsonProducts = array();
+        /* @var $product Product */
+        foreach ($products as $product) {
+            $jsonProducts[] = array(
+                'title' => $product->getAcronym(),
+                'img'   => '#',
+                'desc'  => $product->getName()
+            );
+        }
+
+        return new JsonResponse($jsonProducts);
+
+    }
+
+    /**
+     * @Route("/test/test/more")
+     * @Method("POST")
+     */
+    public function testTestCatalogAction() {
+        $em = $this->getDoctrine()->getManager();
+        $products = $em
+            ->getRepository('EnmashStoreBundle:Product')
+            ->findAll();
+        $products = array_slice($products, 5, 5);
+
+        $jsonProducts = array();
+        /* @var $product Product */
+        foreach ($products as $product) {
+            $jsonProducts[] = array(
+                'title' => $product->getAcronym(),
+                'img'   => '#',
+                'desc'  => $product->getName()
+            );
+        }
+
+        return new JsonResponse($jsonProducts);
+
     }
 
     /**

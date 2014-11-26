@@ -1,0 +1,32 @@
+<link rel="import" href="{{ asset('vendor/polymer/polymer.html') }}">
+<link rel="import" href="{{ asset('vendor/core-menu/core-menu.html') }}">
+<link rel="import" href="{{ asset('vendor/core-menu/core-submenu.html') }}">
+<link rel="import" href="{{ asset('vendor/core-item/core-item.html') }}">
+
+<polymer-element name="catalog-sidebar">
+    <template>
+
+        <style>
+            :host {
+                font-size: .8em;
+            }
+        </style>
+
+        {{ knp_menu_render('EnmashPagesBundle:Builder:catalogSidebarMenu', {'template': 'EnmashPagesBundle:Menu:polymer_sidebar_catalog.html.twig'}) }}
+    </template>
+
+    <script>
+        Polymer({
+            ready: function() {
+
+            },
+            catalogSelect: function(event, detail) {
+//                event.preventDefault();
+                var menuItem = detail.item;
+                var href = menuItem.getAttribute('data-uri');
+                console.log(href);
+            }
+        });
+    </script>
+
+</polymer-element>

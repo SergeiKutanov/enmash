@@ -11,28 +11,14 @@
 {% block root %}
     {% set listAttributes = item.childrenAttributes %}
 
-    <script>
-        $(document).ready(function(){
-//            $('core-submenu').click(function(e){
-//                e.preventDefault();
-//                console.log(e.target);
-//            });
-//
-//            $('core-submenu:before').click(function(e){
-//                e.preventDefault();
-//                console.log(e.target);
-//            });
-        });
-    </script>
-
-    <core-menu>
+    <core-menu on-core-select="{{ '{{ catalogSelect }}' }}">
         {#{{ block('list') -}}#}
         {% set currentItem = item %}
         {% for item in currentItem.children %}
             {% if item.hasChildren %}
                 <core-submenu label="{{ item.label }}" class="menu-item">
-                    <core-item label="{{ item.label }}" class="core-selected" active>
-                        <a href="{{ item.uri }}"></a>
+                    <core-item label="{{ item.label }}" class="core-selected" active data-uri="{{ item.uri }}">
+                        {#<a href="{{ item.uri }}"></a>#}
                     </core-item>
                     {% set secondLevelItem = item %}
                     {% for secondLevelIterItem in secondLevelItem %}

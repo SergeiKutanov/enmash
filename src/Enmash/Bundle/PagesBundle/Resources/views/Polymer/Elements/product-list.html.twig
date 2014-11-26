@@ -1,0 +1,33 @@
+<link rel="import" href="{{ asset('vendor/polymer/polymer.html') }}">
+<link rel="import" href="{{ asset('vendor/paper-shadow/paper-shadow.html') }}">
+
+<link rel="import" href="{{ path('get_polymer_element', {'name': 'product-list-item.html.twig'}) }}">
+<link rel="import" href="{{ path('get_polymer_element', {'name': 'product-catalog-service.html.twig'}) }}">
+
+<polymer-element name="product-list" attributes="url">
+    <template>
+        <style>
+
+        </style>
+
+        <product-catalog-service
+                products="{{ '{{ products }}' }}"
+                url="{{ '{{ url }}' }}">
+        </product-catalog-service>
+
+        <div class="product-list" layout horizontal wrap>
+            <template repeat="{{ '{{ product in products  }}' }}">
+                <product-list-item>
+                    <h3>{{ "{{ product.title }}" }}</h3>
+                    <img src="{{ '{{ product.img }}' }}">
+                    <p>{{ "{{ product.desc }}" }}</p>
+                </product-list-item>
+            </template>
+        </div>
+
+    </template>
+
+    <script>
+        Polymer({});
+    </script>
+</polymer-element>

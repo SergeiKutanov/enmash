@@ -22,7 +22,10 @@
     <link rel="import" href="{{ asset('vendor/paper-button/paper-button.html') }}">
 
 
-    {#<link rel="import" href="{{ path('get_polymer_element', {'name': 'site-banner.html.twig'}) }}">#}
+    <link rel="import" href="{{ path('get_polymer_element', {'name': 'site-banner.html.twig'}) }}">
+    <link rel="import" href="{{ path('get_polymer_element', {'name': 'product-list-item.html.twig'}) }}">
+    <link rel="import" href="{{ path('get_polymer_element', {'name': 'product-list.html.twig'}) }}">
+    <link rel="import" href="{{ path('get_polymer_element', {'name': 'catalog-sidebar.html.twig'}) }}">
 
     <style>
 
@@ -114,12 +117,6 @@
             color: #333999;
         }
 
-        /*#catalog-menu core-submenu core-item:first-child {*/
-            /*position: absolute;*/
-            /*top: 0;*/
-            /*left: 0;*/
-        /*}*/
-
         #catalog-menu core-menu {
             font-size: .7em !important;
         }
@@ -127,32 +124,6 @@
         #catalog-menu core-submenu {
             position: relative;
         }
-
-        /*#catalog-menu core-menu core-item.has-children {*/
-            /*position: absolute;*/
-            /*z-index: 1;*/
-            /*top: 0;*/
-            /*left: 0;*/
-        /*}*/
-
-        /*#catalog-menu core-submenu:before{*/
-            /*content: '+';*/
-            /*position: absolute;*/
-            /*top: 14px;*/
-            /*left: -10px;*/
-            /*cursor: pointer;*/
-            /*z-index: 5;*/
-        /*}*/
-
-        /*#catalog-menu core-icon.dropdown-arrow {*/
-            /*position: absolute;*/
-            /*right: 0;*/
-            /*top: 8px;*/
-        /*}*/
-
-        /*#catalog-menu core-submenu.core-selected:before{*/
-            /*content: '-';*/
-        /*}*/
 
     </style>
 
@@ -164,30 +135,7 @@
                 <span flex>Каталог Товаров</span>
             </core-toolbar>
             <div class="content" id="catalog-menu">
-                {{ knp_menu_render('EnmashPagesBundle:Builder:catalogSidebarMenu', {'template': 'EnmashPagesBundle:Menu:polymer_sidebar_catalog.html.twig'}) }}
-                {#<core-menu>#}
-                    {#<core-item label="first level category" class="has-children"><a href="#"></a></core-item>#}
-                    {#<core-submenu label="">#}
-                        {#<core-item label="2nd level category"><a href="#"></a></core-item>#}
-                        {#<core-item label="2nd level category" class="has-children"><a href="#"></a></core-item>#}
-                        {#<core-submenu>#}
-                            {#<core-item label="3rd level category"></core-item>#}
-                            {#<core-item label="3rd level category"></core-item>#}
-                            {#<core-item label="3rd level category"></core-item>#}
-                        {#</core-submenu>#}
-                        {#<core-item label="2nd level category"></core-item>#}
-                    {#</core-submenu>#}
-                    {#<core-item label="first level category" class="has-children"><a href="#"></a></core-item>#}
-                    {#<core-submenu label="">#}
-                        {#<core-item label="2nd level category"></core-item>#}
-                        {#<core-item label="2nd level category"></core-item>#}
-                        {#<core-item label="2nd level category"></core-item>#}
-                        {#<core-item label="2nd level category"></core-item>#}
-                        {#<core-item label="2nd level category"></core-item>#}
-                    {#</core-submenu>#}
-                    {#<core-item label="Some Category"><a href="#"></a></core-item>#}
-                    {#<core-item label="Some Category"><a href="#"></a></core-item>#}
-                {#</core-menu>#}
+                <catalog-sidebar></catalog-sidebar>
             </div>
         </core-header-panel>
         <core-header-panel main id="main-page">
@@ -239,7 +187,35 @@
                 </div>
 
             </core-toolbar>
+            <div class="content" fit>
+                <a class="update-catalog" href="//test.local:8000/enmash.local/web/app_dev.php/catalog/test/test/more">more</a>
+                <product-list url="//test.local:8000/enmash.local/web/app_dev.php/catalog/test/test">
+
+                </product-list>
+            </div>
         </core-header-panel>
     </core-drawer-panel>
+
+    <script type="text/javascript">
+
+//        Polymer('', {
+//            ready: function() {
+//                alert('ready');
+//            }
+//        });
+
+        var menuItems = document.querySelectorAll('#catalog-menu a');
+//        menuItems.addEventListener('click', function(event){
+//            event.preventDefault();
+//            alert(this);
+//        });
+//        menuItem.addEventListener('click', function(event){
+//            event.preventDefault();
+//            var href = this.getAttribute('href');
+//            var productList = document.querySelector('product-list');
+//            productList.setAttribute('url', href);
+//        });
+    </script>
+
 </body>
 </html>

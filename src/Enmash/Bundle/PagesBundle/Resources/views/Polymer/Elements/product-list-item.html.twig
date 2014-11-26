@@ -1,0 +1,62 @@
+<link rel="import" href="{{ asset('vendor/polymer/polymer.html') }}">
+<link rel="import" href="{{ asset('vendor/paper-shadow/paper-shadow.html') }}">
+
+<polymer-element name="product-list-item">
+
+    <template>
+        <style>
+
+            @media screen and (min-width: 780px) {
+                :host {
+                    width: 33%;
+                }
+            }
+
+            @media screen and (max-width: 779px) {
+                :host {
+                    width: 100%;
+                }
+            }
+
+            .product-list-item {
+                border: 1px solid #eeeeee;
+                margin: 10px;
+            }
+
+            polyfill-next-selector {content: '.product-list-item h3';}
+            .product-list-item ::content h3 {
+                background-color: #337ab7;
+                color: yellow;
+                margin: 0;
+                text-align: center;
+                padding: 10px 0;
+            }
+
+            polyfill-next-selector {content: '.product-list-item img';}
+            .product-list-item ::content img {
+                margin: 10px;
+            }
+
+            polyfill-next-selector {content: '.product-short-desc';}
+            .product-list-item .product-short-desc {
+                margin: 0px 10px 10px 10px;
+            }
+
+        </style>
+        <paper-shadow z="1" class="product-list-item" layout vertical>
+
+                <content select="h3"></content>
+
+                <content select="img"></content>
+            <div class="product-short-desc">
+                <content></content>
+            </div>
+
+        </paper-shadow>
+
+    </template>
+
+    <script>
+        Polymer({});
+    </script>
+</polymer-element>

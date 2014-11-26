@@ -1,49 +1,22 @@
 <link rel="import" href="{{ asset('vendor/polymer/polymer.html') }}">
-<link rel="import" href="{{ asset('vendor/core-drawer-panel/core-drawer-panel.html') }}">
+<link rel="import" href="{{ asset('vendor/core-ajax/core-ajax.html') }}">
 
 <style>
-    core-toolbar {
-        background-color: #0073b7;
-    }
+
 </style>
 
 <polymer-element name="site-banner">
 
     <template>
-        <style>
-            :host {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                box-sizing: border-box;
-            }
-            #core_drawer_panel {
-                position: absolute;
-                top: 0px;
-                right: 0px;
-                bottom: 0px;
-                left: 0px;
-            }
-            #section {
-                box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-                background-color: rgb(250, 250, 250);
-            }
-            #section1 {
-                height: 100%;
-                box-sizing: border-box;
-                background-color: rgb(221, 221, 221);
-            }
-        </style>
-        <core-drawer-panel transition id="core_drawer_panel" touch-action>
-            <section id="section" drawer></section>
-            <section id="section1" main></section>
-        </core-drawer-panel>
+        <div>{{ '{{ category }}' }}</div>
     </template>
 
     <script>
 
-        Polymer({
-
+        Polymer('site-banner', {
+            ready: function(){
+                this.category = 'category title';
+            }
         });
 
     </script>
