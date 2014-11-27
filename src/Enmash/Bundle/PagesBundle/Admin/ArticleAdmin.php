@@ -55,6 +55,14 @@ class ArticleAdmin extends Admin
             ->add('publish')
             ->add('featured')
             ->add('title')
+            ->add('featuredImage',
+                'sonata_media_type',
+                array(
+                    'provider' => 'sonata.media.provider.image',
+                    'context'  => 'articleimages',
+                    'required' => false
+                )
+            )
             ->add(
                 'abstract',
                 'ckeditor',
