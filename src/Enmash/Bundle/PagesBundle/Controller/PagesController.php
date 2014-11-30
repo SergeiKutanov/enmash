@@ -193,7 +193,8 @@ class PagesController extends Controller{
             ->getRepository('EnmashPagesBundle:Article')
             ->findBy(
                 array(
-                    'publish'   => true
+                    'publish'   => true,
+                    'featured'  => true
                 ),
                 array(
                     'featured'    => 'desc',

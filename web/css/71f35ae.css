@@ -2,7 +2,7 @@
     overflow: auto;
 }
 /*---------------------------------global stuff-------------------------------*/
-@import url(http://fonts.googleapis.com/css?family=Roboto+Slab&subset=latin,cyrillic);
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300,100&subset=latin,cyrillic);
 
 html, body {
     font-family: 'Roboto Slab', serif;
@@ -23,6 +23,10 @@ a:hover {
 
 .btn {
     border-radius: 0;
+}
+
+h1 a, h2 a, h3 a, h1 a:hover, h2 a:hover, h3 a:hover {
+    color: #000000;
 }
 
 .btn-warning, .btn-warning:hover, .btn-warning:active, .btn-warning:focus {
@@ -75,6 +79,16 @@ hr {
 /*body .modal-dialog {*/
     /*width: 100%;*/
 /*}*/
+
+
+/*------------------------shadows------------------------------------*/
+.z1 {
+    box-shadow: 0px 0px 5px 0px #555;
+}
+
+.z2 {
+    box-shadow: 0px 0px 10px 0px #555;
+}
 
 /*-------------------------top menu css------------------------------*/
 #top-menu a {
@@ -180,10 +194,60 @@ hr {
 }
 
 #cheap-banner {
-    position: absolute;
-    right: 40px;
     z-index: 1;
-    top: 50px;
+    position: absolute;
+    top: 0px;
+    right: 70px;
+    background: #fff;
+    padding: 5px;
+    border-radius: 10px;
+    transform: rotate(-15deg) scale(1, 1);
+    box-shadow: 0px 5px 10px 0px #000;
+    -webkit-transition: transform 0.5s ease;
+    -moz-transition: transform 0.5s ease;
+    -o-transition: transform 0.5s ease;
+    -ms-transition: transform 0.5s ease;
+    transition: transform 0.5s ease;
+}
+
+#cheap-banner:hover {
+    transform: rotate(0deg) scale(1.3, 1.3);
+}
+
+#cheap-banner:before {
+    content: '';
+    display: block;
+    height: 50px;
+    width: 110px;
+    border-left: 1px solid #000;
+    position: absolute;
+    top: -50px;
+    left: 22px;
+    border-right: 1px solid #000;
+    transform: skew(-15deg);
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#cheap-banner:hover:before {
+    transform: skew(0deg);
+    left: 14px;
+}
+
+#cheap-banner a {
+    font-weight: 900;
+    color: #000;
+    display: block;
+    background-color: yellow;
+    border: 3px solid #000;
+    padding: 5px;
+    font-size: 20px;
+    text-align: center;
+    font-family: arial;
+    text-decoration: none;
 }
 
 /*-----------------------carousel--------------------------------*/
@@ -194,7 +258,7 @@ div.go-down, div.go-down:focus{
     height: 50px;
     background-color: rgba(0, 0, 0, .2);
     z-index: 99;
-    right: 30px;
+    left: 30px;
     bottom: 45px;
     border: none;
     font-size: 25px;
@@ -252,13 +316,52 @@ div.go-down:hover span{
 }
 
 #carousel .carousel-caption {
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(0, 124, 194, .7);
+    text-shadow: 2px 2px #555;
+    box-shadow: 5px 5px 0px 0px rgba(0, 124, 194, .9);
+    top: 10px;
+    padding: 0;
+    bottom: initial;
+    /*left: 10px;*/
+    color: #fdda0a;
+    /*max-width: 30%; */
+    right: initial;
+}
+
+.jumbo-logo {
+    padding: 7px 15px 15px 15px;
+    background-color: rgba(0, 95, 141, .7);
+    border-radius: 5px;
+}
+
+div.container.landing-map {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    bottom: 40px;
+    right: 0;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.logo-pic {
+    display: inline-block;
+    background-image: url('../../bundles/enmashpages/images/logo_elgoods_white.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    width: 9.5em;
+    height: 25px;
+    position: relative;
+    top: 7px;
 }
 
 #carousel .carousel-caption p {
     font-weight: 700;
-    font-size: 2em;
-    padding: 20px;
+    font-size: 1.5em;
+    padding: 5px;
+    margin: 0px;
 }
 
 /*---------------------about section-----------------------------*/
@@ -283,11 +386,11 @@ div.go-down:hover span{
 }
 
 #vladimir-region {
-    overflow: auto;
-    background-image: url('../../bundles/enmashpages/images/logo_grey.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: 85% center;
+    /*overflow: auto;*/
+    /*background-image: url('../images/logo_grey.png');*/
+    /*background-size: contain;*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: 85% center;*/
 }
 
 #ivanovo-region p {
@@ -303,6 +406,7 @@ div.go-down:hover span{
     width: 200px;
     border-radius: 100px;
     text-decoration: none;
+    border: 1px solid #333399;
 }
 
 #ivanovo-region a.store-link:hover:after {
@@ -329,27 +433,27 @@ div.go-down:hover span{
 }
 
 #ivanovo-region a.store-link.store1 {
-    background-image: url('../../bundles/enmashpages/images/store1.jpg');
+    background-image: url('../../bundles/enmashpages/images/ivanovo_lenina.jpg');
 }
 
 #ivanovo-region a.store-link.store1:after {
-    content: 'ул. Мостостроевкая, д. 8'
+    content: 'пр-кт Ленина, д. 49'
 }
 
 #ivanovo-region a.store-link.store2:after {
-    content: 'ул. Мостостроевкая, д. 9'
+    content: 'пр-кт Строителей, д. 24'
 }
 
 #ivanovo-region a.store-link.store3:after {
-    content: 'ул. Мостостроевкая, д. 10'
+    content: 'ул. Некрасова, д. 55'
 }
 
 #ivanovo-region a.store-link.store2 {
-    background-image: url('../../bundles/enmashpages/images/store2.jpg');
+    background-image: url('../../bundles/enmashpages/images/ivanovo_stroitelei.jpg');
 }
 
 #ivanovo-region a.store-link.store3 {
-    background-image: url('../../bundles/enmashpages/images/store3.jpg');
+    background-image: url('../../bundles/enmashpages/images/ivanovo_nekrasova.jpg');
 }
 
 /*------------------wholesale block------------------------------*/
@@ -368,7 +472,7 @@ div.go-down:hover span{
 
 /*---------------------title banners-----------------------------*/
 #banners-carousel .carousel-inner .item > div {
-    height: 300px;
+    height: 367px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -415,10 +519,12 @@ div.go-down:hover span{
     background-color: rgba(0, 0, 0, .8);
     top: 0;
     left: 0;
+    bottom: 0;
+    right: 0;
     color: #ffffff;
     z-index: 1999;
-    width: 100%;
-    height: 100%;
+    /*width: 100%;*/
+    /*height: 100%;*/
     display: none;
 }
 
@@ -455,13 +561,32 @@ div.go-down:hover span{
 .index-banner div.full-screen-img {
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
 }
 
 /*---------------------maps----------------------------------*/
 #find-store-map #find-store-map-canvas{
     height: 450px;
     width: 100%;
+}
+
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    font-size: 2em;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
 }
 
 /*--------------stores page----------------------------------*/
@@ -485,6 +610,32 @@ a.offset-anchor{
     height: 100%;
 }
 
+.back-to-map-arrow span{
+    font-size: 1.5em;
+}
+
+#links {
+    text-align: justify;
+}
+
+.store-images #links a {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.store-images #links {
+    text-align: center;
+}
+
+a.featured-image {
+    display: block;
+    width: 100%;
+}
+
+a.featured-image img {
+    width: 100%;
+}
+
 /*-------------------about page-------------------------------*/
 #est-year{
     display: inline-block;
@@ -500,9 +651,87 @@ a.offset-anchor{
 }
 
 #about-page-content {
-    background-color: rgba(255,255,255, .5);
+    background-color: rgba(255,255,255, .7);
 }
 
 #about-page-content p {
     margin: 40px 0;
+}
+
+/*------------------------articles page--------------------------*/
+.featured-articles {
+    display: table-row;
+    width: 100%;
+}
+
+.featured-articles > div[class^=col-] {
+    display: table-cell;
+    float: none;
+    border-left: 1px solid #555555;
+}
+
+.featured-articles > div[class^=col-]:first-child {
+    border-left: none;
+}
+
+.featured-articles div.read-more {
+    position: absolute;
+    right: 15px;
+    bottom: 0;
+}
+
+.featured-articles .article-body {
+    margin-bottom: 30px;
+}
+
+.article-preview:nth-child(even) {
+    background-color: #eeeeee;
+    margin-bottom: 10px;
+}
+
+.article-preview {
+    /*height: 250px;*/
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center top;
+}
+
+.article-preview ul li {
+    margin: 20px 0;
+}
+
+.article-preview .background-cover {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,.8);
+}
+
+
+/*.article-preview:after {*/
+    /*content: '';*/
+    /*position: absolute;*/
+    /*height: 50px;*/
+    /*width: 100%;*/
+    /*left: 0;*/
+    /*bottom: 0;*/
+    /*background: -webkit-linear-gradient(rgba(0,0,0,0), rgba(255, 255, 255, 255)); *//* For Safari 5.1 to 6.0 */
+    /*background: -o-linear-gradient(rgba(0,0,0,0), rgba(255, 255, 255, 255)); *//* For Opera 11.1 to 12.0 */
+    /*background: -moz-linear-gradient(rgba(0,0,0,0), rgba(255, 255, 255, 255)); *//* For Firefox 3.6 to 15 */
+    /*background: linear-gradient(rgba(0,0,0,0), rgba(255, 255, 255, 255)); *//* Standard syntax */
+/*}*/
+
+
+.article-preview h3 a {
+    color: #337ab7;
+}
+
+.article-separator {
+    margin-bottom: 40px;
+    border-bottom: 1px solid #dddddd;
+}
+
+/*----------------special offers page---------------------------*/
+#isotope-container .item img {
+    width: 100%;
 }

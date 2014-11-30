@@ -28,9 +28,9 @@
 
             $(document).ready(function(){
 
-                var mapInfo = null;
+                window.mapInfo = null;
 
-                if (mapInfo == null) {
+                if (window.mapInfo == null) {
 
                     var iconPath = $('#bigmap').attr('data-icon-path');
 
@@ -41,7 +41,7 @@
                         },
                         url: $('#bigmap').attr('data-path'),
                         success: function(data) {
-                            mapInfo = initializeBigMap(data, iconPath);
+                            window.mapInfo = initializeBigMap(data, iconPath);
                         }
                     });
                 }
@@ -51,7 +51,7 @@
                     e.preventDefault();
                     var storeId = $(this).attr('data-store-id');
 
-                    showStoreOnMap(storeId, mapInfo);
+                    showStoreOnMap(storeId, window.mapInfo);
                 });
 
             });

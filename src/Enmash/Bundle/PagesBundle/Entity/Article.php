@@ -78,6 +78,12 @@ class Article
     private $products;
 
     /**
+     * @var \Application\Sonata\MediaBundle\Entity\Media
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"persist"}, fetch="LAZY")
+     */
+    protected $featuredImage;
+
+    /**
      * @ORM\OneToMany(targetEntity="Article", mappedBy="parentArticle", cascade={"persist", "remove"}, orphanRemoval=false)
      */
     private $connectedArticles;
@@ -356,5 +362,28 @@ class Article
     public function getFeatured()
     {
         return $this->featured;
+    }
+
+    /**
+     * Set featuredImage
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Media $featuredImage
+     * @return Article
+     */
+    public function setFeaturedImage(\Application\Sonata\MediaBundle\Entity\Media $featuredImage = null)
+    {
+        $this->featuredImage = $featuredImage;
+
+        return $this;
+    }
+
+    /**
+     * Get featuredImage
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     */
+    public function getFeaturedImage()
+    {
+        return $this->featuredImage;
     }
 }

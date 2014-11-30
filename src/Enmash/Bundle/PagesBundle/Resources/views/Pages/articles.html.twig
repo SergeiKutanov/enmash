@@ -1,12 +1,26 @@
 {% extends 'EnmashPagesBundle:Base:public_base.html.twig' %}
 
 {% block content %}
+
 <div class="row pusher">
     <div class="col-xs-12">
         <h1>Статьи</h1>
     </div>
 </div>
+<div class="row article-separator">
 {% for article in articles %}
-    {% include 'EnmashPagesBundle:Pages:Blocks/Articles/articlepreview.html.twig' with {'article': article} %}
+    {% if (loop.index - 1) is divisible by(3) %}
+    <div class="row article-separator">
+    {% endif %}
+    <div class="col-xs-12 col-md-4">
+        {% include 'EnmashPagesBundle:Pages:Blocks/Articles/articlepreview.html.twig' with {'article': article} %}
+    </div>
+    {% if (loop.index) is divisible by(3) %}
+    </div>
+    {% endif %}
 {% endfor %}
+{% if articles | length is  divisible by(3)%}
+    </div>
+{% endif %}
+
 {% endblock %}
