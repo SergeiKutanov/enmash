@@ -245,7 +245,7 @@ div.go-down, div.go-down:focus{
     height: 50px;
     background-color: rgba(0, 0, 0, .2);
     z-index: 99;
-    right: 30px;
+    left: 30px;
     bottom: 45px;
     border: none;
     font-size: 25px;
