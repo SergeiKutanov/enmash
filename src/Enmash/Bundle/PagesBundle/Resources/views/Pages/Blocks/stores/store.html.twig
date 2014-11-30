@@ -20,17 +20,22 @@
         </table>
 
     </div>
+
     <div class="col-xs-12 col-md-6 store-images">
         {% if store.storeImages %}
             <h3>Фотографии</h3>
             <div id="links">
 
                 {% for media in store.storeImages.galleryHasMedias %}
-
+                    {% if loop.index == 1 %}
+                    <a href="{% path media.media, 'big' %}" title="{{ media.media.name }}" data-gallery="store_{{ store.id }}" class="featured-image z1">
+                        <img src="{% path media.media, 'big' %}" alt="{{ media.media.name  }}">
+                    </a>
+                    {% else %}
                     <a href="{% path media.media, 'big' %}" title="{{ media.media.name }}" data-gallery="store_{{ store.id }}" >
                         <img src="{% path media.media, 'small' %}" alt="{{ media.media.name  }}">
                     </a>
-
+                    {% endif %}
                 {% endfor %}
 
             </div>
