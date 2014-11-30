@@ -52,8 +52,8 @@ class Product
     private $mansku;
 
     /**
-     * @ManyToOne(targetEntity="Category", inversedBy="products")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="Category", inversedBy="products", cascade={"all"})
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $category;
 
@@ -84,10 +84,10 @@ class Product
      * @ORM\JoinTable(
      *      name="product_analogs",
      *      joinColumns={
-     *          @ORM\JoinColumn(name="product_id", referencedColumnName="id"),
+     *          @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE"),
      *      },
      *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="analog_id", referencedColumnName="id")
+     *          @ORM\JoinColumn(name="analog_id", referencedColumnName="id", onDelete="CASCADE")
      *      }
      * )
      */
@@ -98,10 +98,10 @@ class Product
      * @ORM\JoinTable(
      *      name="product_similar",
      *      joinColumns={
-     *          @ORM\JoinColumn(name="product_id", referencedColumnName="id"),
+     *          @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE"),
      *      },
      *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="similar_product_id", referencedColumnName="id")
+     *          @ORM\JoinColumn(name="similar_product_id", referencedColumnName="id", onDelete="CASCADE")
      *      }
      * )
      */
