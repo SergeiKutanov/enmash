@@ -47,8 +47,8 @@ class Category
     private $subCategories;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="subCategories")
-     * @ORM\JoinColumn(name="parent_category_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="subCategories", cascade={"all"})
+     * @ORM\JoinColumn(name="parent_category_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $parentCategory;
 
