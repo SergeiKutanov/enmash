@@ -17,31 +17,31 @@
         {% for item in currentItem.children %}
             {% if item.hasChildren %}
                 <core-submenu label="{{ item.label }}" class="menu-item">
-                    <core-item label="{{ item.label }}" class="core-selected" active data-uri="{{ item.uri }}">
-                        {#<a href="{{ item.uri }}"></a>#}
+                    <core-item label="{{ item.label }}" active data-uri="{{ item.uri }}" {% if item.current %}class="current"{% endif %}>
+                        <a href="{{ item.uri }}"></a>
                     </core-item>
                     {% set secondLevelItem = item %}
                     {% for secondLevelIterItem in secondLevelItem %}
                         {% if secondLevelIterItem.hasChildren %}
                             <core-submenu label="{{ secondLevelIterItem.label }}" class="menu-item">
-                                <core-item label="{{ secondLevelIterItem.label }}" class="core-selected" active>
+                                <core-item label="{{ secondLevelIterItem.label }}" active {% if secondLevelIterItem.current %}class="current"{% endif %}>
                                     <a href="{{ secondLevelIterItem.uri }}"></a>
                                 </core-item>
                                 {% for thirdLevelItem in secondLevelIterItem %}
-                                <core-item label="{{ thirdLevelItem.label }}" class="menu-item">
+                                <core-item label="{{ thirdLevelItem.label }}" class="menu-item" {% if thirdLevelItem.current %}class="current"{% endif %}>
                                     <a href="{{ thirdLevelItem.uri }}"></a>
                                 </core-item>
                                 {% endfor %}
                             </core-submenu>
                         {% else %}
-                        <core-item label="{{ secondLevelIterItem.label }}" class="menu-item">
+                        <core-item label="{{ secondLevelIterItem.label }}" class="menu-item" {% if secondLevelIterItem.current %}class="curretn"{% endif %}>
                             <a href="{{ secondLevelIterItem.uri }}"></a>
                         </core-item>
                         {% endif %}
                     {% endfor %}
                 </core-submenu>
             {% else %}
-                <core-item label="{{ block('label') }}" class="menu-item">
+                <core-item label="{{ block('label') }}" class="menu-item" {% if item.current %}class="current"{% endif %}>
                     <a href="{{ item.uri }}"></a>
                 </core-item>
             {% endif %}

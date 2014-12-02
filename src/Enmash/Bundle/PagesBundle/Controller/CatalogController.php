@@ -34,7 +34,7 @@ class CatalogController extends Controller
         return $this->render(
             'EnmashPagesBundle:Pages:Catalog/base.html.twig',
             array(
-                'catalog'   => $catalog
+//                'catalog'   => $catalog
             )
         );
     }
@@ -45,7 +45,12 @@ class CatalogController extends Controller
      * @ParamConverter("category", options={"mapping": {"slug": "slug"}})
      */
     public function showSingleCategoryAction(Category $category) {
-        die();
+        return $this->render(
+            'EnmashPagesBundle:Pages:Catalog/base.html.twig',
+            array(
+//                'catalog'   => $catalog
+            )
+        );
     }
 
 
