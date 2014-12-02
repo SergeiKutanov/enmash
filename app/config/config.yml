@@ -5,6 +5,8 @@ imports:
     - { resource: @EnmashStoreBundle/Resources/config/services.yml  }
     # pages bundle admin entities
     - { resource: @EnmashPagesBundle/Resources/config/services.yml  }
+    # user bundle admin entities
+#    - { resource: @EnmashUserControlBundle/Resources/config/services.yml  }
 
 framework:
     #esi:             ~
@@ -95,6 +97,8 @@ swiftmailer:
 sonata_user:
     security_acl: true
     manager_type: orm
+    class:
+        user: Enmash\Bundle\UserControlBundle\Entity\User
 
 sonata_block:
     default_contexts: [sonata_page_bundle]
@@ -119,6 +123,7 @@ fos_user:
         user_manager: sonata.user.orm.user_manager
 
 sonata_admin:
+    title: Энергомаш
     security:
         handler: sonata.admin.security.handler.role
     templates:
