@@ -1,3 +1,34 @@
 .sonata-ba-field.sonata-ba-field-standard-natural {
     overflow: auto;
 }
+/*
+.skin-black .logo {
+    background-color: #335d7e;
+}
+
+    .skin-black .logo:hover {
+        background-color: #113b5d;
+    }
+
+.skin-black .sidebar {
+    background-color: #335d7e;
+}
+
+.skin-black .sidebar > .sidebar-menu > li {
+    border-top: 1px solid #113b5d;
+    border-bottom: 1px solid #113b5d;
+}
+
+    .skin-black .sidebar > .sidebar-menu > li > a:hover, .skin-black .sidebar > .sidebar-menu > li.active > a {
+        background: #113b5d;
+    }
+
+.skin-black .left-side {
+    background: #335d7e;
+}
+
+*/
+.logo img {
+    max-width: 100%;
+}
+
