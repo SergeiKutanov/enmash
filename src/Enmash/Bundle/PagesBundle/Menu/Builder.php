@@ -11,6 +11,7 @@ namespace Enmash\Bundle\PagesBundle\Menu;
 
 use Enmash\Bundle\StoreBundle\Entity\Category;
 use Knp\Menu\FactoryInterface;
+use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\Routing\Router;
 
@@ -60,19 +61,32 @@ class Builder extends ContainerAware {
 
         foreach ($catalog as $item) {
             /* @var $item \Enmash\Bundle\StoreBundle\Entity\Category */
+
+            $options = array(
+                'route' => 'catalog-category-page',
+                'routeParameters' => array(
+                    'slug' => $item->getSlug()
+                )
+            );
+
+            if ($item->getSubCategories()) {
+                $options['attributes'] = array(
+                    'class' => 'has-children'
+                );
+            }
+
             $menu->addChild(
                 $item->getName(),
-                array(
-                    'route'             => 'catalog-category-page',
-                    'routeParameters'   => array(
-                        'slug'  => $item->getSlug()
-                    )
-                )
+                $options
             );
             if ($item->getSubCategories()) {
                 $this->addSecondLevel($item, $menu);
             }
         }
+
+        $menu->setCurrentUri(
+            $this->container->get('request')->getRequestUri()
+        );
 
         return $menu;
 
