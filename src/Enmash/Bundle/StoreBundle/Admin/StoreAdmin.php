@@ -54,7 +54,8 @@ class StoreAdmin extends Admin
     {
         $formMapper
             ->add('storeType', 'choice', array(
-                    'choices'   => Store::getstoreTypeList()
+                    'choices'   => Store::getstoreTypeList(),
+                    'multiple'  => true
                 ))
             ->add('name')
             ->add('publish', null, array(
@@ -65,6 +66,17 @@ class StoreAdmin extends Admin
             ->add('latitude')
             ->add('longitude')
             ->add('info', 'ckeditor', array(
+                    'config'    => array(
+                        'toolbar'   => array(
+
+                            array(
+                                'items' => array('Source', '-', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat')
+                            )
+                        )
+                    )
+                ))
+            ->add('whInfo', 'ckeditor', array(
+                    'required'  => false,
                     'config'    => array(
                         'toolbar'   => array(
 
@@ -121,10 +133,12 @@ class StoreAdmin extends Admin
 
     public function prePersist($object) {
         $this->fixRelations($object);
+        $this->clearInfos($object);
     }
 
     public function preUpdate($object) {
         $this->fixRelations($object);
+        $this->clearInfos($object);
     }
 
     protected function fixRelations($object) {
@@ -137,4 +151,22 @@ class StoreAdmin extends Admin
         }
     }
 
+    protected function clearInfos($object) {
+        /* @var $object Store */
+        if (!in_array(Store::WHOLESALE_TYPE, $object->getStoreType())) {
+            $object->setWhInfo(null);
+        }
+
+        if (!in_array(Store::RETAIL_TYPE, $object->getStoreType()) && !in_array(Store::ORDER_TYPE, $object->getStoreType())) {
+            $object->setInfo(null);
+        }
+    }
+
+    public function getTemplate($name)
+    {
+        if ($name == 'edit') {
+            return 'EnmashStoreBundle:Admin:storeedit.html.twig';
+        }
+        return parent::getTemplate($name);
+    }
 }

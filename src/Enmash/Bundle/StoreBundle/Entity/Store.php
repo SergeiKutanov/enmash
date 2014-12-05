@@ -14,7 +14,7 @@ class Store
 {
     const RETAIL_TYPE = 1;
     const WHOLESALE_TYPE = 2;
-    const BOTH_TYPE = 3;
+    const ORDER_TYPE = 3;
 
     /**
      * @var integer
@@ -85,8 +85,14 @@ class Store
     protected $info;
 
     /**
+     * @var string
+     * @ORM\Column(name="wh_info", type="text", nullable=true)
+     */
+    protected $whInfo;
+
+    /**
      * @var int
-     * @ORM\Column(name="store_type", type="integer")
+     * @ORM\Column(name="store_type", type="json_array")
      */
     protected $storeType;
 
@@ -99,15 +105,25 @@ class Store
         return array(
             self::RETAIL_TYPE       => self::getStoreTypeString(self::RETAIL_TYPE),
             self::WHOLESALE_TYPE    => self::getStoreTypeString(self::WHOLESALE_TYPE),
-            self::BOTH_TYPE         => self::getStoreTypeString(self::BOTH_TYPE)
+            self::ORDER_TYPE         => self::getStoreTypeString(self::ORDER_TYPE)
         );
     }
 
     public static function getStoreTypeString($type) {
+
+        if (is_array($type)) {
+            $result = '';
+            foreach ($type as $index => $subType) {
+                if ($index > 0) $result .= ' - ';
+                $result .= self::getStoreTypeString($subType);
+            }
+            return $result;
+        }
+
         switch ($type) {
             case self::RETAIL_TYPE : return 'Розничный магазин';
             case self::WHOLESALE_TYPE : return 'Служба сбыта';
-            case self::BOTH_TYPE: return 'Розничный магазин и служба сбыта';
+            case self::ORDER_TYPE: return 'Стол заказов';
         }
     }
 
@@ -223,7 +239,7 @@ class Store
     {
         $this->publish = false;
 //        $this->storeImages = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->storeType = self::BOTH_TYPE;
+        $this->storeType = array(self::RETAIL_TYPE);
     }
 
 
@@ -320,29 +336,6 @@ class Store
     }
 
     /**
-     * Set storeType
-     *
-     * @param integer $storeType
-     * @return Store
-     */
-    public function setStoreType($storeType)
-    {
-        $this->storeType = $storeType;
-
-        return $this;
-    }
-
-    /**
-     * Get storeType
-     *
-     * @return integer 
-     */
-    public function getStoreType()
-    {
-        return $this->storeType;
-    }
-
-    /**
      * Add contacts
      *
      * @param \Enmash\Bundle\StoreBundle\Entity\StoreContact $contacts
@@ -373,5 +366,52 @@ class Store
     public function getContacts()
     {
         return $this->contacts;
+    }
+
+
+    /**
+     * Set storeType
+     *
+     * @param array $storeType
+     * @return Store
+     */
+    public function setStoreType($storeType)
+    {
+        $this->storeType = $storeType;
+
+        return $this;
+    }
+
+    /**
+     * Get storeType
+     *
+     * @return array 
+     */
+    public function getStoreType()
+    {
+        return $this->storeType;
+    }
+
+    /**
+     * Set whInfo
+     *
+     * @param string $whInfo
+     * @return Store
+     */
+    public function setWhInfo($whInfo)
+    {
+        $this->whInfo = $whInfo;
+
+        return $this;
+    }
+
+    /**
+     * Get whInfo
+     *
+     * @return string 
+     */
+    public function getWhInfo()
+    {
+        return $this->whInfo;
     }
 }

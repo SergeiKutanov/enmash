@@ -1,0 +1,42 @@
+{% extends 'SonataAdminBundle:CRUD:edit.html.twig' %}
+
+{% block form %}
+    {{ parent() }}
+{% endblock%}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            var select = $("select[id*='_storeType']");
+            var storeType = $(select).val();
+
+            var retailStoreInfoDiv = $("div.form-group[id*='_info']");
+            var whStoreInfoDiv = $("div.form-group[id*='_whInfo']");
+
+            switchInfoPanels(storeType, retailStoreInfoDiv, whStoreInfoDiv);
+
+            $(select).bind('change', function(e){
+                switchInfoPanels($(this).val(), retailStoreInfoDiv, whStoreInfoDiv);
+            });
+//            console.log(select);
+//
+            function switchInfoPanels(types, retail, wholesale) {
+                $(retail).hide();
+                $(wholesale).hide();
+
+                for (var i = 0; i < types.length; i++) {
+                    if (types[i] == 1 || types[i] == 3) {
+                        $(retail).show();
+                    }
+                    if (types[i] == 2) {
+                        $(wholesale).show();
+                    }
+                }
+            }
+        });
+
+
+    </script>
+{% endblock %}

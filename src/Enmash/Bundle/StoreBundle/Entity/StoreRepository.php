@@ -20,30 +20,35 @@ class StoreRepository extends EntityRepository {
             ->getRepository('EnmashStoreBundle:Store')
             ->createQueryBuilder('s')
             ->select('s')
-            ->where('s.publish = true');
+            ->where('s.publish = true')
+            ->getQuery();
 
-        switch ($type) {
-            case Store::RETAIL_TYPE:
-                $query
-                    ->andWhere(
-                        's.storeType = ' . Store::RETAIL_TYPE . ' OR s.storeType = ' . Store::BOTH_TYPE
-                    );
-                break;
-            case Store::WHOLESALE_TYPE:
-                $query
-                    ->andWhere(
-                        's.storeType = ' . Store::WHOLESALE_TYPE . ' OR s.storeType = ' . Store::BOTH_TYPE
-                    );
-                break;
-            case Store::BOTH_TYPE:
-                $query
-                    ->andWhere(
-                        's.storeType = ' . Store::BOTH_TYPE
-                    );
-                break;
+        $stores = $query->getResult();
+        if (!$type) {
+            return $stores;
         }
 
-        return $query->getQuery()->getResult();
+        $filteredStores = array();
+
+        if (!is_array($type)) {
+            $type = array($type);
+        }
+
+        foreach ($stores as $store) {
+            foreach ($type as $subType) {
+                $add = true;
+                /* @var $store \Enmash\Bundle\StoreBundle\Entity\Store */
+                if (!in_array($subType, $store->getStoreType())) {
+                     $add = false;
+                }
+            }
+            if ($add) {
+                $filteredStores[] = $store;
+            }
+        }
+
+        return $filteredStores;
+
     }
 
 }
