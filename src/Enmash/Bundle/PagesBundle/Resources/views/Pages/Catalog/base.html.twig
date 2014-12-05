@@ -270,7 +270,9 @@
             </core-toolbar>
             <div class="content" fit>
                 {% block breadcrumbs %}
-                    {{ wo_render_breadcrumbs() }}
+                    <div class="hide-mobile">
+                        {{ wo_render_breadcrumbs() }}
+                    </div>
                 {% endblock %}
                 {% block maincontent %}
 
