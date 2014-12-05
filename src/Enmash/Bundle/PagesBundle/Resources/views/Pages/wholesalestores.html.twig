@@ -15,7 +15,7 @@
         {% include 'EnmashPagesBundle:Pages:Blocks/gallerymodal.html.twig' %}
 
         {% for store in stores %}
-            {% include 'EnmashPagesBundle:Pages:Blocks/stores/store.html.twig' with {'store': store} %}
+            {% include 'EnmashPagesBundle:Pages:Blocks/stores/store.html.twig' with {'store': store, 'renderAs': constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::WHOLESALE_TYPE')} %}
         {% endfor %}
 
     {% endblock %}

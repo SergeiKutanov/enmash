@@ -280,10 +280,10 @@ class PagesController extends Controller{
         $data = array();
         foreach ($stores as $store) {
             $path = "#store_" . $store->getId();
-            if ($store->getStoreType() == Store::RETAIL_TYPE || $store->getStoreType() == Store::BOTH_TYPE) {
+            if (in_array(Store::RETAIL_TYPE, $store->getStoreType())) {
                 $path = $this
                         ->generateUrl('stores-page') . $path;
-            } elseif ($store->getStoreType() == Store::WHOLESALE_TYPE) {
+            } else {
                 $path = $this
                         ->generateUrl('wholesale-stores-page') . $path;
             }

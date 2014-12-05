@@ -1,0 +1,6 @@
+services:
+    enmash_user_control.admin.user:
+        class: Enmash\Bundle\UserControlBundle\Admin\UserAdmin
+        arguments: [~, Enmash\Bundle\UserControlBundle\Entity\User, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: User}

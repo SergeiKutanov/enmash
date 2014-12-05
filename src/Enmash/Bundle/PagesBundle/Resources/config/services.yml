@@ -3,13 +3,13 @@ services:
         class: Enmash\Bundle\PagesBundle\Admin\BannerAdmin
         arguments: [~, Enmash\Bundle\PagesBundle\Entity\Banner, SonataAdminBundle:CRUD]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: Banner}
+            - {name: sonata.admin, manager_type: orm, group: Содержание, label: Баннеры}
 
     enmash_pages.admin.article:
         class: Enmash\Bundle\PagesBundle\Admin\ArticleAdmin
         arguments: [~, Enmash\Bundle\PagesBundle\Entity\Article, SonataAdminBundle:CRUD]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: Article}
+            - {name: sonata.admin, manager_type: orm, group: Содержание, label: Полезные статьи}
 
     gedmo.listener.sluggable:
         class: Gedmo\Sluggable\SluggableListener

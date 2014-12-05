@@ -17,7 +17,7 @@ services:
         class: Enmash\Bundle\StoreBundle\Admin\StoreAdmin
         arguments: [~, Enmash\Bundle\StoreBundle\Entity\Store, EnmashStoreBundle:StoreAdmin]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: Store}
+            - {name: sonata.admin, manager_type: orm, group: Магазины, label: Магазины}
 
     enmash_store.admin.store_image:
         class: Enmash\Bundle\StoreBundle\Admin\StoreImageAdmin
@@ -57,4 +57,4 @@ services:
         class: Enmash\Bundle\StoreBundle\Admin\SpecialOfferAdmin
         arguments: [~, Enmash\Bundle\StoreBundle\Entity\SpecialOffer, SonataAdminBundle:CRUD]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: SpecialOffer}
+            - {name: sonata.admin, manager_type: orm, group: Содержание, label: Специальные предложения}

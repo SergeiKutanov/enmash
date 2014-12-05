@@ -5,6 +5,8 @@ imports:
     - { resource: @EnmashStoreBundle/Resources/config/services.yml  }
     # pages bundle admin entities
     - { resource: @EnmashPagesBundle/Resources/config/services.yml  }
+    # user bundle admin entities
+#    - { resource: @EnmashUserControlBundle/Resources/config/services.yml  }
 
 framework:
     #esi:             ~
@@ -95,6 +97,8 @@ swiftmailer:
 sonata_user:
     security_acl: true
     manager_type: orm
+    class:
+        user: Enmash\Bundle\UserControlBundle\Entity\User
 
 sonata_block:
     default_contexts: [sonata_page_bundle]
@@ -119,10 +123,49 @@ fos_user:
         user_manager: sonata.user.orm.user_manager
 
 sonata_admin:
+#    title: Энергомаш
+    title_logo: bundles/enmashpages/images/logo_energomash.png
+    options:
+        title_mode: single_image
     security:
         handler: sonata.admin.security.handler.role
     templates:
         layout: EnmashPagesBundle:Admin:standard_layout.html.twig
+    dashboard:
+        groups:
+            Content:
+                label: Содержание
+                items:
+                    - enmash_pages.admin.article
+                    - enmash_pages.admin.banner
+                    - enmash_store.admin.special_offer
+                roles: [ROLE_SITE_EDITOR]
+            Stores:
+                label: Магазины
+                items:
+                    - enmash_store.admin.store
+                roles: [ROLE_SITE_EDITOR]
+            Admin:
+                label: Admin
+                items:
+                    - enmash_store.admin.product
+                    - enmash_store.admin.category
+                    - enmash_store.admin.store
+                    - enmash_store.admin.store_image
+                    - enmash_store.admin.manufacturer
+                    - enmash_store.admin.category_parameter
+                    - enmash_store.admin.product_parameter
+                    - enmash_store.admin.store_contact
+                    - enmash_store.admin.special_offer
+                    - enmash_pages.admin.banner
+                    - enmash_pages.admin.article
+                    - sonata.user.admin.user
+                    - sonata.user.admin.group
+                    - sonata.media.admin.media
+                    - sonata.media.admin.gallery
+                    - sonata.media.admin.gallery_has_media
+                roles: [ROLE_SUPER_ADMIN]
+
 
 # sonata media bundle settings
 sonata_media:
