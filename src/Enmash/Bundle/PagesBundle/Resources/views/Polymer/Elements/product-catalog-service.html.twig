@@ -1,7 +1,7 @@
 <link rel="import" href="{{ asset('vendor/polymer/polymer.html') }}">
 <link rel="import" href="{{ asset('vendor/core-ajax/core-ajax.html') }}">
 
-<polymer-element name="product-catalog-service" attributes="products url">
+<polymer-element name="product-catalog-service" attributes="products url category">
     <template>
         <core-ajax
             auto
@@ -20,7 +20,9 @@
 
             },
             productsLoaded: function(event, detail) {
-                this.products = detail.response;
+                this.products = detail.response.products;
+                this.category = detail.response.category;
+                console.log(this.category);
             }
         });
     </script>

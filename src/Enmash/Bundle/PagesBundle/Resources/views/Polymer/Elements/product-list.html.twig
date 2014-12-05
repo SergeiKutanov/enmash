@@ -7,20 +7,24 @@
 <polymer-element name="product-list" attributes="url">
     <template>
         <style>
-
+            :host h1 {
+                float: none;
+            }
         </style>
 
         <product-catalog-service
                 products="{{ '{{ products }}' }}"
-                url="{{ '{{ url }}' }}">
+                url="{{ '{{ url }}' }}"
+                category="{{ '{{ category }}' }}">
         </product-catalog-service>
 
+        <h1>{{ "{{ category.name }}" }}</h1>
         <div class="product-list" layout horizontal wrap>
             <template repeat="{{ '{{ product in products  }}' }}">
                 <product-list-item>
-                    <h3>{{ "{{ product.title }}" }}</h3>
-                    <img src="{{ '{{ product.img }}' }}">
-                    <p>{{ "{{ product.desc }}" }}</p>
+                    <h3>{{ "{{ product.acronym }}" }}</h3>
+                    <img src="#">
+                    <p>some description</p>
                 </product-list-item>
             </template>
             <template if="{{ '{{ products == 0}}' }}">
@@ -31,6 +35,8 @@
     </template>
 
     <script>
-        Polymer({});
+        Polymer({
+
+        });
     </script>
 </polymer-element>

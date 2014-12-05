@@ -5,12 +5,16 @@ namespace Enmash\Bundle\StoreBundle\Entity;
 use Application\Sonata\MediaBundle\Entity\Gallery;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * Product
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Enmash\Bundle\StoreBundle\Entity\ProductRepository")
+ *
+ * @ExclusionPolicy("all")
  */
 class Product
 {
@@ -20,6 +24,8 @@ class Product
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Expose
      */
     private $id;
 
@@ -34,6 +40,8 @@ class Product
      * @var string
      *
      * @ORM\Column(name="acronym", type="string", length=255)
+     *
+     * @Expose
      */
     private $acronym;
 
@@ -41,6 +49,8 @@ class Product
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     *
+     * @Expose
      */
     private $name;
 
@@ -54,6 +64,8 @@ class Product
     /**
      * @ManyToOne(targetEntity="Category", inversedBy="products", cascade={"all"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE")
+     *
+     * @Expose
      */
     private $category;
 

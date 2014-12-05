@@ -176,6 +176,35 @@
             text-decoration: underline;
         }
 
+        div.content {
+            padding: 10px;
+        }
+
+        /*breadcrumbs style*/
+        ul.breadcrumb {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        ul.breadcrumb li {
+            display: inline-block;
+            font-size: .9em;
+        }
+
+        ul.breadcrumb li span.separator {
+            margin: 0px 10px;
+        }
+
+        ul.breadcrumb a {
+            text-decoration: none;
+            color: #000000;
+        }
+
+        ul.breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
     </style>
 
 </head>
@@ -240,9 +269,12 @@
 
             </core-toolbar>
             <div class="content" fit>
-                {% set currentPath = url(app.request.attributes.get('_route'),
-                app.request.attributes.get('_route_params')) %}
-                <product-list url="{{ currentPath }}"></product-list>
+                {% block breadcrumbs %}
+                    {{ wo_render_breadcrumbs() }}
+                {% endblock %}
+                {% block maincontent %}
+
+                {% endblock %}
             </div>
         </core-header-panel>
     </core-drawer-panel>

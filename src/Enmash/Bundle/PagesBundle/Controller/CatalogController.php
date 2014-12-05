@@ -11,6 +11,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
 
 /**
  * @Route("/catalog")
@@ -47,8 +49,30 @@ class CatalogController extends Controller
      */
     public function showSingleCategoryAction(Category $category, Request $request) {
         if ($request->getMethod() === 'GET') {
+
+            /* @var $breadcrumbs Breadcrumbs */
+            $breadcrumbs = $this->get('white_october_breadcrumbs');
+
+            $node = $category;
+            while($node) {
+                $breadcrumbs->prependItem(
+                    $node->getName(),
+                    $this->get('router')->generate(
+                            'catalog-category-page',
+                            array(
+                                'slug'  => $node->getSlug()
+                            )
+                        )
+                );
+                $node = $node->getParentCategory();
+            }
+            $breadcrumbs->prependItem(
+                'Каталог',
+                $this->get('router')->generate('catalog-index-page')
+            );
+
             return $this->render(
-                'EnmashPagesBundle:Pages:Catalog/base.html.twig'
+                'EnmashPagesBundle:Pages:Catalog/index.html.twig'
             );
         } else {
             $em = $this->getDoctrine()->getManager();
@@ -58,17 +82,20 @@ class CatalogController extends Controller
                     $category
                 );
 
-            $jsonProducts = array();
+            $serializer = $this->container->get('serializer');
+
+            $response = array(
+                'products' => array(),
+                'category' => $category
+            );
             /* @var $product Product */
             foreach ($products as $product) {
-                $jsonProducts[] = array(
-                    'title' => $product->getAcronym(),
-                    'img'   => '#',
-                    'desc'  => $product->getName()
-                );
+                $response['products'][] = $product;
             }
 
-            return new JsonResponse($jsonProducts);
+            $jsonResponse = $serializer->serialize($response, 'json');
+
+            return new Response($jsonResponse);
         }
 
     }

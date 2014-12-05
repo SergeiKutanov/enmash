@@ -5,12 +5,16 @@ namespace Enmash\Bundle\StoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
 use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * Category
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Enmash\Bundle\StoreBundle\Entity\CategoryRepository")
+ *
+ * @ExclusionPolicy("all")
  */
 class Category
 {
@@ -20,6 +24,8 @@ class Category
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Expose
      */
     private $id;
 
@@ -27,6 +33,8 @@ class Category
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Expose
      */
     private $name;
 
