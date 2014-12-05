@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Route("/catalog")
@@ -41,66 +42,34 @@ class CatalogController extends Controller
 
     /**
      * @Route("/{slug}", name="catalog-category-page")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @ParamConverter("category", options={"mapping": {"slug": "slug"}})
      */
-    public function showSingleCategoryAction(Category $category) {
-        return $this->render(
-            'EnmashPagesBundle:Pages:Catalog/base.html.twig',
-            array(
-//                'catalog'   => $catalog
-            )
-        );
-    }
-
-
-    /**
-     * @Route("/test/test")
-     * @Method("POST")
-     */
-    public function testCatalogAction() {
-        $em = $this->getDoctrine()->getManager();
-        $products = $em
-            ->getRepository('EnmashStoreBundle:Product')
-            ->findAll();
-        $products = array_slice($products, 0, 5);
-
-        $jsonProducts = array();
-        /* @var $product Product */
-        foreach ($products as $product) {
-            $jsonProducts[] = array(
-                'title' => $product->getAcronym(),
-                'img'   => '#',
-                'desc'  => $product->getName()
+    public function showSingleCategoryAction(Category $category, Request $request) {
+        if ($request->getMethod() === 'GET') {
+            return $this->render(
+                'EnmashPagesBundle:Pages:Catalog/base.html.twig'
             );
+        } else {
+            $em = $this->getDoctrine()->getManager();
+            $products = $em
+                ->getRepository('EnmashStoreBundle:Product')
+                ->findAllElementsForCategory(
+                    $category
+                );
+
+            $jsonProducts = array();
+            /* @var $product Product */
+            foreach ($products as $product) {
+                $jsonProducts[] = array(
+                    'title' => $product->getAcronym(),
+                    'img'   => '#',
+                    'desc'  => $product->getName()
+                );
+            }
+
+            return new JsonResponse($jsonProducts);
         }
-
-        return new JsonResponse($jsonProducts);
-
-    }
-
-    /**
-     * @Route("/test/test/more")
-     * @Method("POST")
-     */
-    public function testTestCatalogAction() {
-        $em = $this->getDoctrine()->getManager();
-        $products = $em
-            ->getRepository('EnmashStoreBundle:Product')
-            ->findAll();
-        $products = array_slice($products, 5, 5);
-
-        $jsonProducts = array();
-        /* @var $product Product */
-        foreach ($products as $product) {
-            $jsonProducts[] = array(
-                'title' => $product->getAcronym(),
-                'img'   => '#',
-                'desc'  => $product->getName()
-            );
-        }
-
-        return new JsonResponse($jsonProducts);
 
     }
 

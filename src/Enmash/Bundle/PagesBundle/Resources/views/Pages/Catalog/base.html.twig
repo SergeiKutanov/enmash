@@ -154,14 +154,10 @@
         }
 
         #catalog-menu li.has-children span.submenu-trigger {
-            /*content: '';*/
             position: absolute;
             left: -20px;
             top: 2px;
             display: block;
-            /*width: 5px;*/
-            /*height: 100%;*/
-            /*background-color: #337ab7;*/
             cursor: pointer;
             color: #337ab7;
         }
@@ -175,7 +171,7 @@
             text-decoration: none;
         }
 
-        #catalog-menu li.current a {
+        #catalog-menu li.current > a {
             color: #337ab7;
             text-decoration: underline;
         }
@@ -244,15 +240,16 @@
 
             </core-toolbar>
             <div class="content" fit>
-                <a class="update-catalog" href="//test.local:8000/enmash.local/web/app_dev.php/catalog/test/test/more">more</a>
-                <product-list url="//test.local:8000/enmash.local/web/app_dev.php/catalog/test/test">
-
-                </product-list>
+                {% set currentPath = url(app.request.attributes.get('_route'),
+                app.request.attributes.get('_route_params')) %}
+                <product-list url="{{ currentPath }}"></product-list>
             </div>
         </core-header-panel>
     </core-drawer-panel>
 
     <script type="text/javascript">
+
+        //collapse sidebar stuff
         $(document).ready(function(){
             $('#catalog-menu').delegate('li span.submenu-trigger', 'click', function(e){
                 $(this).parent().find('ul').first().toggle();
@@ -271,6 +268,13 @@
                     $(element).find('span.submenu-trigger').first().trigger('click');
                 });
             }
+
+            //product list ajax refresh
+//            $('#catalog-menu').delegate('a', 'click', function(e){
+//                e.preventDefault();
+//                var dataUrl = $(this).attr('href');
+//                console.log('loading products from ' + dataUrl);
+//            });
         });
     </script>
 

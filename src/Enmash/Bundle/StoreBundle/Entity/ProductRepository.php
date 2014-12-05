@@ -12,4 +12,32 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductRepository extends EntityRepository
 {
+    public function findAllElementsForCategory(Category $category) {
+
+        $allCategories = array(
+            $category->getId()
+        );
+        foreach ($category->getSubCategories() as $subCategory) {
+            $allCategories[] = $subCategory->getId();
+            foreach ($subCategory->getSubCategories() as $subSubCategory) {
+                $allCategories[] = $subSubCategory->getId();
+            }
+        }
+
+        $query = $this
+            ->getEntityManager()
+            ->getRepository('EnmashStoreBundle:Product')
+            ->createQueryBuilder('p')
+            ->select('p');
+
+        foreach ($allCategories as $index => $categoryId) {
+            if ($index == 0) {
+                $query->where('p.category = ' . $categoryId);
+            } else {
+                $query->orWhere('p.category = ' . $categoryId);
+            }
+        }
+
+        return $query->getQuery()->getResult();
+    }
 }

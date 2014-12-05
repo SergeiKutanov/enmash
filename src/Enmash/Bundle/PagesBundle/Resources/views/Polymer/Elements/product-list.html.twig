@@ -23,6 +23,9 @@
                     <p>{{ "{{ product.desc }}" }}</p>
                 </product-list-item>
             </template>
+            <template if="{{ '{{ products == 0}}' }}">
+                <div>No items found</div>
+            </template>
         </div>
 
     </template>
