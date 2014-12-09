@@ -4,6 +4,8 @@ namespace Enmash\Bundle\PagesBundle\Controller;
 
 use Enmash\Bundle\StoreBundle\Entity\Category;
 use Enmash\Bundle\StoreBundle\Entity\Product;
+use JMS\Serializer\Serializer;
+use Sonata\MediaBundle\Model\GalleryHasMedia;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -50,26 +52,7 @@ class CatalogController extends Controller
     public function showSingleCategoryAction(Category $category, Request $request) {
         if ($request->getMethod() === 'GET') {
 
-            /* @var $breadcrumbs Breadcrumbs */
-            $breadcrumbs = $this->get('white_october_breadcrumbs');
-
-            $node = $category;
-            while($node) {
-                $breadcrumbs->prependItem(
-                    $node->getName(),
-                    $this->get('router')->generate(
-                            'catalog-category-page',
-                            array(
-                                'slug'  => $node->getSlug()
-                            )
-                        )
-                );
-                $node = $node->getParentCategory();
-            }
-            $breadcrumbs->prependItem(
-                'Каталог',
-                $this->get('router')->generate('catalog-index-page')
-            );
+            $this->buildBreadcrumbs($category);
 
             return $this->render(
                 'EnmashPagesBundle:Pages:Catalog/index.html.twig'
@@ -90,7 +73,22 @@ class CatalogController extends Controller
             );
             /* @var $product Product */
             foreach ($products as $product) {
-                $response['products'][] = $product;
+
+                $image = Product::NO_IMAGE;
+
+                if ($product->getProductImages()) {
+                    $images = $product->getProductImages()->getGalleryHasMedias();
+                    $image = $this->container->get('sonata.media.twig.extension')->path($images[0]->getMedia(), 'big');
+                }
+
+                $response['products'][] = array(
+                    'product'   => $product,
+                    'image'     => $image,
+                    'href'      => $this->generateUrl('catalog-product-page', array(
+                            'slug'  => $product->getCategory()->getSlug(),
+                            'product'   => $product->getId()
+                        ))
+                );
             }
 
             $jsonResponse = $serializer->serialize($response, 'json');
@@ -98,6 +96,32 @@ class CatalogController extends Controller
             return new Response($jsonResponse);
         }
 
+    }
+
+    /**
+     * @Route("/{slug}/{product}", name="catalog-product-page")
+     * @Method({"GET", "POST"})
+     * @ParamConverter("category", options={"mapping": {"slug": "slug"}})
+     * @ParamConverter("product")
+     */
+    public function showSingleProductAction(Category $category, Product $product, Request $request) {
+
+        if ($request->getMethod() == 'GET') {
+
+            $this->buildBreadcrumbs($category);
+
+            return $this->render(
+                'EnmashPagesBundle:Pages:Catalog/singleitem.html.twig',
+                array(
+                    'product'   => $product
+                )
+            );
+        }
+
+        $serializer = $this->get('serializer');
+        /* @var $serializer Serializer */
+        $productJson = $serializer->serialize($product, 'json');
+        return new Response($productJson);
     }
 
     /**
@@ -109,4 +133,27 @@ class CatalogController extends Controller
             'EnmashPagesBundle:Polymer:Elements/' . $name
         );
     }
+
+    private function buildBreadcrumbs($node) {
+        /* @var $breadcrumbs Breadcrumbs */
+        $breadcrumbs = $this->get('white_october_breadcrumbs');
+
+        while($node) {
+            $breadcrumbs->prependItem(
+                $node->getName(),
+                $this->get('router')->generate(
+                    'catalog-category-page',
+                    array(
+                        'slug'  => $node->getSlug()
+                    )
+                )
+            );
+            $node = $node->getParentCategory();
+        }
+        $breadcrumbs->prependItem(
+            'Каталог',
+            $this->get('router')->generate('catalog-index-page')
+        );
+    }
+
 }

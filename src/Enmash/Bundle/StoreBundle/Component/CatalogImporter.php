@@ -149,7 +149,7 @@ class CatalogImporter {
                     )
                 );
             if (!$good) {
-                throw new NotFoundResourceException('Product not found while working on analogs');
+                throw new NotFoundResourceException('Product -(' . $productCode  .')- not found while working on analogs');
             }
 
             if (count($good->getAnalogs()) > 0) {

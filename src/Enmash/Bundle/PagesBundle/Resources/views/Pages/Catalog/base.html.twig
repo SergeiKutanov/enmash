@@ -20,6 +20,7 @@
     <link rel="import" href="{{ asset('vendor/paper-icon-button/paper-icon-button.html') }}">
     <link rel="import" href="{{ asset('vendor/paper-dropdown/paper-dropdown.html') }}">
     <link rel="import" href="{{ asset('vendor/paper-button/paper-button.html') }}">
+    <link rel="import" href="{{ asset('vendor/paper-shadow/paper-shadow.html') }}">
 
 
     <link rel="import" href="{{ path('get_polymer_element', {'name': 'site-banner.html.twig'}) }}">
@@ -311,6 +312,8 @@
 //            });
         });
     </script>
+
+    {% block customjs %}{% endblock %}
 
 </body>
 </html>

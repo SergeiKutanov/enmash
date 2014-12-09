@@ -51,6 +51,8 @@ class Category
 
     /**
      * @OneToMany(targetEntity="Category", mappedBy="parentCategory", cascade={"persist", "remove"}, orphanRemoval=true)
+     *
+     * @ORM\OrderBy({"name" = "ASC"})
      */
     private $subCategories;
 

@@ -1,7 +1,6 @@
 <link rel="import" href="{{ asset('vendor/polymer/polymer.html') }}">
-<link rel="import" href="{{ asset('vendor/paper-shadow/paper-shadow.html') }}">
 
-<polymer-element name="product-list-item">
+<polymer-element name="product-list-item" attributes="product">
 
     <template>
         <style>
@@ -21,20 +20,12 @@
             .product-list-item {
                 border: 1px solid #eeeeee;
                 margin: 10px;
+                padding: 10px;
             }
 
-            polyfill-next-selector {content: '.product-list-item h3';}
-            .product-list-item ::content h3 {
-                background-color: #337ab7;
-                color: yellow;
-                margin: 0;
-                text-align: center;
-                padding: 10px 0;
-            }
-
-            polyfill-next-selector {content: '.product-list-item img';}
-            .product-list-item ::content img {
-                margin: 10px;
+            polyfill-next-selector {content: '.product-list-item a img';}
+            .product-list-item a img {
+                width: 100%;
             }
 
             polyfill-next-selector {content: '.product-short-desc';}
@@ -42,21 +33,42 @@
                 margin: 0px 10px 10px 10px;
             }
 
+            /*polyfill-next-selector {content: '.product-list-item p.price';}*/
+            /*.product-list-item ::content p.price {*/
+                /*color: red;*/
+            /*}*/
+
+            polyfill-next-selector {content: '.product-list-item p.price';}
+            .product-list-item p.price {
+                /*color: red;*/
+            }
+
         </style>
         <paper-shadow z="1" class="product-list-item" layout vertical>
 
-            <content select="h3"></content>
+            <a href="{{ '{{ product.href }}' }}">
+                <img src="{{ '{{ product.image }}' }}">
+            </a>
 
-            <content select="img"></content>
-            <div class="product-short-desc">
-                <content></content>
-            </div>
+            <h3>{{ '{{ product.product.acronym }}' }}</h3>
+
+            <p class="price">100 руб.</p>
+
+            {#<content select="img"></content>#}
+
+            {#<content select="h3">{{ '{{ product.product.acronym}}' }}</content>#}
+
+            {#<content select="p.price"></content>#}
 
         </paper-shadow>
 
     </template>
 
     <script>
-        Polymer({});
+        Polymer({
+            ready: function() {
+
+            }
+        });
     </script>
 </polymer-element>

@@ -1,0 +1,12 @@
+<div class="product-small">
+    {% set imgPath = product.getNoImage %}
+    {% if product.productImages %}
+        {% if product.productImages.galleryHasMedias | length > 0 %}
+            {% set imgPath = path(product.productImages.galleryHasMedias[0].media, 'small') %}
+        {% endif %}
+    {% endif %}
+    <div>
+        <img src="{{ imgPath }}">
+    </div>
+    <a href={{ path('catalog-product-page', {'slug': product.category.slug, 'product': product.id}) }}>{{ product.name }} - {{ product.acronym }}</a>
+</div>

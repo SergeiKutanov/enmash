@@ -21,10 +21,11 @@
         <h1>{{ "{{ category.name }}" }}</h1>
         <div class="product-list" layout horizontal wrap>
             <template repeat="{{ '{{ product in products  }}' }}">
-                <product-list-item>
-                    <h3>{{ "{{ product.acronym }}" }}</h3>
-                    <img src="#">
-                    <p>some description</p>
+                <product-list-item product="{{ '{{ product }}' }}">
+                    {#<img src="{{ '{{ product.image }}' }}">#}
+                    {#<h3>{{ "{{ product.product.acronym }}" }}</h3>#}
+                    {#<p>Производитель - <a href="#">{{ '{{ product.product.manufacturer.name}}' }}</a></p>#}
+                    {#<p class="price">100 руб.</p>#}
                 </product-list-item>
             </template>
             <template if="{{ '{{ products == 0}}' }}">

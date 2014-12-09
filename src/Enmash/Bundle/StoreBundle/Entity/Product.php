@@ -18,6 +18,8 @@ use JMS\Serializer\Annotation\Expose;
  */
 class Product
 {
+    const NO_IMAGE = '/enmash.local/web/bundles/enmashpages/images/noimageyet.jpg';
+
     /**
      * @var integer
      *
@@ -72,6 +74,9 @@ class Product
     /**
      * @ORM\ManyToOne(targetEntity="Manufacturer", inversedBy="products")
      * @ORM\JoinColumn(name="manufacturer_id", referencedColumnName="id")
+     *
+     * @Expose
+     *
      */
     private $manufacturer;
 
@@ -438,5 +443,9 @@ class Product
     public function getProductImages()
     {
         return $this->productImages;
+    }
+
+    public function getNoImage() {
+        return self::NO_IMAGE;
     }
 }

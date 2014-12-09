@@ -1,0 +1,214 @@
+{% extends 'EnmashPagesBundle:Pages:Catalog/base.html.twig' %}
+
+{% block css %}
+    <style>
+        .product-short-info {
+            background-color: #eeeeee;
+            margin-bottom: 20px;
+        }
+
+        .product-short-info core-item {
+            margin: 0 10px;
+        }
+
+        .product-main-info {
+            padding: 10px;
+        }
+
+        .row {
+            margin: 10px 0px;
+        }
+
+        .list-inline {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .list-inline li {
+            display: inline-block;
+            float: left;
+            margin: 5px;
+        }
+        
+        .list-inline li:first-child {
+            margin-left: 0px;
+        }
+
+        #product-images li {
+            cursor: pointer;
+            position: relative;
+        }
+
+        #product-images li img {
+            display: block;
+        }
+
+        .main-image {
+            text-align: center;
+        }
+
+        .main-image img {
+            width: 100%;
+        }
+
+        #product-images li.current:before {
+            content: '';
+            position: absolute;
+            display: block;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 124, 194, .3);
+        }
+
+        .margin-outline-5 {
+            margin: 5px;
+        }
+
+        .margin-top-bottom-outline-10 {
+            margin: 10px 0;
+        }
+
+        .list-unstyled {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        @media screen and (min-width: 780px) {
+            .responsive-3{
+                width: 33%;
+            }
+
+            div[class*="responsive-"] > .content{
+                margin: 10px 5px;
+            }
+        }
+
+        @media screen and (min-width: 780px) {
+            .responsive-2{
+                width: 50%;
+            }
+        }
+
+        @media screen and (max-width: 779px) {
+            .responsive{
+                width: 100%;
+            }
+
+            .responsive > .content {
+                margin: 10px 0;
+            }
+        }
+
+        .responsive > .content {
+            padding: 5px;
+        }
+
+        .product-small img {
+            width: 100%;
+        }
+
+        .product-analogs paper-shadow {
+            padding: 5px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block maincontent %}
+<h1>{{ product.name }} - {{ product.acronym }}</h1>
+<paper-shadow z="1" layout horizontal class="product-short-info row">
+    <core-item>
+        Арт.: <b>{{ product.sku }}</b>
+    </core-item>
+    <core-item>
+        Производитель: <b>{{ product.manufacturer.name }}</b>
+    </core-item>
+</paper-shadow>
+
+<paper-shadow z="1" layout vertical class="product-main-info row">
+    <div id="product-photo-and-desc" layout horizontal wrap>
+        <div class="product-images responsive responsive-2">
+            <div class="main-image margin-outline-5">
+                {% if product.productImages %}
+                    {% set mainImage = product.productImages.galleryHasMedias[0].media %}
+                    <img src="{% path mainImage, 'big' %}" alt="{{ mainImage.name  }}" id="mainImage">
+                {% else %}
+                    <img src="{{ product.getNoImage }}">
+                {% endif %}
+            </div>
+            <hr>
+            <div class="other-images margin-outline-5">
+                {% if product.productImages %}
+                <ul class="list-inline" id="product-images">
+                    {% for media in product.productImages.galleryHasMedias %}
+                        <li {% if loop.index == 1 %}class="current"{% endif %}>
+                            <img src="{% path media.media, 'small' %}" data-big-img="{% path media.media, 'big' %}">
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+        <div class="produc-info responsive responsive-2">
+            <h4>Описание товара</h4>
+        </div>
+    </div>
+</paper-shadow>
+<paper-shadow z="1">
+    <div id="product-analogs-and-similars" layout horizontal wrap>
+        {% if product.analogs %}
+        <div class="product-analogs responsive responsive-2 text-center">
+            <h3>Аналоги</h3>
+            <div layout horizontal wrap class="product-wrap">
+                {% for analog in product.analogs %}
+                <div class="responsive responsive-2">
+                    <paper-shadow z="1" class="content">
+                        {% include 'EnmashPagesBundle:Pages:Catalog/Block/product-small.html.twig' with {'product': analog} %}
+                    </paper-shadow>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% if product.similars %}
+        <div class="product-similars responsive responsive-2 text-center">
+            <h3>Похожие товары</h3>
+            <div layout horizontal wrap class="product-wrap">
+                {% for similar in product.similars %}
+                    <div class="responsive responsive-2">
+                        <paper-shadow z="1" class="content">
+                            {% include 'EnmashPagesBundle:Pages:Catalog/Block/product-small.html.twig' with {'product': similar} %}
+                        </paper-shadow>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</paper-shadow>
+{% endblock %}
+
+{% block customjs %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#product-images img').click(function(e){
+
+                $('#product-images img').parent().parent().find('li').removeClass('current');
+
+                var bigImageHref = $(this).attr('data-big-img');
+                $('#mainImage').attr('src', bigImageHref);
+
+                $(this).parent().addClass('current');
+            });
+        });
+    </script>
+{% endblock %}
