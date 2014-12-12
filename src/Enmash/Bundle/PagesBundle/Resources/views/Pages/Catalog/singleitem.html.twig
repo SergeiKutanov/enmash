@@ -93,6 +93,12 @@
             }
         }
 
+        @media screen and (min-width: 780px) {
+            .responsive-4{
+                width: 25%;
+            }
+        }
+
         @media screen and (max-width: 779px) {
             .responsive{
                 width: 100%;
@@ -145,9 +151,9 @@
                     <img src="{{ product.getNoImage }}">
                 {% endif %}
             </div>
+            {% if product.productImages %}
             <hr>
             <div class="other-images margin-outline-5">
-                {% if product.productImages %}
                 <ul class="list-inline" id="product-images">
                     {% for media in product.productImages.galleryHasMedias %}
                         <li {% if loop.index == 1 %}class="current"{% endif %}>
@@ -155,45 +161,100 @@
                         </li>
                     {% endfor %}
                 </ul>
-                {% endif %}
             </div>
+            {% endif %}
         </div>
-        <div class="produc-info responsive responsive-2">
+        <div class="product-info responsive responsive-2">
             <h4>Описание товара</h4>
         </div>
     </div>
 </paper-shadow>
 <paper-shadow z="1">
-    <div id="product-analogs-and-similars" layout horizontal wrap>
-        {% if product.analogs %}
-        <div class="product-analogs responsive responsive-2 text-center">
-            <h3>Аналоги</h3>
-            <div layout horizontal wrap class="product-wrap">
-                {% for analog in product.analogs %}
-                <div class="responsive responsive-2">
-                    <paper-shadow z="1" class="content">
-                        {% include 'EnmashPagesBundle:Pages:Catalog/Block/product-small.html.twig' with {'product': analog} %}
-                    </paper-shadow>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %}
-        {% if product.similars %}
-        <div class="product-similars responsive responsive-2 text-center">
-            <h3>Похожие товары</h3>
-            <div layout horizontal wrap class="product-wrap">
-                {% for similar in product.similars %}
-                    <div class="responsive responsive-2">
+    <paper-tabs selected="0">
+        <paper-tab>
+           Аналоги
+        </paper-tab>
+        <paper-tab>
+            Похожие товары
+        </paper-tab>
+    </paper-tabs>
+
+    <core-pages flex>
+        <div>
+            {% if product.analogs | length > 0 %}
+            <div class="product-analogs text-center">
+                <div layout horizontal wrap class="product-wrap">
+                    {% for analog in product.analogs %}
+                    <div class="responsive responsive-4">
                         <paper-shadow z="1" class="content">
-                            {% include 'EnmashPagesBundle:Pages:Catalog/Block/product-small.html.twig' with {'product': similar} %}
+                            {% include 'EnmashPagesBundle:Pages:Catalog/Block/product-small.html.twig' with {'product': analog} %}
                         </paper-shadow>
                     </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
+            {% endif %}
         </div>
-        {% endif %}
-    </div>
+        <div id="similars">
+            {% if product.similars | length > 0 %}
+            <div class="product-analogs text-center">
+                <div layout horizontal wrap class="product-wrap">
+                    {% for similar in product.similars %}
+                        <div class="responsive responsive-4">
+                            <paper-shadow z="1" class="content">
+                                {% include 'EnmashPagesBundle:Pages:Catalog/Block/product-small.html.twig' with {'product': similar} %}
+                            </paper-shadow>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {#{% if product.analogs | length > 0 %}#}
+        {#<div class="product-analogs responsive responsive-2 text-center">#}
+        {#<h3>Аналоги</h3>#}
+        {#<div layout horizontal wrap class="product-wrap">#}
+        {#{% for analog in product.analogs %}#}
+        {#<div class="responsive responsive-2">#}
+        {#<paper-shadow z="1" class="content">#}
+        {#{% include 'EnmashPagesBundle:Pages:Catalog/Block/product-small.html.twig' with {'product': analog} %}#}
+        {#</paper-shadow>#}
+        {#</div>#}
+        {#{% endfor %}#}
+        {#</div>#}
+        {#</div>#}
+        {#{% endif %}#}
+    </core-pages>
+    {#<div id="product-analogs-and-similars" layout horizontal wrap>#}
+        {#{% if product.analogs | length > 0 %}#}
+        {#<div class="product-analogs responsive responsive-2 text-center">#}
+            {#<h3>Аналоги</h3>#}
+            {#<div layout horizontal wrap class="product-wrap">#}
+                {#{% for analog in product.analogs %}#}
+                {#<div class="responsive responsive-2">#}
+                    {#<paper-shadow z="1" class="content">#}
+                        {#{% include 'EnmashPagesBundle:Pages:Catalog/Block/product-small.html.twig' with {'product': analog} %}#}
+                    {#</paper-shadow>#}
+                {#</div>#}
+                {#{% endfor %}#}
+            {#</div>#}
+        {#</div>#}
+        {#{% endif %}#}
+        {#{% if product.similars | length > 0%}#}
+        {#<div class="product-similars responsive responsive-2 text-center">#}
+            {#<h3>Похожие товары</h3>#}
+            {#<div layout horizontal wrap class="product-wrap">#}
+                {#{% for similar in product.similars %}#}
+                    {#<div class="responsive responsive-2">#}
+                        {#<paper-shadow z="1" class="content">#}
+                            {#{% include 'EnmashPagesBundle:Pages:Catalog/Block/product-small.html.twig' with {'product': similar} %}#}
+                        {#</paper-shadow>#}
+                    {#</div>#}
+                {#{% endfor %}#}
+            {#</div>#}
+        {#</div>#}
+        {#{% endif %}#}
+    {#</div>#}
 </paper-shadow>
 {% endblock %}
 
@@ -209,6 +270,16 @@
 
                 $(this).parent().addClass('current');
             });
+
+
+
         });
+
+        var pages = document.querySelector('core-pages');
+        var tabs = document.querySelector('paper-tabs');
+        tabs.addEventListener('core-select', function() {
+            pages.selected = tabs.selected;
+        });
+
     </script>
 {% endblock %}
