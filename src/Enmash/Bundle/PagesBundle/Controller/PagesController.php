@@ -40,37 +40,13 @@ class PagesController extends Controller{
 
         //todo think of a better way to find store's location for landing page tab
         $em = $this->getDoctrine()->getManager();
-        $stores = $em
-            ->getRepository('EnmashStoreBundle:Store')
-            ->findBy(
-                array(
-                    'publish'   => true
-                )
-            );
-        $sortedStores = array(
-            'vladimir'          => array(),
-            'vladimir_region'   => array(),
-            'ivanovo_region'    => array()
-        );
-        foreach ($stores as $store) {
-            /* @var $store Store */
-            if (strpos($store->getAddress(), 'Владимир') !== false) {
-                $sortedStores['vladimir'][] = $store;
-            } elseif ((strpos($store->getAddress(), 'Иваново') !== false) || (strpos($store->getAddress(), 'Кинешма') !== false)) {
-                $sortedStores['ivanovo_region'][] = $store;
-            } else {
-                $sortedStores['vladimir_region'][] = $store;
-            }
-        }
+        $sortedStores = $em
+            ->getRepository("EnmashStoreBundle:Store")
+            ->getCitySortedStores();
 
         $featuredArticles = $em
             ->getRepository('EnmashPagesBundle:Article')
-            ->findBy(
-                array(
-                    'publish'   => true,
-                    'featured'  => true
-                )
-            );
+            ->getRandomArticles(3);
 
         $cheapBannerPath = $this->container->getParameter('cheap_banner_folder') . DIRECTORY_SEPARATOR .$this->container->getParameter('cheap_banner_filename');
 
@@ -138,7 +114,12 @@ class PagesController extends Controller{
         $em = $this->getDoctrine()->getManager();
         $stores = $em
             ->getRepository('EnmashStoreBundle:Store')
-            ->getOnlyOneTypeOfStores(Store::WHOLESALE_TYPE);
+            ->getOnlyOneTypeOfStores(
+                array(
+                    Store::WHOLESALE_TYPE,
+                    Store::ORDER_TYPE
+                )
+            );
 
         if (!$stores) {
             throw new NotFoundHttpException('No stores found');
@@ -175,23 +156,31 @@ class PagesController extends Controller{
     }
 
     /**
-     * @Route("/articles", name="articles-page")
+     * @Route("/yourbenefits", name="your-benefits-page")
      * @Method("GET")
      */
-    public function articlesPage() {
+    public function yourBenefitsPage() {
         $em = $this->getDoctrine()->getManager();
         $articles = $em
             ->getRepository('EnmashPagesBundle:Article')
-            ->findBy(
-                array(
-                    'publish'   => true,
-                    'featured'  => true
-                ),
-                array(
-                    'featured'    => 'desc',
-                    'createdAt'   => 'asc'
-                )
-            );
+            ->getYourBenefitArticles();
+        return $this->render(
+            'EnmashPagesBundle:Pages:articles.html.twig',
+            array(
+                'articles'  => $articles
+            )
+        );
+    }
+
+    /**
+     * @Route("/yoursafety", name="your-safety-page")
+     * @Method("GET")
+     */
+    public function yourSafetyPage() {
+        $em = $this->getDoctrine()->getManager();
+        $articles = $em
+            ->getRepository('EnmashPagesBundle:Article')
+            ->getYourSafetyArticles();
         return $this->render(
             'EnmashPagesBundle:Pages:articles.html.twig',
             array(
@@ -313,15 +302,10 @@ class PagesController extends Controller{
      */
     public function testAction() {
 
-        $article = new Article();
-        $article->setTitle('Заголовок статьи');
-        $article->setAbstract('abstract');
-        $article->setBody('body');
-        $article->setPublish(true);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($article);
-        $em->flush();
+//        $arr1 = [0,1,2,3];
+//        $arr2 = [4];
+//        var_dump(array_intersect($arr1, $arr2));
+//        die();
     }
 
 } 

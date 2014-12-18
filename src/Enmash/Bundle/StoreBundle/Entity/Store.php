@@ -35,6 +35,13 @@ class Store
     /**
      * @var string
      *
+     * @ORM\Column(name="city", type="string", length=255)
+     */
+    private $city;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="address", type="string", length=255)
      */
     private $address;
@@ -413,5 +420,44 @@ class Store
     public function getWhInfo()
     {
         return $this->whInfo;
+    }
+
+    public function getAddressWithoutCity() {
+        return preg_replace('/^([^,]+),\s/', '', $this->getAddress());
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     * @return Store
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    public function getTypesString() {
+        $typesString = '';
+        $trailingComaOffset = count($this->getStoreType()) - 1;
+        foreach ($this->getStoreType() as $index => $type) {
+            $typesString .= $this->getStoreTypeString($type);
+            if ($index != $trailingComaOffset) {
+                $typesString .= ' | ';
+            }
+        }
+        return $typesString;
     }
 }

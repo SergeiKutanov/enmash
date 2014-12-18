@@ -37,11 +37,11 @@
                     $.ajax({
                         method: 'POST',
                         data: {
-                            'type': $('#bigmap').attr('data-type')
+                            'type': $('#bigmap').data('type')
                         },
                         url: $('#bigmap').attr('data-path'),
                         success: function(data) {
-                            window.mapInfo = initializeBigMap(data, iconPath);
+                            window.mapInfo = initializeBigMap(data, iconPath, true);
                         }
                     });
                 }

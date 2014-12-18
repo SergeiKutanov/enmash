@@ -6,6 +6,13 @@ html, body {
     height: 100%;
 }
 
+body.article {
+    /*background-color: #ffffdf;*/
+    /*background-image: url('../images/logo_grey.png');*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
+}
+
 p {
     font-size: 1.3em;
 }
@@ -107,10 +114,14 @@ hr {
 
 .navbar-brand {
     height: initial;
+    font-size: 12px;
+    text-align: center;
+    padding: 0px 15px;
 }
 
 .navbar-brand img {
-    height: 25px;
+    height: initial;
+    width: 215px;
 }
 
 #top-menu ul.navbar-nav a {
@@ -388,6 +399,10 @@ div.container.landing-map {
     /*background-size: contain;*/
     /*background-repeat: no-repeat;*/
     /*background-position: 85% center;*/
+}
+
+.store-panel {
+    margin-bottom: 5px;
 }
 
 #ivanovo-region p {
@@ -731,4 +746,9 @@ a.featured-image img {
 /*----------------special offers page---------------------------*/
 #isotope-container .item img {
     width: 100%;
+}
+
+.offer-anchor {
+    position: absolute;
+    top: -100px;
 }

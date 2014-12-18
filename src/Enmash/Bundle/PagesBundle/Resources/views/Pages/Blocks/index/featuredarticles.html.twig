@@ -1,6 +1,35 @@
+<style>
+    div.featured-articles .bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: block;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        z-index: -1;
+    }
+
+    div.featured-articles .bg:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: block;
+        background-color: rgba(255, 255, 255, .8);
+    }
+</style>
+
 <div class="row featured-articles">
     {% for article in articles %}
-    <div class="col-xs-12 col-md-4">
+    <div class="col-xs-12 col-md-4" >
+        <div class="bg" {% if article.featuredImage %}style="background-image: url('{% path article.featuredImage, 'big' %}')"{% endif %}>
+
+        </div>
         <h3><a href="{{ path('article-page', {'slug': article.slug}) }}">{{ article.title }}</a></h3>
         <div class="article-body">
             {{ article.abstract | raw }}

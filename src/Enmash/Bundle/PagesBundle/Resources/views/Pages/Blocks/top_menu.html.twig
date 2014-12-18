@@ -4,7 +4,8 @@
             <div class="col-xs-3">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="{{ path('index-page') }}">
-                        {% image '@EnmashPagesBundle/Resources/public/images/logo_energomash.png' %}
+                        ЭЛЕКТРОТЕХНИЧЕСКАЯ КОМПАНИЯ
+                        {% image '@EnmashPagesBundle/Resources/public/images/logo_energomash_blue.png' %}
                         <img src="{{ asset_url }}" alt="Логотип Энергомаш" />
                         {% endimage %}
                     </a>
@@ -39,7 +40,8 @@
                     <li {% if app.request.get('_route') == 'stores-page' %}class="active"{% endif %}><a href="{{ path('stores-page') }}">МАГАЗИНЫ</a></li>
                     <li {% if app.request.get('_route') == 'wholesale-stores-page' %}class="active"{% endif %}><a href="{{ path('wholesale-stores-page') }}">СЛУЖБЫ СБЫТА</a></li>
                     <li {% if app.request.get('_route') == 'special-offers-page' %}class="active"{% endif %}><a href="{{ path('special-offers-page') }}">БОНУСЫ И СКИДКИ</a></li>
-                    <li {% if app.request.get('_route') == 'articles-page' %}class="active"{% endif %}><a href="{{ path('articles-page') }}">ПОЛЕЗНЫЕ СТАТЬИ</a></li>
+                    <li {% if app.request.get('_route') == 'your-benefits-page' %}class="active"{% endif %}><a href="{{ path('your-benefits-page') }}">ВАША ПРИБЫЛЬ</a></li>
+                    <li {% if app.request.get('_route') == 'your-safety-page' %}class="active"{% endif %}><a href="{{ path('your-safety-page') }}">ВАША БЕЗОПАСНОСТЬ</a></li>
                     <li {% if app.request.get('_route') == 'contacts-page' %}class="active"{% endif %}><a href="{{ path('contacts-page') }}">КОНТАКТЫ</a></li>
                 </ul>
             </div>

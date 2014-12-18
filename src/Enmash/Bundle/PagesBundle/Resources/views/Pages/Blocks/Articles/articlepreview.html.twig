@@ -10,6 +10,7 @@
             <a href="{{ path('article-page', {'slug': article.slug}) }}">Читать дальше</a>
         </div>
         <hr>
+        {% if article.connectedArticles | length > 0 %}
         <div class="">
             <p>Серия статей на тему:</p>
             <ul class="list-unstyled">
@@ -18,5 +19,6 @@
                 {% endfor %}
             </ul>
         </div>
+        {% endif %}
     </div>
 </div>
