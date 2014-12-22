@@ -2,21 +2,58 @@
     <td>Контакты</td>
     <td>
         {% for contact in store.contacts %}
-            <ul class="list-unstyled text-left">
-                {% if contact.name %}
-                    <li>{{ contact.name }}</li>
-                {% endif %}
-                {% if contact.phone %}
-                    <li>Тел.: {{ contact.phone }}</li>
-                {% endif %}
-                {% if contact.email %}
-                    <li>Email: {{ contact.email }}</li>
-                {% endif %}
-                {% if contact.skype %}
-                    <li></li>
-                    <li>Skype: <a href="skype:{{ contact.skype }}?call"> <img src="http://mystatus.skype.com/smallicon/{{ contact.skype }}" border="0"></a></li>
-                {% endif %}
-            </ul>
+            {% if renderAs == constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::RETAIL_TYPE') and not contact.skype %}
+                <ul class="list-unstyled text-left">
+                    <li class="text-center">
+                        {% if contact.name %}
+                            <b>{{ contact.name }}:</b>
+                        {% endif %}
+                        <div class="row contact-row">
+                            <div class="col-xs-12 {% if contact.photo %}col-md-8{% endif %}">
+                                <ul class="list-unstyled text-left contacts-list">
+                                    {% if contact.phone %}
+                                        <li><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span> {{ contact.phone }}</li>
+                                    {% endif %}
+                                    {% if contact.email %}
+                                        <li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {{ contact.email }}</li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            {% elseif renderAs == constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::WHOLESALE_TYPE') %}
+                <ul class="list-unstyled text-left">
+                    <li class="text-center">
+                        {% if contact.name %}
+                            <b>{{ contact.name }}:</b>
+                        {% endif %}
+                        <div class="row contact-row">
+                            <div class="col-xs-12 col-md-8">
+                                <ul class="list-unstyled text-left contacts-list">
+                                    {% if contact.phone %}
+                                        <li><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span> {{ contact.phone }}</li>
+                                    {% endif %}
+                                    {% if contact.email %}
+                                        <li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {{ contact.email }}</li>
+                                    {% endif %}
+                                    {% if contact.skype %}
+                                        <li><b>Skype</b>: <a href="skype:{{ contact.skype }}?call"> <img src="http://mystatus.skype.com/smallicon/{{ contact.skype }}" border="0"></a> - позвоните мне и я отвечу на все ваши вопросы</li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            {% if renderAs == constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::WHOLESALE_TYPE') %}
+                                {% if contact.skype %}
+                                    <div class="col-xs-12 col-md-4">
+                                        {#<img src="{% path contact.photo, 'small' %}" class="contact-image">#}
+                                        <img src="http://api.skype.com/users/{{ contact.skype }}/profile/avatar" class="contact-image">
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </li>
+                </ul>
+            {% endif %}
         {% endfor %}
     </td>
 </tr>

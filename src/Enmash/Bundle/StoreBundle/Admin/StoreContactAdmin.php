@@ -55,6 +55,15 @@ class StoreContactAdmin extends Admin
             ->add('email')
             ->add('phone')
             ->add('skype')
+            ->add(
+                'photo',
+                'sonata_media_type',
+                array(
+                    'required'  => false,
+                    'provider'  => 'sonata.media.provider.image',
+                    'context'   => 'contactphoto'
+                )
+            )
         ;
     }
 

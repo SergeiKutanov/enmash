@@ -68,6 +68,13 @@ class Store
     private $schedule;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="whschedule", type="string", length=255)
+     */
+    private $wholesaleSchedule;
+
+    /**
      * @var boolean
      * @ORM\Column(name="publish", type="boolean")
      */
@@ -116,10 +123,19 @@ class Store
         );
     }
 
-    public static function getStoreTypeString($type) {
+    public static function getStoreTypeString($type, $noRetail = false) {
 
         if (is_array($type)) {
             $result = '';
+            if ($noRetail) {
+                foreach($type as $index => $subType) {
+                    $newType = array();
+                    if ($subType != self::RETAIL_TYPE) {
+                        $newType[] = $subType;
+                    }
+                }
+                $type = $newType;
+            }
             foreach ($type as $index => $subType) {
                 if ($index > 0) $result .= ' - ';
                 $result .= self::getStoreTypeString($subType);
@@ -459,5 +475,28 @@ class Store
             }
         }
         return $typesString;
+    }
+
+    /**
+     * Set wholesaleSchedule
+     *
+     * @param string $wholesaleSchedule
+     * @return Store
+     */
+    public function setWholesaleSchedule($wholesaleSchedule)
+    {
+        $this->wholesaleSchedule = $wholesaleSchedule;
+
+        return $this;
+    }
+
+    /**
+     * Get wholesaleSchedule
+     *
+     * @return string 
+     */
+    public function getWholesaleSchedule()
+    {
+        return $this->wholesaleSchedule;
     }
 }

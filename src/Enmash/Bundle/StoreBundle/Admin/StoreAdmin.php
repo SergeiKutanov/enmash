@@ -63,6 +63,7 @@ class StoreAdmin extends Admin
                     'required'  => false
                 ))
             ->add('schedule')
+            ->add('wholesaleSchedule')
             ->add('city')
             ->add('address')
             ->add('latitude')

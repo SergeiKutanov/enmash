@@ -50,6 +50,12 @@ class StoreContact
     private $skype;
 
     /**
+     * @var \Application\Sonata\MediaBundle\Entity\Media
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"persist"}, fetch="LAZY")
+     */
+    protected $photo;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Store", inversedBy="contacts")
      * @ORM\JoinColumn(name="store_id", referencedColumnName="id")
      */
@@ -183,5 +189,28 @@ class StoreContact
     public function getStore()
     {
         return $this->store;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Media $photo
+     * @return StoreContact
+     */
+    public function setPhoto(\Application\Sonata\MediaBundle\Entity\Media $photo = null)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
     }
 }

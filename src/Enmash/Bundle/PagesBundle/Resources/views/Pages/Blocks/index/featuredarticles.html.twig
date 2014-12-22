@@ -23,8 +23,9 @@
         background-color: rgba(255, 255, 255, .8);
     }
 </style>
-
+<h2 class="text-center">ВАША ПРИБЫЛЬ</h2>
 <div class="row featured-articles">
+
     {% for article in articles %}
     <div class="col-xs-12 col-md-4" >
         <div class="bg" {% if article.featuredImage %}style="background-image: url('{% path article.featuredImage, 'big' %}')"{% endif %}>
