@@ -35,19 +35,42 @@ class StoreRepository extends EntityRepository {
         }
 
         foreach ($stores as $store) {
-            foreach ($type as $subType) {
-                $add = true;
-                /* @var $store \Enmash\Bundle\StoreBundle\Entity\Store */
-                if (!in_array($subType, $store->getStoreType())) {
-                     $add = false;
-                }
-            }
-            if ($add) {
+            if (count(array_intersect($store->getStoreType(), $type)) > 0) {
                 $filteredStores[] = $store;
             }
         }
 
         return $filteredStores;
+
+    }
+
+    public function getCitySortedStores() {
+        $cities = $this
+            ->createQueryBuilder('s')
+            ->select('DISTINCT s.city')
+            ->where('s.publish = true')
+            ->getQuery()
+            ->getResult();
+
+        $sortedStores = array();
+
+        foreach ($cities as $city) {
+            $city = $city['city'];
+            $stores = $this
+                ->createQueryBuilder('s')
+                ->where('s.publish = true')
+                ->andWhere('s.city = :city')
+                ->setParameters(
+                    array(
+                        'city'  => $city
+                    )
+                )
+                ->getQuery()
+                ->getResult();
+            $sortedStores[$city] = $stores;
+        }
+
+        return $sortedStores;
 
     }
 

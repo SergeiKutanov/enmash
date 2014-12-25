@@ -12,7 +12,12 @@
     {% if (loop.index - 1) is divisible by(3) %}
     <div class="row article-separator">
     {% endif %}
+    {#workaround for your-safety/your-benefits pages#}
+        {% if articles | length > 1%}
     <div class="col-xs-12 col-md-4">
+        {% else %}
+    <div class="col-xs-12 col-md-12">
+        {% endif %}
         {% include 'EnmashPagesBundle:Pages:Blocks/Articles/articlepreview.html.twig' with {'article': article} %}
     </div>
     {% if (loop.index) is divisible by(3) %}

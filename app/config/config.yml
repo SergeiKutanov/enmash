@@ -234,6 +234,13 @@ sonata_media:
                 small: { width: 250 , quality: 70}
                 big:   { width: 800 , quality: 70}
 
+        contactphoto:
+            providers:
+                - sonata.media.provider.image
+
+            formats:
+                small: { width: 250 , quality: 70}
+
     cdn:
         server:
             path: "%sonata_media_bundle_server_path%" # http://media.sonata-project.org/

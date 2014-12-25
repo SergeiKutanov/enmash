@@ -17,13 +17,13 @@
 
         {% include('EnmashPagesBundle:Pages:Blocks/index/about.html.twig') %}
 
-        {% include('EnmashPagesBundle:Pages:Blocks/index/banners.html.twig') %}
+        {% include 'EnmashPagesBundle:Pages:Blocks/index/featuredarticles.html.twig' with {'articles': articles} %}
 
         {% include('EnmashPagesBundle:Pages:Blocks/index/retail_chain.html.twig') %}
 
         {% include('EnmashPagesBundle:Pages:Blocks/index/wholesale.html.twig') %}
 
-        {% include 'EnmashPagesBundle:Pages:Blocks/index/featuredarticles.html.twig' with {'articles': articles} %}
+        {% include('EnmashPagesBundle:Pages:Blocks/index/banners.html.twig') %}
 
     {% endblock %}
 

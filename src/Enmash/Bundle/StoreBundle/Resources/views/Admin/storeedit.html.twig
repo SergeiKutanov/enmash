@@ -15,26 +15,31 @@
             var retailStoreInfoDiv = $("div.form-group[id*='_info']");
             var whStoreInfoDiv = $("div.form-group[id*='_whInfo']");
 
+            var retailSchedule = $("div.form-group[id*='_schedule']");
+            var wholesaleSchedule = $("div.form-group[id*='_wholesaleSchedule']");
+
             switchInfoPanels(storeType, retailStoreInfoDiv, whStoreInfoDiv);
+            switchInfoPanels(storeType, retailSchedule, wholesaleSchedule);
 
             $(select).bind('change', function(e){
                 switchInfoPanels($(this).val(), retailStoreInfoDiv, whStoreInfoDiv);
+                switchInfoPanels($(this).val(), retailSchedule, wholesaleSchedule);
             });
-//            console.log(select);
-//
+
             function switchInfoPanels(types, retail, wholesale) {
                 $(retail).hide();
                 $(wholesale).hide();
 
                 for (var i = 0; i < types.length; i++) {
-                    if (types[i] == 1 || types[i] == 3) {
+                    if (types[i] == 1) {
                         $(retail).show();
                     }
-                    if (types[i] == 2) {
+                    if (types[i] == 2 || types[i] == 3) {
                         $(wholesale).show();
                     }
                 }
             }
+
         });
 
 

@@ -1,5 +1,5 @@
 <div id="map-container">
-    <div id="bigmap" data-path="{{ path('getStoresCoordinates') }}" data-type="{{ storeType }}" data-icon-path="{{ asset('bundles/enmashpages/images/logo_sm.png') }}">
+    <div id="bigmap" data-path="{{ path('getStoresCoordinates') }}" data-type="[{{ storeType | join(',') }}]" data-icon-path="{{ asset('bundles/enmashpages/images/logo_sm.png') }}">
         <div id="map-canvas"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></div>
     </div>
 </div>

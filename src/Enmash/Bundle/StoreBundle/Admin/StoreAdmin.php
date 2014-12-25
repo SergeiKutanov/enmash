@@ -34,6 +34,7 @@ class StoreAdmin extends Admin
         $listMapper
 //            ->add('id')
             ->addIdentifier('name')
+            ->add('city')
             ->add('address')
 //            ->add('latitude')
 //            ->add('longitude')
@@ -62,6 +63,8 @@ class StoreAdmin extends Admin
                     'required'  => false
                 ))
             ->add('schedule')
+            ->add('wholesaleSchedule')
+            ->add('city')
             ->add('address')
             ->add('latitude')
             ->add('longitude')

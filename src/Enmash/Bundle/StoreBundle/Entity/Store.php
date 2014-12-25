@@ -35,6 +35,13 @@ class Store
     /**
      * @var string
      *
+     * @ORM\Column(name="city", type="string", length=255)
+     */
+    private $city;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="address", type="string", length=255)
      */
     private $address;
@@ -59,6 +66,13 @@ class Store
      * @ORM\Column(name="schedule", type="string", length=255)
      */
     private $schedule;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="whschedule", type="string", length=255)
+     */
+    private $wholesaleSchedule;
 
     /**
      * @var boolean
@@ -109,10 +123,19 @@ class Store
         );
     }
 
-    public static function getStoreTypeString($type) {
+    public static function getStoreTypeString($type, $noRetail = false) {
 
         if (is_array($type)) {
             $result = '';
+            if ($noRetail) {
+                foreach($type as $index => $subType) {
+                    $newType = array();
+                    if ($subType != self::RETAIL_TYPE) {
+                        $newType[] = $subType;
+                    }
+                }
+                $type = $newType;
+            }
             foreach ($type as $index => $subType) {
                 if ($index > 0) $result .= ' - ';
                 $result .= self::getStoreTypeString($subType);
@@ -413,5 +436,67 @@ class Store
     public function getWhInfo()
     {
         return $this->whInfo;
+    }
+
+    public function getAddressWithoutCity() {
+        return preg_replace('/^([^,]+),\s/', '', $this->getAddress());
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     * @return Store
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    public function getTypesString() {
+        $typesString = '';
+        $trailingComaOffset = count($this->getStoreType()) - 1;
+        foreach ($this->getStoreType() as $index => $type) {
+            $typesString .= $this->getStoreTypeString($type);
+            if ($index != $trailingComaOffset) {
+                $typesString .= ' | ';
+            }
+        }
+        return $typesString;
+    }
+
+    /**
+     * Set wholesaleSchedule
+     *
+     * @param string $wholesaleSchedule
+     * @return Store
+     */
+    public function setWholesaleSchedule($wholesaleSchedule)
+    {
+        $this->wholesaleSchedule = $wholesaleSchedule;
+
+        return $this;
+    }
+
+    /**
+     * Get wholesaleSchedule
+     *
+     * @return string 
+     */
+    public function getWholesaleSchedule()
+    {
+        return $this->wholesaleSchedule;
     }
 }

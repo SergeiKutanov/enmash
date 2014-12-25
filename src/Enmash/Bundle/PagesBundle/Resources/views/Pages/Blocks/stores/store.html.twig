@@ -2,24 +2,34 @@
 {% set renderAs = constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::RETAIL_TYPE') %}
 {% endif %}
 
+{% set storeTitle = 'магазине' %}
+{% if renderAs == constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::WHOLESALE_TYPE') %}
+    {% set storeTitle = 'службе сбыта' %}
+{% endif %}
+
 <div class="row store-row">
     <a class="offset-anchor" id="store_{{ store.id }}"></a>
     <div class="col-xs-12 text-center">
         <h2>{{ store.name }}</h2>
     </div>
     <div class="col-xs-12 col-md-6">
-        <h3>Информация о магазине</h3>
+        <h3>Информация о {{ storeTitle }}</h3>
         <table class="table table-striped">
             <tr>
                 <td>Адрес</td>
-                <td>{{ store.address }} | <a href="#" class="show-store-on-map" data-store-id="{{ store.id }}">Карта</a></td>
+                <td>{{ store.city }}, {{ store.address }} | <a href="#" class="show-store-on-map" data-store-id="{{ store.id }}">Карта</a></td>
             </tr>
             <tr>
-                <td>График работы</td>
+                {% if renderAs == constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::RETAIL_TYPE') %}
+                <td>График работы магазина</td>
                 <td>{{ store.schedule }}</td>
+                {% else %}
+                <td>График работы ({{ store.getStoreTypeString(store.storeType, true) }})</td>
+                <td>{{ store.wholesaleSchedule }}</td>
+                {% endif %}
             </tr>
             {% if store.contacts | length > 0 %}
-            {% include 'EnmashPagesBundle:Pages:Blocks/storecontacts.html.twig' with {'store': store} %}
+            {% include 'EnmashPagesBundle:Pages:Blocks/storecontacts.html.twig' with {'store': store, 'renderAs': renderAs} %}
             {% endif %}
         </table>
 

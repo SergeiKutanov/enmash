@@ -7,7 +7,7 @@
     {% endblock %}
 
     {% block jumbotron %}
-        {% include 'EnmashPagesBundle:Pages:Blocks/stores/bigmap.html.twig' with {'storeType' : constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::WHOLESALE_TYPE')} %}
+        {% include 'EnmashPagesBundle:Pages:Blocks/stores/bigmap.html.twig' with {'storeType' : [constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::WHOLESALE_TYPE'), constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::ORDER_TYPE')]} %}
     {% endblock %}
 
     {% block content %}
@@ -37,11 +37,11 @@
                     $.ajax({
                         method: 'POST',
                         data: {
-                            'type': $('#bigmap').attr('data-type')
+                            'type': $('#bigmap').data('type')
                         },
                         url: $('#bigmap').attr('data-path'),
                         success: function(data) {
-                            mapInfo = initializeBigMap(data, iconPath);
+                            mapInfo = initializeBigMap(data, iconPath, true, true);
                         }
                     });
                 }

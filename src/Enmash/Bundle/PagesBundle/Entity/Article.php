@@ -10,10 +10,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Article
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Enmash\Bundle\PagesBundle\Entity\ArticleRepository")
  */
 class Article
 {
+    const NEED_TO_KNOW_ARTICLE_TITLE = 'Это нужно знать!';
+
     /**
      * @var integer
      *
