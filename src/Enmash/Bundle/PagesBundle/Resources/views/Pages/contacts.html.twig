@@ -10,7 +10,7 @@
             {% for store in stores %}
             <tr>
                 <td>Адрес</td>
-                <td>{{ store.address }} | <a href="{{ path('stores-page') }}#store_{{ store.id }}">Подробнее</a></td>
+                <td>г. {{ store.city }}, {{ store.address }} | <a href="{{ path('stores-page') }}#store_{{ store.id }}">Подробнее</a></td>
             </tr>
             <tr>
                 <td>Тип</td>

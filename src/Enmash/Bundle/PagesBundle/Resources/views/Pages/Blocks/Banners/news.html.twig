@@ -1,0 +1,33 @@
+<style>
+    #newsBanner {
+        position: absolute;
+        bottom: 15px;
+        left: 100px;
+        z-index: 1;
+        /*background-color: rgba(0, 0, 0, .8);*/
+        background-color: rgba(0, 124, 194, .8);
+        padding: 10px;
+        box-shadow: 5px 5px 0px 0px rgba(0, 124, 194, .9);
+        font-weight: 700;
+        color: #FFFFFF;
+        z-index: 20;
+    }
+
+    #newsBanner a {
+        color: #FFFFFF;
+    }
+
+    #newsBanner h2 {
+        color: #fdda0a;
+        margin: 0;
+        text-shadow: 2px 2px #555;
+        font-weight: 700;
+        font-size: 1.5em;
+    }
+</style>
+<div id="newsBanner">
+    <h2>НОВОСТИ</h2>
+    <ul class="list-unstyled">
+        <li><a href="{{ asset('files/NY2015.pdf') }}" target="_blank">График работы в новогодние праздники 2015</a></li>
+    </ul>
+</div>
