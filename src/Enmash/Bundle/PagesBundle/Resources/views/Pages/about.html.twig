@@ -2,59 +2,336 @@
 
 {% block js %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('vendor/skrollr/dist/skrollr.min.js') }}"></script>
+    {#<script type="text/javascript" src="{{ asset('vendor/skrollr/dist/skrollr.min.js') }}"></script>#}
     <script type="text/javascript">
-        $(document).ready(function(){
-            var windowWidth = $(window).width();
-            if(windowWidth > 767){
-                $('body').attr('data-0', 'background-position: 0px 0px');
-                $('body').attr('data-1000', 'background-position: 0px -100%');
-
-                skrollr.init({
-                    forceHeight: false
-                });
-            }
-        });
+//        $(document).ready(function(){
+//            var windowWidth = $(window).width();
+//            if(windowWidth > 767){
+//                $('body').attr('data-0', 'background-position: 0px 0px');
+//                $('body').attr('data-1000', 'background-position: 0px -100%');
+//
+//                skrollr.init({
+//                    forceHeight: false
+//                });
+//            }
+//        });
 
     </script>
 {% endblock %}
 
-{% block content %}
+{% block no_container %}
     <style type="text/css">
 
         body {
-            background:url({{ asset('bundles/enmashpages/images/map_grey.png') }}) no-repeat fixed;
-            background-size: cover;
+            {#background:url({{ asset('bundles/enmashpages/images/map_grey.png') }}) no-repeat fixed;#}
+            /*background-size: cover;*/
         }
 
     </style>
 
-    <div id="about-page-content">
-        <div id="skrollr-body">
-            <div class="row pusher">
-                <div class="col-sx-12">
-                    <h1 class="text-center">О КОМПАНИИ</h1>
-                    <div class="text-center">
-                        <div id="est-year">
+    {#<div id="about-page-content">#}
+        {#<div id="skrollr-body">#}
+            {#<div class="row pusher">#}
+                {#<div class="col-sx-12">#}
+                    {#<h1 class="text-center">О КОМПАНИИ</h1>#}
+                    {#<div class="text-center">#}
+                        {#<div id="est-year">#}
+                            {#<h4 class="text-center">Год создания</h4>#}
+                            {#<hr>#}
+                            {#<span class="text-center">1994</span>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="row">#}
+                {#<div class="col-sm-12 text-center" id="first-paragraph">#}
+                    {#<p>Сегодня "ЭНЕРГОМАШ" — это электротехническая компания, в состав которой входит более 20 филиалов и специализированных магазинов.</p>#}
+                {#</div>#}
+                {#<div class="col-sm-12 text-center">#}
+                    {#<p>Основные направления розничной и оптовой сети "ЭНЕРГОМАШ"  обеспечение офисно-бытовых, ремонтно-эксплуатационных и строительных нужд предприятий и граждан низковольтной аппаратурой, светотехникой, кабельно-проводниковой и другой продукцией. В номенклатуру компании входят тысячи изделий для различных групп потребителей от лампочек и розеток до люстр и подстанций.</p>#}
+                    {#<p>Главная задача, которую ставит перед собой коллектив "ЭНЕРГОМАША" — предоставить всем потребителям возможность получения как можно более широкого ассортимента продукции комплексно, в одном месте.</p>#}
+                    {#<p>Нас связывают дилерские отношения с крупнейшими российскими и зарубежными производителями.</p>#}
+                    {#<p>Это позволяет сформировать на электротехнические изделия и материалы доступные, конкурентноспособные цены, в ряде случаев — на уровне и ниже, чем у производителей.</p>#}
+                    {#<p>Компания понимает насколько важны, сложны и одновременно опасны в использовании электротехнические изделия. Поэтому в розничной торговле и сбыте во главу угла ставит не обезличенное самообслуживание, а квалифицированные консультации специалистов по подбору оборудования. Этому способствуют созданные во всех филиалах и магазинах обширные экспозиции изделий основной номенклатуры.</p>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+
+    <style>
+        .fill {
+            height: 100%;
+            position: relative;
+        }
+
+        .background {
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-size: cover;
+            -webkit-filter: blur(3px);
+            -moz-filter: blur(3px);
+            -o-filter: blur(3px);
+            -ms-filter: blur(3px);
+            filter: blur(3px);
+            position: absolute;
+            z-index: -1;
+        }
+
+        .firstBlock {
+            background-image: url("{{ asset('bundles/enmashpages/images/about/firstblock.jpg')  }}");
+        }
+
+        .secondBlock {
+            background-image: url("{{ asset('bundles/enmashpages/images/about/secondblock.jpg')  }}");
+        }
+
+        .thirdBlock {
+            background-image: url("{{ asset('bundles/enmashpages/images/about/thirdblock.jpg')  }}");
+        }
+
+        .firstItem {
+            padding-top: 105px;
+        }
+
+        .about-jumbo {
+            color: #ffffff;
+        }
+
+        .about-jumbo .big-text {
+            font-weight: 900;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .about-jumbo .grey-bg {
+            background-color: rgba(0,0,0, .5);
+            color: #ffffff;
+            overflow: auto;
+        }
+
+        .about-jumbo .white-bg {
+            background-color: rgba(255, 255, 255, .5);
+            color: #555555;
+            overflow: auto;
+        }
+
+        .about-jumbo .big-text h4 {
+            font-size: 2em;
+            font-weight: 900;
+        }
+
+        .about-jumbo .big-text hr {
+            border-color: #ffffff;
+        }
+
+        .about-jumbo .big-text p {
+            font-size: 2em;
+        }
+
+        .about-jumbo .main-text {
+            margin-top: 50px;
+            padding: 10px;
+        }
+
+        .secondSlide .content {
+            margin: 50px;
+        }
+
+        .secondSlide p , .thirdSlide p{
+            display: block;
+            margin: 20px;
+        }
+
+        .thirdSlide .content {
+            margin-top: 50px;
+        }
+
+        #footer {
+            margin: 0;
+        }
+
+        .big-text, .main-text {
+            opacity: 0;
+            transition: all 0.5s;
+            position: relative;
+            top: -50px;
+        }
+
+        .main-text:nth-child(odd) {
+            left: 50px;
+        }
+
+        .main-text:nth-child(even) {
+            left: -50px;
+        }
+
+        .big-text.visible, .main-text.visible {
+            opacity: 1 !important;
+            top: 0 !important;
+            left: 0
+        }
+
+        .go-down {
+            display: block;
+            width: 100%;
+            right: 0px;
+            bottom: 0;
+            position: absolute;
+            text-align: center;
+            font-size: 3em;
+            cursor: pointer;
+            color: #ffffff;
+        }
+
+        .go-down a {
+            display: block;
+            color: #ffffff;
+        }
+
+        .go-down span {
+            top: -10px;
+            position: relative;
+            transition: all 0.5s;
+        }
+
+        .go-down:hover span {
+            color: #cccccc;
+            top: 0px;
+        }
+
+    </style>
+
+    <script type="text/javascript">
+
+        function isElementInViewport (el) {
+
+            //special bonus for those using jQuery
+            if (typeof jQuery === "function" && el instanceof jQuery) {
+                el = el[0];
+            }
+
+            var rect = el.getBoundingClientRect();
+
+            //full element is visible
+            return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
+            );
+        }
+
+        $(document).ready(function(){
+
+            var pageHeightOffset = 150;
+            var screenHeight = $(window).height() - pageHeightOffset;
+
+            var firstSlide = $('.firstSlide');
+            $(firstSlide).find('.big-text').addClass('visible');
+            $(firstSlide).find('.main-text').addClass('visible');
+
+            $(document).on('scroll', function(event) {
+
+                var firstSlide = $('.firstSlide');
+                var secondSlide = $('.secondSlide');
+                var thirdSlide = $('.thirdSlide');
+
+                if (isElementInViewport(firstSlide)) {
+                    $(firstSlide).find('.big-text').addClass('visible');
+                    $(firstSlide).find('.main-text').addClass('visible');
+                } else {
+                    $(firstSlide).find('.big-text').removeClass('visible');
+                    $(firstSlide).find('.main-text').removeClass('visible');
+                }
+
+                if (isElementInViewport(secondSlide)) {
+                    $(secondSlide).find('.main-text').addClass('visible');
+                } else {
+                    $(secondSlide).find('.main-text').removeClass('visible');
+                }
+
+                if (isElementInViewport(thirdSlide)) {
+                    $(thirdSlide).find('.main-text').addClass('visible');
+                } else {
+                    $(thirdSlide).find('.main-text').removeClass('visible');
+                }
+
+            });
+        });
+    </script>
+
+    <div class="fill firstItem">
+        <span class="go-down" data-path="secondSlide">
+            <a href="#secondSlide">
+                <span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span>
+            </a>
+        </span>
+        <div class="container about-jumbo firstSlide">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6 big-text grey-bg">
                             <h4 class="text-center">Год создания</h4>
                             <hr>
-                            <span class="text-center">1994</span>
+                            <p>1994</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-8 pull-right main-text grey-bg">
+                            <p>Сегодня <b>"ЭНЕРГОМАШ"</b> — это электротехническая компания, в состав которой входит <b>более 20 филиалов и специализированных магазинов</b>.</p>
+                            <p>Основные направления розничной и оптовой сети <b>"ЭНЕРГОМАШ"</b> обеспечение офисно-бытовых, ремонтно-эксплуатационных и строительных нужд предприятий и граждан низковольтной аппаратурой, светотехникой, кабельно-проводниковой и другой продукцией. В номенклатуру компании входят <b>тысячи изделий</b> для различных групп потребителей от лампочек и розеток до люстр и подстанций.</p>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+        <div class="background firstBlock"></div>
+    </div>
+    <div class="fill">
+        <span class="go-down" data-path="thirdSlide">
+            <a href="#thirdSlide">
+                <span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span>
+            </a>
+        </span>
+        <div class="container about-jumbo secondSlide" id="secondSlide">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row content">
+                        <div class="col-xs-12 col-md-6 main-text">
+                            <div class="white-bg">
+                            <p>Главная задача, которую ставит перед собой коллектив "<b>ЭНЕРГОМАША</b>" — предоставить всем потребителям возможность получения как можно более <b>широкого ассортимента продукции</b> комплексно, <b>в одном месте</b>.</p>
+                </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 main-text">
+                            <div class="white-bg">
+                    <p>Нас связывают дилерские отношения с крупнейшими российскими и зарубежными производителями.</p>
+                                <p>Это позволяет сформировать на электротехнические изделия и материалы доступные, конкурентноспособные <b>цены</b>, в ряде случаев — на уровне и <b>ниже, чем у производителей</b>.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="background secondBlock"></div>
+    </div>
+
+    <div class="fill">
+        <div class="container about-jumbo thirdSlide" id="thirdSlide">
             <div class="row">
-                <div class="col-sm-12 text-center" id="first-paragraph">
-                    <p>Сегодня "ЭНЕРГОМАШ" — это электротехническая компания, в состав которой входит более 20 филиалов и специализированных магазинов.</p>
-                </div>
-                <div class="col-sm-12 text-center">
-                    <p>Основные направления розничной и оптовой сети "ЭНЕРГОМАШ"  обеспечение офисно-бытовых, ремонтно-эксплуатационных и строительных нужд предприятий и граждан низковольтной аппаратурой, светотехникой, кабельно-проводниковой и другой продукцией. В номенклатуру компании входят тысячи изделий для различных групп потребителей от лампочек и розеток до люстр и подстанций.</p>
-                    <p>Главная задача, которую ставит перед собой коллектив "ЭНЕРГОМАША" — предоставить всем потребителям возможность получения как можно более широкого ассортимента продукции комплексно, в одном месте.</p>
-                    <p>Нас связывают дилерские отношения с крупнейшими российскими и зарубежными производителями.</p>
-                    <p>Это позволяет сформировать на электротехнические изделия и материалы доступные, конкурентноспособные цены, в ряде случаев — на уровне и ниже, чем у производителей.</p>
+                <div class="col-xs-12">
+                    <div class="row content">
+                        <div class="col-xs-12 main-text">
+                            <div class="grey-bg">
                     <p>Компания понимает насколько важны, сложны и одновременно опасны в использовании электротехнические изделия. Поэтому в розничной торговле и сбыте во главу угла ставит не обезличенное самообслуживание, а квалифицированные консультации специалистов по подбору оборудования. Этому способствуют созданные во всех филиалах и магазинах обширные экспозиции изделий основной номенклатуры.</p>
                 </div>
             </div>
         </div>
     </div>
+            </div>
+        </div>
+        <div class="background thirdBlock"></div>
+    </div>
+
 {% endblock %}
