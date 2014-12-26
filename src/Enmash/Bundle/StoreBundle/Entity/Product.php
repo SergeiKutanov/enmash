@@ -19,6 +19,7 @@ use JMS\Serializer\Annotation\Expose;
 class Product
 {
     const NO_IMAGE = '/enmash.local/web/bundles/enmashpages/images/noimageyet.jpg';
+    const NO_MANUFACTURER = 'Нет производителя';
 
     /**
      * @var integer
@@ -73,7 +74,7 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity="Manufacturer", inversedBy="products")
-     * @ORM\JoinColumn(name="manufacturer_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="manufacturer_id", referencedColumnName="id", nullable=true)
      *
      * @Expose
      *

@@ -56,6 +56,12 @@ class CatalogImportCommand extends ContainerAwareCommand {
                 'Import type: ' . self::OPTION_MODE_ALL . '|' . self::OPTION_MODE_MANUFACTURERS . '|' . self::OPTION_MODE_CATEGORIES . '|' . self::OPTION_MODE_GOODS . '|' . self::OPTION_MODE_CLEAR,
                 self::OPTION_MODE_ALL . ' | ' . self::OPTION_MODE_FLUSH_CATEGORIES
             )
+            ->addOption(
+                'offset',
+                'o',
+                InputArgument::OPTIONAL,
+                'Line offset'
+            )
         ;
     }
 
@@ -78,6 +84,7 @@ class CatalogImportCommand extends ContainerAwareCommand {
             ->get('enmash_store.catalog_importer');
 
         $mode = $input->getOption('mode');
+        $offset = (int) $input->getOption('offset');
         switch ($mode) {
             case self::OPTION_MODE_ALL:
                 $output->writeln('Full catalog import started');
@@ -104,7 +111,7 @@ class CatalogImportCommand extends ContainerAwareCommand {
                 $output->writeln('Goods catalog import started');
                 $this
                     ->catalogImporter
-                    ->importGoods($file);
+                    ->importGoods($file, $offset);
                 break;
             case self::OPTION_MODE_CLEAR:
                 $output->writeln('Removing unused stuff');

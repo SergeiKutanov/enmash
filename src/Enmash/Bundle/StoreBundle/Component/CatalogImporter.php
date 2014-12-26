@@ -358,7 +358,7 @@ class CatalogImporter {
 
     }
 
-    public function importGoods(\PHPExcel $file = null) {
+    public function importGoods(\PHPExcel $file = null, $offset) {
         if (!$file) {
             $file = $this->getFile();
         }
@@ -367,10 +367,14 @@ class CatalogImporter {
         $sheet = $file->getActiveSheet();
 
         $rowIndex = 2;
+        if (is_int($offset)) {
+            $rowIndex += $offset;
+        }
         $goodsRepository = $this->em->getRepository('EnmashStoreBundle:Product');
 
-        while ($sheet->cellExistsByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex)) {
 
+        while ($sheet->cellExistsByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex)) {
+            echo $rowIndex . ' products imported' . PHP_EOL;
             $productCode = $sheet
                 ->getCellByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex)
                 ->getValue();
@@ -405,6 +409,9 @@ class CatalogImporter {
             $acronym = $sheet
                 ->getCellByColumnAndRow(self::PRODUCT_ACRONYM_COLUMN, $rowIndex)
                 ->getValue();
+            if (!$acronym) {
+                $acronym = $productName;
+            }
             $product->setAcronym($acronym);
 
             //manufacturer's sku
@@ -417,6 +424,9 @@ class CatalogImporter {
             $manufacturerName = $sheet
                 ->getCellByColumnAndRow(self::PRODUCT_MAN, $rowIndex)
                 ->getValue();
+            if (!$manufacturerName) {
+                $manufacturerName = Product::NO_MANUFACTURER;
+            }
             $manufacturer = $this
                 ->em
                 ->getRepository('EnmashStoreBundle:Manufacturer')
@@ -481,7 +491,7 @@ class CatalogImporter {
 
         }
 
-        $this->importAnalogsAndSimilarGoods($file);
+        //$this->importAnalogsAndSimilarGoods($file);
 
     }
 
