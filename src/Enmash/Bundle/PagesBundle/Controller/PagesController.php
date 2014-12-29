@@ -297,15 +297,4 @@ class PagesController extends Controller{
         return new JsonResponse($data);
     }
 
-    /**
-     * @Route("/test")
-     */
-    public function testAction() {
-
-//        $arr1 = [0,1,2,3];
-//        $arr2 = [4];
-//        var_dump(array_intersect($arr1, $arr2));
-//        die();
-    }
-
 } 

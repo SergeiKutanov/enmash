@@ -1,8 +1,8 @@
 <style>
-    #retail-chain .panel:nth-child(odd) .panel-heading {
+    #retail-chain .row > .col-xs-12:nth-child(odd) .panel-heading {
         background-color: rgba(73, 187, 252, 0.29);
     }
-    #retail-chain .panel:nth-child(even) .panel-heading{
+    #retail-chain .row > .col-xs-12:nth-child(even) .panel-heading{
         background-color: rgba(233, 252, 0, 0.29);
     }
 </style>
@@ -203,29 +203,32 @@
         {#</div>#}
     {#<hr>#}
 
-
+    <div class="row">
         {% for city, city_stores in stores %}
-        <div class="store-panel panel panel-default">
-            <div class="panel-heading text-center">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#{{ city }}">
-                        <b>{{ city }}</b> ({{ stores[city] | length }} магазинов) <span class="glyphicon glyphicon-collapse-down" aria-hidden="true"></span>
-                    </a>
-                </h4>
-            </div>
-            <div id="{{ city }}" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <ul>
-                        {% for store in city_stores %}
-                        <li>
-                            <a href="{{ path('stores-page') }}#store_{{ store.id }}">{{ store.address }} ({{ store.getTypesString() }})</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
+            <div class="col-xs-12 col-md-4">
+                <div class="store-panel panel panel-default">
+                    <div class="panel-heading text-center">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#{{ city }}">
+                                <b>{{ city }}</b> ({{ stores[city] | length }} магазинов) <span class="glyphicon glyphicon-collapse-down" aria-hidden="true"></span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="{{ city }}" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ul>
+                                {% for store in city_stores %}
+                                    <li>
+                                        <a href="{{ path('stores-page') }}#store_{{ store.id }}">{{ store.address }} ({{ store.getTypesString() }})</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
         {% endfor %}
+    </div>
     <hr>
     </div>
 </div>

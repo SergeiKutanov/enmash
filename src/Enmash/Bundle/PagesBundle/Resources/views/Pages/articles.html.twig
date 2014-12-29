@@ -7,7 +7,7 @@
         <h1>Статьи</h1>
     </div>
 </div>
-<div class="row article-separator">
+{#<div class="row article-separator">#}
 {% for article in articles %}
     {% if (loop.index - 1) is divisible by(3) %}
     <div class="row article-separator">
@@ -24,7 +24,7 @@
     </div>
     {% endif %}
 {% endfor %}
-{% if articles | length is  divisible by(3)%}
+{% if articles | length is not divisible by(3)%}
     </div>
 {% endif %}
 
