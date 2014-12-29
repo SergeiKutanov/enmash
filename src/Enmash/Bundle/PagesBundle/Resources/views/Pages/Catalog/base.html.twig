@@ -1,322 +1,90 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="{{ asset('vendor/webcomponentsjs/webcomponents.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+{% extends 'EnmashPagesBundle:Base:public_base.html.twig' %}
 
-    <link rel="import" href="{{ asset('vendor/font-roboto/roboto.html') }}">
-    <link rel="import" href="{{ asset('vendor/core-header-panel/core-header-panel.html') }}">
-    <link rel="import" href="{{ asset('vendor/core-toolbar/core-toolbar.html') }}">
-    <link rel="import" href="{{ asset('vendor/core-icon-button/core-icon-button.html') }}">
-    <link rel="import" href="{{ asset('vendor/core-dropdown/core-dropdown.html') }}">
-    <link rel="import" href="{{ asset('vendor/core-dropdown-menu/core-dropdown-menu.html') }}">
-    <link rel="import" href="{{ asset('vendor/core-item/core-item.html') }}">
-    <link rel="import" href="{{ asset('vendor/core-selector/core-selector.html') }}">
-    <link rel="import" href="{{ asset('vendor/core-drawer-panel/core-drawer-panel.html') }}">
-    <link rel="import" href="{{ asset('vendor/core-menu/core-menu.html') }}">
-    <link rel="import" href="{{ asset('vendor/core-menu/core-submenu.html') }}">
-    <link rel="import" href="{{ asset('vendor/paper-menu-button/paper-menu-button.html') }}">
-    <link rel="import" href="{{ asset('vendor/paper-icon-button/paper-icon-button.html') }}">
-    <link rel="import" href="{{ asset('vendor/paper-dropdown/paper-dropdown.html') }}">
-    <link rel="import" href="{{ asset('vendor/paper-button/paper-button.html') }}">
-    <link rel="import" href="{{ asset('vendor/paper-shadow/paper-shadow.html') }}">
-    <link rel="import" href="{{ asset('vendor/paper-tabs/paper-tabs.html') }}">
-    <link rel="import" href="{{ asset('vendor/paper-tabs/paper-tab.html') }}">
-    <link rel="import" href="{{ asset('vendor/core-pages/core-pages.html') }}">
+{% block content %}
+<style>
+    /*
+ * Style tweaks
+ * --------------------------------------------------
+ */
+    html,
+    body {
+        overflow-x: hidden; /* Prevent scroll on narrow devices */
+        height: initial;
+    }
+    body {
+        padding-top: 70px;
+    }
+    footer {
+        padding: 30px 0;
+    }
 
-
-    <link rel="import" href="{{ path('get_polymer_element', {'name': 'site-banner.html.twig'}) }}">
-    <link rel="import" href="{{ path('get_polymer_element', {'name': 'product-list-item.html.twig'}) }}">
-    <link rel="import" href="{{ path('get_polymer_element', {'name': 'product-list.html.twig'}) }}">
-    {#<link rel="import" href="{{ path('get_polymer_element', {'name': 'catalog-sidebar.html.twig'}) }}">#}
-
-    {% block css %}
-        {#<link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap/dist/css/bootstrap.min.css') }}">#}
-    {% endblock %}
-
-    {% stylesheets 'bundles/enmashpages/css/catalog.css' filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-
-    <style>
-
-        body{
-            font-family: 'RobotoDraft', sans-serif;
-        }
-
-        :host {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            box-sizing: border-box;
-        }
-        #core_drawer_panel {
-            position: absolute;
-            top: 0px;
-            right: 0px;
-            bottom: 0px;
-            left: 0px;
-        }
-        #drawer {
-            box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px, rgba(0, 0, 0, 0.0980392) 0px 0px 3px;
-            background-color: rgb(250, 250, 250);
-        }
-
-        #drawer core-toolbar {
-            background-color: #007CC2;
-            color: #ffffff;
-            text-align: center;
-        }
-
-        #main-page {
-            height: 100%;
-            box-sizing: border-box;
-        }
-
-        core-toolbar {
-            background-color: #DDDDDD;
-        }
-
-        #toolbar-logo {
-            height: 50%;
-        }
-
-        #toolbar-logo img {
-            height: 80%;
-        }
-
-        paper-dropdown.dropdown {
-            top: 38px;
-        }
-
-        paper-dropdown paper-item {
-            font-size: .8em;
-        }
-
-        paper-dropdown paper-item a {
-            text-decoration: none;
-            color: #555555;
-        }
-
-        .hide-desktop {
-            display: none;
-        }
-
-        @media only screen and (max-width: 1299px) {
-            .hide-desktop {
-                display: inline-block;
-            }
-
-            .hide-mobile {
-                display: none;
-            }
-        }
-
-        .main-toolbar div a {
-            padding: 0;
-            text-decoration: none;
-            color: #555;
-            font-size: .7em;
-        }
-
-        .main-toolbar paper-button {
-            margin: 0;
-            min-width: initial;
-        }
-
-        .main-toolbar paper-button::shadow #ripple {
-            color: #333999;
-        }
-
-        #catalog-menu core-menu {
-            font-size: .7em !important;
-        }
-
-        #catalog-menu core-submenu {
+    /*
+     * Off Canvas
+     * --------------------------------------------------
+     */
+    @media screen and (max-width: 767px) {
+        .row-offcanvas {
             position: relative;
+            -webkit-transition: all .25s ease-out;
+            -o-transition: all .25s ease-out;
+            transition: all .25s ease-out;
         }
 
-        /*simple sidebar catalog style*/
-        #catalog-menu ul {
-            list-style: none;
-            margin: 0;
-            padding-left: 10px;
-            font-size: 14px;
+        .row-offcanvas-right {
+            right: 0;
         }
 
-        #catalog-menu ul:first-child {
-            margin-left: 15px;
+        .row-offcanvas-left {
+            left: 0;
         }
 
-        #catalog-menu li {
-            position: relative;
+        .row-offcanvas-right
+        .sidebar-offcanvas {
+            right: -50%; /* 6 columns */
         }
 
-        #catalog-menu li.has-children ul {
-            display: none;
+        .row-offcanvas-left
+        .sidebar-offcanvas {
+            left: -50%; /* 6 columns */
         }
 
-        #catalog-menu li.has-children span.submenu-trigger {
+        .row-offcanvas-right.active {
+            right: 50%; /* 6 columns */
+        }
+
+        .row-offcanvas-left.active {
+            left: 50%; /* 6 columns */
+        }
+
+        .sidebar-offcanvas {
             position: absolute;
-            left: -20px;
-            top: 2px;
-            display: block;
-            cursor: pointer;
-            color: #337ab7;
+            top: 0;
+            width: 50%; /* 6 columns */
         }
+    }
+</style>
 
-        #catalog-menu li {
-            margin: 5px 0;
-        }
 
-        #catalog-menu ul a {
-            color: #555;
-            text-decoration: none;
-        }
+<div class="row row-offcanvas row-offcanvas-left pusher">
+    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+        {{ knp_menu_render('EnmashPagesBundle:Builder:catalogSidebarMenu', {'template': 'EnmashPagesBundle:Menu:catalogsidebarmenu.html.twig'}) }}
+    </div>
 
-        #catalog-menu li.current > a {
-            color: #337ab7;
-            text-decoration: underline;
-        }
+    <div class="col-md-9">
+        <p class="pull-left visible-xs">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Каталог</button>
+        </p>
+    </div>
+</div>
+{% endblock %}
 
-        div.content {
-            padding: 10px;
-        }
-
-        /*breadcrumbs style*/
-        ul.breadcrumb {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        ul.breadcrumb li {
-            display: inline-block;
-            font-size: .9em;
-        }
-
-        ul.breadcrumb li span.separator {
-            margin: 0px 10px;
-        }
-
-        ul.breadcrumb a {
-            text-decoration: none;
-            color: #000000;
-        }
-
-        ul.breadcrumb a:hover {
-            text-decoration: underline;
-        }
-
-    </style>
-
-</head>
-<body>
-    <core-drawer-panel transition id="core_drawer_panel" touch-action>
-        <core-header-panel drawer id="drawer">
-            <core-toolbar>
-                <span flex>Каталог Товаров</span>
-            </core-toolbar>
-            <div class="content" id="catalog-menu">
-                {#<catalog-sidebar></catalog-sidebar>#}
-                {{ knp_menu_render('EnmashPagesBundle:Builder:catalogSidebarMenu', {'template': 'EnmashPagesBundle:Menu:simple_sidebar_catalog.html.twig'}) }}
-            </div>
-        </core-header-panel>
-        <core-header-panel main id="main-page">
-            <core-toolbar class="main-toolbar">
-                <core-icon-button icon="menu" core-drawer-toggle></core-icon-button>
-                <span id="toolbar-logo" flex>
-                    <a href="{{ path('index-page') }}">
-                        {% image '@EnmashPagesBundle/Resources/public/images/logo_energomash.png' %}
-                        <img src="{{ asset_url }}" alt="Логотип Энергомаш" />
-                        {% endimage %}
-                    </a>
-                </span>
-
-                <div relative class="hide-mobile">
-                    <paper-button><a href="{{ path('about-page') }}">О Компании</a></paper-button>
-                    <paper-button><a href="{{ path('stores-page') }}">Магазины</a></paper-button>
-                    <paper-button><a href="{{ path('wholesale-stores-page') }}">службы сбыта</a></paper-button>
-                    <paper-button><a href="{{ path('special-offers-page') }}">бонусы и скидки</a></paper-button>
-                    <paper-button><a href="{{ path('articles-page') }}">полезные статьи</a></paper-button>
-                    <paper-button><a href="{{ path('contacts-page') }}">контакты</a></paper-button>
-                </div>
-
-                <div relative class="hide-desktop">
-                    <paper-menu-button>
-                        <paper-icon-button icon="menu" noink></paper-icon-button>
-                        <paper-dropdown class="dropdown" halign="right">
-                            <core-menu class="menu">
-                                <core-item>
-                                    <paper-item><a href="{{ path('about-page') }}">О Компании</a></paper-item>
-                                </core-item>
-                                <core-item>
-                                    <paper-item><a href="{{ path('stores-page') }}">Магазины</a></paper-item>
-                                </core-item>
-                                <core-item>
-                                    <paper-item><a href="{{ path('wholesale-stores-page') }}">Службы Сбыта</a></paper-item>
-                                </core-item>
-                                <core-item>
-                                    <paper-item><a href="{{ path('special-offers-page') }}">Бонусы и Скидки</a></paper-item>
-                                </core-item>
-                                <core-item>
-                                    <paper-item><a href="{{ path('articles-page') }}">Полезные Статьи</a></paper-item>
-                                </core-item>
-                                <core-item>
-                                    <paper-item><a href="{{ path('contacts-page') }}">Контакты</a></paper-item>
-                                </core-item>
-                            </core-menu>
-                        </paper-dropdown>
-                    </paper-menu-button>
-                </div>
-
-            </core-toolbar>
-            <div class="content" fit>
-                {% block breadcrumbs %}
-                    <div class="hide-mobile">
-                        {{ wo_render_breadcrumbs() }}
-                    </div>
-                {% endblock %}
-                {% block maincontent %}
-
-                {% endblock %}
-            </div>
-        </core-header-panel>
-    </core-drawer-panel>
-
+{% block js %}
+    {{ parent() }}
     <script type="text/javascript">
-
-        //collapse sidebar stuff
-        $(document).ready(function(){
-            $('#catalog-menu').delegate('li span.submenu-trigger', 'click', function(e){
-                $(this).parent().find('ul').first().toggle();
-                if ($(this).parent().find('ul').first().is(':visible')) {
-                    $(this).removeClass('glyphicon-expand');
-                    $(this).addClass('glyphicon-collapse-down');
-                } else {
-                    $(this).addClass('glyphicon-expand');
-                    $(this).removeClass('glyphicon-collapse-down');
-                }
+        $(document).ready(function () {
+            $('[data-toggle="offcanvas"]').click(function () {
+                $('.row-offcanvas').toggleClass('active')
             });
-
-            var currentElement = $('#catalog-menu li.current');
-            if (currentElement.length > 0) {
-                $('li.current_ancestor').each(function(index, element){
-                    $(element).find('span.submenu-trigger').first().trigger('click');
-                });
-            }
-
-            //product list ajax refresh
-//            $('#catalog-menu').delegate('a', 'click', function(e){
-//                e.preventDefault();
-//                var dataUrl = $(this).attr('href');
-//                console.log('loading products from ' + dataUrl);
-//            });
         });
     </script>
-
-    {% block customjs %}{% endblock %}
-
-</body>
-</html>
+{% endblock %}

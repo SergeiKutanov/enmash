@@ -1,0 +1,145 @@
+{% extends 'knp_menu.html.twig' %}
+
+{% macro attributes(attributes) %}
+    {% for name, value in attributes %}
+        {%- if value is not none and value is not sameas(false) -%}
+            {{- ' %s="%s"'|format(name, value is sameas(true) ? name|e : value|e)|raw -}}
+        {%- endif -%}
+    {%- endfor -%}
+{% endmacro %}
+
+{% block root %}
+
+    <style>
+        #sidebar {
+            position: relative;
+        }
+
+        #sidebar ul {
+            list-style: none;
+        }
+
+        #sidebar ul li {
+            position: relative;
+            padding: 10px 0;
+            border-bottom: 1px solid #555555;
+        }
+
+        #sidebar ul li.current > a, li.current_ancestor > a {
+            font-weight: 700;
+        }
+
+        #sidebar > ul > li > ul {
+            display: none;
+        }
+
+        #sidebar ul li.has-children a{
+            position: relative;
+            margin-right: 20px;
+            display: table;
+            z-index: 1;
+        }
+
+        .menu-opener {
+            position: relative;
+            right: -20px;
+            top: 0;
+            height: 100%;
+            display: table-cell;
+            vertical-align: middle;
+            z-index: 5;
+            cursor: pointer;
+        }
+
+        #submenus {
+            position: absolute;
+            display: none;
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            box-shadow: 0px 0px 3px 0px #dddddd;
+            max-height: 100%;
+            top: 0;
+            left: 100%;
+            padding: 10px 45px 10px 10px;
+            column-count: 3;
+            -webkit-column-count: 3;
+            -moz-column-count: 3;
+            overflow-y: scroll;
+        }
+
+        #submenus > ul {
+            padding-left: 0;
+        }
+
+        #submenus > ul > li li {
+            border-bottom: none !important;
+        }
+
+        #submenus #close-submenus {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            z-index: 20;
+        }
+
+        #submenus #close-submenus:hover {
+            color: #337ab7;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function(){
+
+            //fix submenus popup width
+            var submenusDiv = $('#submenus');
+            var sidebarDiv = $('#sidebar');
+            var container = $(sidebarDiv).parent();
+            $(submenusDiv).width($(container).width() - $(sidebarDiv).width() - 45);
+
+            //fix submenus height
+            var windowHeight = $(window).height();
+            var topMenuHeight = $('#top-menu').height();
+            $('#submenus').css('max-height', windowHeight - topMenuHeight - 80);
+
+            //create columns for submenus
+
+
+            $('.menu-opener').click(function(e){
+                e.preventDefault();
+                var currentLi = $(this).closest('li.has-children').find('ul').first();
+                $('#submenus > ul').html($(currentLi).html());
+                $('#submenus').css('display', 'block');
+                $('html, body').animate(
+                        {
+                            'scrollTop': 0
+                        }, 500
+                )
+            });
+
+            $('#close-submenus').click(function(){
+                $('#submenus').css('display', 'none');
+            });
+        });
+    </script>
+
+    {% set listAttributes = item.childrenAttributes %}
+    {{ block('list') -}}
+
+    <div id="submenus">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true" id="close-submenus"></span>
+        <ul></ul>
+    </div>
+
+{% endblock %}
+
+{% block linkElement %}
+    <a href="{{ item.uri }}"{{ _self.attributes(item.linkAttributes) }}>
+        {{ block('label') }}
+        {% if item.hasChildren and item.level == 1 %}
+            <div class="menu-opener">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            </div>
+        {% endif %}
+    </a>
+{% endblock %}

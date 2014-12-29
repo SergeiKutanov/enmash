@@ -115,14 +115,19 @@ hr {
 
 .navbar-brand {
     height: initial;
+    font-size: 12px;
+    text-align: center;
+    padding: 0px 15px;
 }
 
 .navbar-brand img {
-    height: 25px;
+    height: initial;
+    width: 215px;
 }
 
 #top-menu ul.navbar-nav a {
-    color: #000000;
+    font-weight: 700;
+    color: #333;
     padding-top: 5px;
     padding-bottom: 5px;
 }
