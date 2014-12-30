@@ -14,6 +14,22 @@ body.article {
     /*background-size: cover;*/
 }
 
+.bmargin-5 {
+    margin-bottom: 5px;
+}
+
+.bmargin-10 {
+    margin-bottom: 10px;
+}
+
+.bmargin-15 {
+    margin-bottom: 15px;
+}
+
+.bmargin-20 {
+    margin-bottom: 20px;
+}
+
 p {
     font-size: 1.3em;
 }

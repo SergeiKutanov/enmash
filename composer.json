@@ -29,7 +29,8 @@
         "gedmo/doctrine-extensions": "dev-master",
         "liuggio/excelbundle": "~2.0",
         "tilleuls/ckeditor-sonata-media-bundle": "dev-master",
-        "whiteoctober/breadcrumbs-bundle": "dev-master"
+        "whiteoctober/breadcrumbs-bundle": "dev-master",
+        "knplabs/knp-paginator-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

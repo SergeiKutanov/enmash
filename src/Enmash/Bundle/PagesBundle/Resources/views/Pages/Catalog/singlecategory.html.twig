@@ -1,0 +1,64 @@
+{% extends 'EnmashPagesBundle:Pages:Catalog/base.html.twig' %}
+
+{% block maincontent %}
+<style>
+    .catalog-item {
+        border: 1px solid #aaaaaa;
+        margin-bottom: 10px;
+        padding: 10px;
+        box-shadow: 0px 0px 5px 0px #aaaaaa;
+        transition: all .3s;
+        min-height: 310px;
+        position: relative;
+    }
+
+    .catalog-item:hover {
+        box-shadow: 0px 0px 0px 0px #aaaaaa;
+    }
+
+    .catalog-item .item-image {
+        text-align: center;
+    }
+
+    .catalog-item .item-image img {
+        height: 150px;
+    }
+
+    .catalog-item .acronym {
+        font-size: .8em;
+        display: block;
+    }
+
+    .catalog-item .debug-id {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+
+    .catalog-item h3 {
+        font-size: 1.5em;
+    }
+
+    .buy-btn {
+        margin: 10px 0;
+    }
+</style>
+<div class="row">
+    <div class="col-xs-12 bmargin-10">
+        <h3>{{ category.name }}</h3>
+        <span>Товаров в категории - {{ products.getTotalItemCount }} шт.</span>
+    </div>
+    {% for item in products %}
+    <div class="col-xs-12 col-md-4">
+        {% include 'EnmashPagesBundle:Pages:Catalog/Block/item-catalog.html.twig' with {item: item}%}
+    </div>
+    {% if loop.index is divisibleby(3) %}
+        <div class="clearfix"></div>
+    {% endif %}
+    {% endfor %}
+    <div class="pagination col-xs-12 text-center">
+        {{ knp_pagination_render(products) }}
+    </div>
+</div>
+{% endblock %}

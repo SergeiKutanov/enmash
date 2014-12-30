@@ -40,6 +40,7 @@ class AppKernel extends Kernel
             new \Ivory\CKEditorBundle\IvoryCKEditorBundle(),
             new \Sonata\FormatterBundle\SonataFormatterBundle(),
             new \WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
 
             //php excel helpers
             new \Liuggio\ExcelBundle\LiuggioExcelBundle(),

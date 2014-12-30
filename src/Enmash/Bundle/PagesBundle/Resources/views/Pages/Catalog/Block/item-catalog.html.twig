@@ -1,0 +1,23 @@
+<div class="catalog-item">
+    <div class="item-image">
+        {% set image = item.productImages %}
+        {% if image %}
+            {% set image = image.galleryHasMedias %}
+            {% if image | length > 0 %}
+                <img src="{% path image[0].media, 'reference' %}">
+            {% else %}
+                <img src="{{ asset('bundles/enmashpages/images/noimageyet.jpg') }}">
+            {% endif %}
+        {% else %}
+            <img src="{{ asset('bundles/enmashpages/images/noimageyet.jpg') }}">
+        {% endif %}
+
+    </div>
+    <h3>{{ item.name }}</h3>
+    <span class="acronym">{{ item.acronym }}</span>
+    <span class="debug-id">{{ item.id }}</span>
+    <div class="text-center buy-btn">
+        <a class="btn btn-primary" href="#">Подробнее</a>
+    </div>
+</div>
+

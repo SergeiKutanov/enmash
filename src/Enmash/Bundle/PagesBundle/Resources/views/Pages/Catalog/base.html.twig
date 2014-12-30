@@ -61,6 +61,44 @@
             top: 0;
             width: 50%; /* 6 columns */
         }
+
+
+    }
+
+    /*breadcrumbs style*/
+    ul.breadcrumb {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        background-color: initial;
+    }
+
+    .breadcrumb>li+li:before {
+        content: "";
+        padding: 0;
+    }
+
+    ul.breadcrumb li {
+        display: inline;
+        font-size: .9em;
+    }
+
+    ul.breadcrumb li span.separator {
+        margin: 0px 10px;
+        color: #aaaaaa;
+    }
+
+    ul.breadcrumb a {
+        text-decoration: none;
+        color: #000000;
+    }
+
+    ul.breadcrumb a:hover {
+        text-decoration: underline;
+    }
+
+    .breadcrumbs-row {
+        margin-bottom: 20px;
     }
 </style>
 
@@ -74,6 +112,16 @@
         <p class="pull-left visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Каталог</button>
         </p>
+        <div class="row breadcrumbs-row">
+            <div class="col-xs-12">
+                {% block breadcrumbs %}
+                    <div class="hide-mobile">
+                        {{ wo_render_breadcrumbs() }}
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+        {% block maincontent %}{% endblock %}
     </div>
 </div>
 {% endblock %}

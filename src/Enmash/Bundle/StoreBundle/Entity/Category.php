@@ -265,4 +265,17 @@ class Category
     {
         return $this->slug;
     }
+
+    public function getAllProducts() {
+        $products = $this->getProducts()->toArray();
+        foreach ($this->getSubCategories() as $subCategory) {
+            $moreProducts = $subCategory->getAllProducts();
+            if (count($moreProducts) > 0) {
+                $products = array_merge($products, $moreProducts);
+            }
+        }
+
+        return $products;
+
+    }
 }

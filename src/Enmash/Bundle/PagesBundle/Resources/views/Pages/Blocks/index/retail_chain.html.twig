@@ -209,12 +209,18 @@
                 <div class="store-panel panel panel-default">
                     <div class="panel-heading text-center">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#{{ city }}">
-                                <b>{{ city }}</b> ({{ stores[city] | length }} магазинов) <span class="glyphicon glyphicon-collapse-down" aria-hidden="true"></span>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#city_{{ city }}">
+                                <b>{{ city }}</b>
+                                <br>({{ stores[city] | length }}
+                                {% transchoice stores[city] | length %}
+                                    {1}магазин| [2,4]магазина|[4,Inf]магазинов
+                                {% endtranschoice %}
+                                )
+                                <br><span class="glyphicon glyphicon-collapse-down" aria-hidden="true"></span>
                             </a>
                         </h4>
                     </div>
-                    <div id="{{ city }}" class="panel-collapse collapse">
+                    <div id="city_{{ city }}" class="panel-collapse collapse">
                         <div class="panel-body">
                             <ul>
                                 {% for store in city_stores %}

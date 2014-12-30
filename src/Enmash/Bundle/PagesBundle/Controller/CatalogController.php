@@ -21,6 +21,8 @@ use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
  */
 class CatalogController extends Controller
 {
+    const PAGINATION_LIMIT = 12;
+
     /**
      * @Route("", name="catalog-index-page")
      * @Method("GET")
@@ -46,57 +48,86 @@ class CatalogController extends Controller
 
     /**
      * @Route("/{slug}", name="catalog-category-page")
-     * @Method({"GET", "POST"})
+     * @Method({"GET"})
      * @ParamConverter("category", options={"mapping": {"slug": "slug"}})
      */
     public function showSingleCategoryAction(Category $category, Request $request) {
-        if ($request->getMethod() === 'GET') {
+        $this->buildBreadcrumbs($category);
 
-            $this->buildBreadcrumbs($category);
+        $products = $category->getAllProducts();
 
-            return $this->render(
-                'EnmashPagesBundle:Pages:Catalog/index.html.twig'
-            );
-        } else {
-            $em = $this->getDoctrine()->getManager();
-            $products = $em
-                ->getRepository('EnmashStoreBundle:Product')
-                ->findAllElementsForCategory(
-                    $category
-                );
-
-            $serializer = $this->container->get('serializer');
-
-            $response = array(
-                'products' => array(),
-                'category' => $category
-            );
-            /* @var $product Product */
-            foreach ($products as $product) {
-
-                $image = Product::NO_IMAGE;
-
-                if ($product->getProductImages()) {
-                    $images = $product->getProductImages()->getGalleryHasMedias();
-                    $image = $this->container->get('sonata.media.twig.extension')->path($images[0]->getMedia(), 'big');
-                }
-
-                $response['products'][] = array(
-                    'product'   => $product,
-                    'image'     => $image,
-                    'href'      => $this->generateUrl('catalog-product-page', array(
-                            'slug'  => $product->getCategory()->getSlug(),
-                            'product'   => $product->getId()
-                        ))
-                );
-            }
-
-            $jsonResponse = $serializer->serialize($response, 'json');
-
-            return new Response($jsonResponse);
-        }
-
+        return $this->render(
+            'EnmashPagesBundle:Pages:Catalog/singlecategory.html.twig',
+            array(
+                'category'  => $category,
+                'products'  => $this->paginate($products)
+            )
+        );
     }
+
+    protected function paginate($items) {
+        $paginator = $this->get('knp_paginator');
+        return $paginator->paginate(
+            $items,
+            null,
+            self::PAGINATION_LIMIT
+        );
+    }
+
+        //polymer json stuff
+//    /**
+//     * @Route("/{slug}", name="catalog-category-page")
+//     * @Method({"GET", "POST"})
+//     * @ParamConverter("category", options={"mapping": {"slug": "slug"}})
+//     */
+//    public function showSingleCategoryAction(Category $category, Request $request) {
+//        if ($request->getMethod() === 'GET') {
+//
+//            $this->buildBreadcrumbs($category);
+//
+//            return $this->render(
+//                'EnmashPagesBundle:Pages:Catalog/index.html.twig'
+//            );
+//        } else {
+//            $em = $this->getDoctrine()->getManager();
+//            $products = $em
+//                ->getRepository('EnmashStoreBundle:Product')
+//                ->findAllElementsForCategory(
+//                    $category
+//                );
+//
+//            $serializer = $this->container->get('serializer');
+//
+//            $response = array(
+//                'products' => array(),
+//                'category' => $category
+//            );
+//            /* @var $product Product */
+//            foreach ($products as $product) {
+//
+//                $image = Product::NO_IMAGE;
+//
+//                if ($product->getProductImages()) {
+//                    $images = $product->getProductImages()->getGalleryHasMedias();
+//                    $image = $this->container->get('sonata.media.twig.extension')->path($images[0]->getMedia(), 'big');
+//                }
+//
+//                $response['products'][] = array(
+//                    'product'   => $product,
+//                    'image'     => $image,
+//                    'href'      => $this->generateUrl('catalog-product-page', array(
+//                            'slug'  => $product->getCategory()->getSlug(),
+//                            'product'   => $product->getId()
+//                        ))
+//                );
+//            }
+//
+//            $jsonResponse = $serializer->serialize($response, 'json');
+//
+//            return new Response($jsonResponse);
+//        }
+//
+//    }
 
     /**
      * @Route("/{slug}/{product}", name="catalog-product-page")

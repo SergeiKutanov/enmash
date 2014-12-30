@@ -270,3 +270,7 @@ ivory_ck_editor:
 
 white_october_breadcrumbs:
     separator: '>'
+
+knp_paginator:
+    template:
+        pagination: EnmashPagesBundle:Base:pagination.html.twig
