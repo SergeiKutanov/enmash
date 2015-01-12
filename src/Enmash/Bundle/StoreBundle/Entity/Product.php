@@ -88,6 +88,12 @@ class Product
     private $productImages;
 
     /**
+     * @var Gallery
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Gallery", cascade={"persist"}, fetch="LAZY")
+     */
+    private $certificates;
+
+    /**
      * @ORM\OneToMany(targetEntity="ProductParameter", mappedBy="product", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $parameters;
@@ -448,5 +454,28 @@ class Product
 
     public function getNoImage() {
         return self::NO_IMAGE;
+    }
+
+    /**
+     * Set certificates
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Gallery $certificates
+     * @return Product
+     */
+    public function setCertificates(\Application\Sonata\MediaBundle\Entity\Gallery $certificates = null)
+    {
+        $this->certificates = $certificates;
+
+        return $this;
+    }
+
+    /**
+     * Get certificates
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Gallery 
+     */
+    public function getCertificates()
+    {
+        return $this->certificates;
     }
 }

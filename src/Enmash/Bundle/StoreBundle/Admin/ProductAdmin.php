@@ -95,6 +95,19 @@ class ProductAdmin extends Admin
                 )
             )
             ->add(
+                'certificates',
+                'sonata_type_model_list',
+                array(
+                    'required'  => false,
+                    'by_reference' => false
+                ),
+                array(
+                    'link_parameters'   => array(
+                        'context'   => 'certificates'
+                    )
+                )
+            )
+            ->add(
                 'analogs',
                 null,
                 array(

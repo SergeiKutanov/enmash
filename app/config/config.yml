@@ -195,6 +195,15 @@ sonata_media:
                 small: { width: 100 , quality: 70}
                 big:   { width: 500 , quality: 70}
 
+        certificates:
+            providers:
+                - sonata.media.provider.file
+                - sonata.media.provider.image
+
+            formats:
+                small: { width: 50 , quality: 70}
+                big:   { width: 190 , quality: 70}
+
         baner:
             providers:
                 - sonata.media.provider.image

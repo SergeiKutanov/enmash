@@ -10,10 +10,10 @@
 
 <style>
     .product-title .add-info {
-        background-color: #EEEEEE;
-        border: 1px solid #dddddd;
-        border-radius: 5px;
-        padding: 5px;
+        /*background-color: #EEEEEE;*/
+        /*border: 1px solid #dddddd;*/
+        /*border-radius: 5px;*/
+        /*padding: 5px;*/
     }
 
     .product-images ul li {
@@ -37,6 +37,27 @@
     .analogs .item-image img {
         height: 100px;
     }
+
+    .certificate-list li a i{
+        font-size: 3em;
+        border: 1px solid #dddddd;
+        border-radius: 3px;
+        padding: 5px;
+        margin: 5px;
+        display: inline-block;
+        background-color: #FFFFFF;
+        transition: all .3s;
+        box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, .5);
+    }
+
+    .certificate-list a:hover i {
+        background-color: #EEEEEE;
+        box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, .5)
+    }
+
+    .certificate-list li a:hover {
+        text-decoration: none;
+    }
 </style>
 
 {% include 'EnmashPagesBundle:Pages:Blocks/gallerymodal.html.twig' %}
@@ -46,7 +67,7 @@
         <h1>{{ product.name }} - {{ product.acronym }}</h1>
     </div>
     <div class="col-xs-12">
-        <div class="add-info">
+        <div class="add-info well well-sm">
             <span>Арт. <b>{{ product.sku }}</b></span>
         </div>
     </div>
@@ -69,7 +90,13 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                No images
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="{{ asset('bundles/enmashpages/images/noimageyet.jpg') }}" data-gallery="product-images-{{ product.id }}">
+                            <img src="{{ asset('bundles/enmashpages/images/noimageyet.jpg') }}">
+                        </a>
+                    </li>
+                </ul>
             {% endif %}
         </div>
     </div>
@@ -95,6 +122,25 @@
         </div>
     </div>
 </div>
+
+    {% if product.certificates %}
+    <div class="certificates">
+        <hr>
+        <h2>Сертификаты и Инструкции</h2>
+        <ul class="unstyled-list list-inline certificate-list">
+            {% for certificate in product.certificates.galleryHasMedias %}
+            <li class="text-center">
+                <a href="{% path certificate.media, 'reference' %}" target="_blank">
+                    <i class="mdi-file-attachment"></i>
+                    {#<span class="glyphicon glyphicon-file" aria-hidden="true"></span><br>#}
+                    <br>
+                    {{ certificate.media.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
     {% if product.analogs | length > 0 %}
     <div class="analogs">
         <hr>
@@ -102,6 +148,7 @@
         {% include 'EnmashPagesBundle:Pages:Catalog/Block/similars.html.twig' with {products: product.analogs, title: 'analogs-carousel'} %}
     </div>
     {% endif %}
+
     {% if product.similars | length > 0 %}
         <div class="analogs">
             <hr>
@@ -109,6 +156,7 @@
             {% include 'EnmashPagesBundle:Pages:Catalog/Block/similars.html.twig' with {products: product.similars, title: 'similars-carousel'} %}
         </div>
     {% endif %}
+
 {% endblock %}
 
 {% block js %}

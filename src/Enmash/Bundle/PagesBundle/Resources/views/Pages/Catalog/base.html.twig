@@ -96,14 +96,11 @@
     ul.breadcrumb a:hover {
         text-decoration: underline;
     }
-
-    .breadcrumbs-row {
-        margin-bottom: 20px;
-    }
 </style>
 
 
 <div class="row row-offcanvas row-offcanvas-left pusher">
+
     <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
         {{ knp_menu_render('EnmashPagesBundle:Builder:catalogSidebarMenu', {'template': 'EnmashPagesBundle:Menu:catalogsidebarmenu.html.twig'}) }}
     </div>
@@ -112,10 +109,11 @@
         <p class="pull-left visible-xs">
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Каталог</button>
         </p>
+        <h1>Каталог Товаров</h1>
         <div class="row breadcrumbs-row">
             <div class="col-xs-12">
                 {% block breadcrumbs %}
-                    <div class="hide-mobile">
+                    <div class="hide-mobile well well-sm">
                         {{ wo_render_breadcrumbs() }}
                     </div>
                 {% endblock %}
