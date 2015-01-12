@@ -5,6 +5,8 @@
     {#<meta name="viewport" content="width=device-width, initial-scale=1">#}
     {% block css %}
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link href="{{ asset('vendor/bootstrap-material-design/dist/css/ripples.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/bootstrap-material-design/dist/css/material-wfont.min.css') }}" rel="stylesheet">
     {% endblock %}
 
     {% block customcss %}
@@ -41,12 +43,16 @@
 
     {% block js %}
     <script type="text/javascript" src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/bootstrap-material-design/dist/js/ripples.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/bootstrap-material-design/dist/js/material.min.js') }}"></script>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript" src="{{ asset('bundles/enmashpages/js/functions.js') }}"></script>
 
         <script type="text/javascript">
 
             $(document).ready(function(){
+
+                $.material.init();
 
                 var map = null;
 
@@ -69,7 +75,7 @@
                 })
 
                 $(function() {
-                    $('a[href*=#]:not([href=#]):not([href=#carousel]):not([href*=#city_]):not([href=#banners-carousel])').click(function() {
+                    $('a[href*=#]:not([href=#]):not([href=#carousel]):not([href*=#city_]):not([href*=-carousel])').click(function() {
                         if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
                             var target = $(this.hash);
                             target = target.length ? target : $('[name=' + this.hash.slice(1) +']');

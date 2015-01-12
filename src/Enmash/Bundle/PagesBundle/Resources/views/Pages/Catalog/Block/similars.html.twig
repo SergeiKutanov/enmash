@@ -1,0 +1,85 @@
+<style>
+
+    /*@media (min-width:768px) {*/
+        /*.horizontal-scroll {*/
+            /*width:100%;*/
+        /*}*/
+
+        /*.horizontal-scroll {*/
+            /*overflow-x:scroll;*/
+            /*overflow-y:hidden;*/
+            /*white-space:nowrap;*/
+        /*}*/
+        /*.horizontal-scroll > [class*="col-lg"], .horizontal-scroll > [class*="col-md"], .horizontal-scroll > [class*="col-sm"] {*/
+            /*float:none;*/
+            /*display:inline-block;*/
+            /*white-space:normal;*/
+            /*vertical-align:top;*/
+        /*}*/
+    /*}*/
+
+    .analogs .catalog-item {
+        width: 33%;
+        float: left;
+    }
+
+    .analogs .catalog-item h3 {
+        height: 50px;
+    }
+
+    .analogs .carousel-control {
+        background: initial;
+    }
+
+    .analogs .carousel-control.left {
+        left: -40px;
+    }
+
+    .analogs .carousel-control.right {
+        right: -40px;
+    }
+
+    .analogs .carousel-control button {
+        margin-top: 50%;
+    }
+
+</style>
+
+<div id="{{ title }}" class="carousel slide analogs" data-ride="carousel">
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        {% for product in products %}
+        {#div for every element#}
+            {% if (loop.index-1) is divisibleby(3) %}
+                <div class="item {% if loop.index == 1 %}active{% endif %}">
+            {% endif %}
+                    {% include 'EnmashPagesBundle:Pages:Catalog/Block/item-catalog.html.twig' with {item: product} %}
+        {#closing div for every 3rd item#}
+            {% if loop.index is divisibleby(3) %}
+                </div>
+            {% endif %}
+        {#closing div for last item#}
+            {% if loop.index == products | length %}
+                {% if products | length is not divisibleby(3) %}
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- Controls -->
+    {% if products | length > 3 %}
+    <a class="left carousel-control" href="#{{ title }}" role="button" data-slide="prev">
+        <button class="btn btn-fab btn-raised btn-material-blue">
+            <i class="mdi-navigation-arrow-back"></i>
+            <div class="ripple-wrapper"></div>
+        </button>
+    </a>
+    <a class="right carousel-control" href="#{{ title }}" role="button" data-slide="next">
+        <button class="btn btn-fab btn-raised btn-material-blue">
+            <i class="mdi-navigation-arrow-forward"></i>
+            <div class="ripple-wrapper"></div>
+        </button>
+    </a>
+    {% endif %}
+</div>

@@ -1,0 +1,118 @@
+{% extends 'EnmashPagesBundle:Pages:Catalog/base.html.twig' %}
+
+{% block customcss %}
+    {{ parent() }}
+    <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+    <link rel="stylesheet" href="{{ asset('vendor/blueimp-bootstrap-image-gallery/css/bootstrap-image-gallery.min.css') }}">
+{% endblock %}
+
+{% block maincontent %}
+
+<style>
+    .product-title .add-info {
+        background-color: #EEEEEE;
+        border: 1px solid #dddddd;
+        border-radius: 5px;
+        padding: 5px;
+    }
+
+    .product-images ul li {
+        display: inline-block;
+        text-align: center;
+        border: 1px solid #dddddd;
+        padding: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .product-images ul li:first-child {
+        display: block;
+        border: initial;
+    }
+
+    .product-main-content {
+        margin-top: 20px;
+    }
+
+    .analogs .item-image img {
+        height: 100px;
+    }
+</style>
+
+{% include 'EnmashPagesBundle:Pages:Blocks/gallerymodal.html.twig' %}
+
+<div class="row product-title">
+    <div class="col-xs-12">
+        <h1>{{ product.name }} - {{ product.acronym }}</h1>
+    </div>
+    <div class="col-xs-12">
+        <div class="add-info">
+            <span>Арт. <b>{{ product.sku }}</b></span>
+        </div>
+    </div>
+</div>
+<div class="row product-main-content">
+    <div class="col-xs-12 col-md-6">
+        <div class="product-images">
+            {% if product.productImages %}
+                <ul class="list-unstyled">
+                    {% for image in product.productImages.galleryHasMedias %}
+                    <li>
+                        <a href="{% path image.media, 'big' %}" data-gallery="product-images-{{ product.id }}">
+                            {% if loop.index == 1 %}
+                            <img src="{% path image.media, 'big' %}" data-image="{%  path image.media, 'big' %}">
+                            {% else %}
+                            <img src="{% path image.media, 'small' %}" data-image="{%  path image.media, 'big' %}">
+                            {% endif %}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                No images
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-6">
+        <div class="product-desc">
+            <dl class="dl-horizontal">
+                <dt>Наименование</dt>
+                <dd>{{ product.name }} - {{ product.acronym }}</dd>
+                <dt>Артикул</dt>
+                <dd>{{ product.sku }}</dd>
+                <dt>Категория</dt>
+                <dd>{{ product.category.name }}</dd>
+                {% if product.manufacturer %}
+                <dt>Производитель</dt>
+                <dd>{{ product.manufacturer.name }}</dd>
+                <dt>Артикул производителя</dt>
+                <dd>{{ product.mansku }}</dd>
+                {% endif %}
+            </dl>
+            <div class="text-center">
+                <button class="btn btn-success">Купить</button>
+            </div>
+        </div>
+    </div>
+</div>
+    {% if product.analogs | length > 0 %}
+    <div class="analogs">
+        <hr>
+        <h2>Аналоги</h2>
+        {% include 'EnmashPagesBundle:Pages:Catalog/Block/similars.html.twig' with {products: product.analogs, title: 'analogs-carousel'} %}
+    </div>
+    {% endif %}
+    {% if product.similars | length > 0 %}
+        <div class="analogs">
+            <hr>
+            <h2>Похожие товары</h2>
+            {% include 'EnmashPagesBundle:Pages:Catalog/Block/similars.html.twig' with {products: product.similars, title: 'similars-carousel'} %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+    <script src="{{ asset('vendor/blueimp-bootstrap-image-gallery/js/bootstrap-image-gallery.min.js') }}"></script>
+{% endblock %}

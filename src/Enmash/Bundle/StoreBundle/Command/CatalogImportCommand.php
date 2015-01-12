@@ -62,6 +62,12 @@ class CatalogImportCommand extends ContainerAwareCommand {
                 InputArgument::OPTIONAL,
                 'Line offset'
             )
+            ->addOption(
+                'limit',
+                'l',
+                InputArgument::OPTIONAL,
+                'limit'
+            )
         ;
     }
 
@@ -85,6 +91,7 @@ class CatalogImportCommand extends ContainerAwareCommand {
 
         $mode = $input->getOption('mode');
         $offset = (int) $input->getOption('offset');
+        $limit = (int) $input->getOption('limit');
         switch ($mode) {
             case self::OPTION_MODE_ALL:
                 $output->writeln('Full catalog import started');
@@ -111,7 +118,7 @@ class CatalogImportCommand extends ContainerAwareCommand {
                 $output->writeln('Goods catalog import started');
                 $this
                     ->catalogImporter
-                    ->importGoods($file, $offset);
+                    ->importGoods($file, $offset, $limit);
                 break;
             case self::OPTION_MODE_CLEAR:
                 $output->writeln('Removing unused stuff');

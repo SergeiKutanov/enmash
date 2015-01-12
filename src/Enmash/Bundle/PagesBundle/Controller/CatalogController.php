@@ -60,16 +60,34 @@ class CatalogController extends Controller
             'EnmashPagesBundle:Pages:Catalog/singlecategory.html.twig',
             array(
                 'category'  => $category,
-                'products'  => $this->paginate($products)
+                'products'  => $this->paginate($products, $request)
             )
         );
     }
 
-    protected function paginate($items) {
+    /**
+     * @Route("/{slug}/{product}", name="catalog-single-item")
+     * @Method("GET")
+     * @ParamConverter("product", class="EnmashStoreBundle:Product")
+     */
+    public function showSingleItemAction(Product $product, Request $request) {
+
+        $this->buildBreadcrumbs($product->getCategory());
+
+        return $this
+            ->render(
+                'EnmashPagesBundle:Pages:Catalog/singleproduct.html.twig',
+                array(
+                    'product'   => $product
+                )
+            );
+    }
+
+    protected function paginate($items, Request $request) {
         $paginator = $this->get('knp_paginator');
         return $paginator->paginate(
             $items,
-            null,
+            $request->get('page', 1),
             self::PAGINATION_LIMIT
         );
     }

@@ -5,6 +5,7 @@
 html, body {
     font-family: 'Roboto', sans-serif;
     height: 100%;
+    background-color: initial;
 }
 
 body.article {
@@ -12,6 +13,10 @@ body.article {
     /*background-image: url('../images/logo_grey.png');*/
     /*background-repeat: no-repeat;*/
     /*background-size: cover;*/
+}
+
+body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
+    font-weight: initial;
 }
 
 .bmargin-5 {
@@ -38,12 +43,29 @@ h2 {
     margin-bottom: 30px;
 }
 
-a:hover {
+a {
+    color: #337ab7;
+}
+
+a:hover, a:focus {
     cursor: pointer;
+    color: #337ab7;
 }
 
 .btn {
     border-radius: 0;
+}
+
+.btn-warning {
+    color: #fff;
+    background-color: #f0ad4e !important;
+    border-color: #eea236 !important;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #337ab7 !important;
+    border-color: #2e6da4 !important;
 }
 
 h1 a, h2 a, h3 a, h1 a:hover, h2 a:hover, h3 a:hover {
@@ -100,6 +122,12 @@ hr {
 /*body .modal-dialog {*/
     /*width: 100%;*/
 /*}*/
+
+/*-------------------------bootstrap overrides-----------------------*/
+.navbar .navbar-nav>.active>a, .navbar .navbar-nav>.active>a:hover, .navbar .navbar-nav>.active>a:focus {
+    color: rgba(255,255,255,.84);
+    background-color: inherit;
+}
 
 
 /*------------------------shadows------------------------------------*/

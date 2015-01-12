@@ -1,4 +1,4 @@
-<div class="catalog-item">
+<div class="catalog-item text-center">
     <div class="item-image">
         {% set image = item.productImages %}
         {% if image %}
@@ -17,7 +17,7 @@
     <span class="acronym">{{ item.acronym }}</span>
     <span class="debug-id">{{ item.id }}</span>
     <div class="text-center buy-btn">
-        <a class="btn btn-primary" href="#">Подробнее</a>
+        <a class="btn btn-primary" href="{{ path('catalog-single-item', {product: item.id, slug: item.category.slug}) }}">Подробнее</a>
     </div>
 </div>
 

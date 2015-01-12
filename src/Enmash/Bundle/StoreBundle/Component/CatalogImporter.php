@@ -122,17 +122,22 @@ class CatalogImporter {
         $this->em->flush();
     }
 
-    protected function importAnalogsAndSimilarGoods(\PHPExcel $file) {
+    protected function importAnalogsAndSimilarGoods(\PHPExcel $file, $offset = null, $limit = null) {
         $file->setActiveSheetIndexByName(self::GOODS_LIST_NAME);
         $sheet = $file->getActiveSheet();
 
         $rowIndex = 2;
+        if (is_int($offset)) {
+            $rowIndex += $offset;
+        }
         $goodsRepository = $this->em->getRepository('EnmashStoreBundle:Product');
 
-        while ($sheet->cellExistsByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex)) {
+        while ($sheet->cellExistsByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex) && $limit > 0) {
+            $limit--;
             $productCode = $sheet
                 ->getCellByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex)
                 ->getValue();
+            echo $rowIndex .': Working on analogs for ' . $productCode . PHP_EOL;
             $analogs = $sheet
                 ->getCellByColumnAndRow(self::PRODUCT_ANALOGS_COLUMN, $rowIndex)
                 ->getValue();
@@ -358,7 +363,7 @@ class CatalogImporter {
 
     }
 
-    public function importGoods(\PHPExcel $file = null, $offset) {
+    public function importGoods(\PHPExcel $file = null, $offset, $limit = null) {
         if (!$file) {
             $file = $this->getFile();
         }
@@ -372,8 +377,14 @@ class CatalogImporter {
         }
         $goodsRepository = $this->em->getRepository('EnmashStoreBundle:Product');
 
+        if (!$limit) {
+            $limit = 9999;
+        }
 
-        while ($sheet->cellExistsByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex)) {
+        $copyLimit = $limit;
+
+        while ($sheet->cellExistsByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex) && $limit > 0) {
+            $limit--;
             echo $rowIndex . ' products imported' . PHP_EOL;
             $productCode = $sheet
                 ->getCellByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex)
@@ -491,7 +502,7 @@ class CatalogImporter {
 
         }
 
-        //$this->importAnalogsAndSimilarGoods($file);
+        $this->importAnalogsAndSimilarGoods($file, $offset, $copyLimit);
 
     }
 
