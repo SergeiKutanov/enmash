@@ -29,6 +29,8 @@ class CatalogController extends Controller
      */
     public function indexAction() {
 
+        $this->buildBreadcrumbs(null);
+
         $em = $this->getDoctrine()->getManager();
         $catalog = $em
             ->getRepository('EnmashStoreBundle:Category')
