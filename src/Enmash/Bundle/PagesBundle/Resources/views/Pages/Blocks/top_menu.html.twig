@@ -18,6 +18,9 @@
                 <div id="search-box">
                     <ul class="list-inline">
                         <li>
+                            Ваш город: <a href="#" data-toggle="modal" data-target="#select-city-modal">{% if app.request.cookies.get('userlocation') %}г. {{ app.request.cookies.get('userlocation') }}{% else %}Выбрать{% endif %}</a>
+                        </li>
+                        <li>
                             <a id="find-store-link" data-toggle="modal" data-target="#find-store-map"><span class="glyphicon glyphicon-map-marker"></span> Найти магазин</a>
                         </li>
                         {#<li>#}
@@ -27,7 +30,7 @@
                             <input type="text" />
                         </li>
                         <li class="find-button">
-                            <a href="#"><span class="glyphicon glyphicon-search"></span></a>
+                            <a href="#" id="select-city"><span class="glyphicon glyphicon-search"></span></a>
                         </li>
                     </ul>
                 </div>

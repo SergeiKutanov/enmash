@@ -11,12 +11,15 @@ namespace Enmash\Bundle\PagesBundle\Controller;
 
 use Application\Sonata\MediaBundle\Entity\GalleryHasMedia;
 use Doctrine\DBAL\Connection;
+use Enmash\Bundle\PagesBundle\Component\RedirectResponseWithCookie;
 use Enmash\Bundle\PagesBundle\Entity\Article;
+use Enmash\Bundle\PagesBundle\EventListener\LocationChangeEventListener;
 use Enmash\Bundle\StoreBundle\Entity\Product;
 use Enmash\Bundle\StoreBundle\Entity\SpecialOffer;
 use Enmash\Bundle\StoreBundle\Entity\Store;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,11 +35,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class PagesController extends Controller{
 
+    const COOKIE_LOCATION = 'userlocation';
+
     /**
      * @Route("/", name="index-page")
      * @Method("GET")
      */
-    public function indexAction() {
+    public function indexAction(Request $request) {
 
         //todo think of a better way to find store's location for landing page tab
         $em = $this->getDoctrine()->getManager();
@@ -73,7 +78,8 @@ class PagesController extends Controller{
                 'articles'          => $featuredArticles,
                 'cheapbannerpath'   => $cheapBannerPath,
                 'banners'           => $banners,
-                'catalog'           => $catalog
+                'catalog'           => $catalog,
+                'city'              => $request->attributes->get(LocationChangeEventListener::LOCATION_COOKIE_NAME)
             )
         );
 
@@ -304,6 +310,29 @@ class PagesController extends Controller{
         }
 
         return new JsonResponse($data);
+    }
+
+    /**
+     * @Route("/setCity/{store}", name="setcity")
+     * @ParamConverter("store", class="EnmashStoreBundle:Store")
+     */
+    public function setCityAction(Store $store, Request $request) {
+        $expDate = new \DateTime();
+        $expDate->add(new \DateInterval('P1D'));
+        $cookie = new Cookie(
+            self::COOKIE_LOCATION,
+            $store->getCity(),
+            $expDate
+        );
+
+        return new RedirectResponseWithCookie(
+            $request->headers->get('referer'),
+            302,
+            array(
+                $cookie
+            )
+        );
+
     }
 
 } 

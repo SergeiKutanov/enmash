@@ -40,6 +40,8 @@ twig:
             - 'SonataMediaBundle:Form:media_widgets.html.twig'
             - 'SonataCoreBundle:Form:datepicker.html.twig'
             - 'SonataFormatterBundle:Form:formatter.html.twig'
+    globals:
+        sorted_stores: '@enmash_pages.store.sortedStores'
 
 # Assetic Configuration
 assetic:

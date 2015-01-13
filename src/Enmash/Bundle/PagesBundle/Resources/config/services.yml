@@ -17,3 +17,19 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ @annotation_reader ] ]
+
+    enmash_pages.location:
+        class: Enmash\Bundle\PagesBundle\EventListener\LocationChangeEventListener
+        tags:
+            - {name: kernel.event_listener, event: kernel.request, method: onRequestMade}
+
+    enmash_pages.store.sortedStores:
+        class: Enmash\Bundle\PagesBundle\Component\EnmashServices
+        arguments:
+            - '@doctrine'
+#    enmash_pages.location:
+#        class: Enmash\Bundle\PagesBundle\EventListener\LocationChangeEventListener
+#        tags:
+#            - {name: kernel.event_listener, event: kernel.response, method: onResponseMade}
+
+
