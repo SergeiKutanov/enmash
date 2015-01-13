@@ -16,6 +16,7 @@ use JMS\Serializer\Annotation\Expose;
  */
 class Manufacturer
 {
+    const NO_NAME = 'Нет производителя';
     /**
      * @var integer
      *

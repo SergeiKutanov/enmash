@@ -109,11 +109,14 @@
                 <dd>{{ product.sku }}</dd>
                 <dt>Категория</dt>
                 <dd>{{ product.category.name }}</dd>
-                {% if product.manufacturer %}
+                {#{% if product.manufacturer and constant('Enmash\\Bundle\\StoreBundle\\Entity\\Manufacturer::NO_NAME') != product.manufacturer %}#}
+                {% if product.manufacturer and constant('NO_NAME', product.manufacturer) != product.manufacturer %}
                 <dt>Производитель</dt>
                 <dd>{{ product.manufacturer.name }}</dd>
+                {% if product.mansku %}
                 <dt>Артикул производителя</dt>
                 <dd>{{ product.mansku }}</dd>
+                {% endif %}
                 {% endif %}
             </dl>
             <div class="text-center">
