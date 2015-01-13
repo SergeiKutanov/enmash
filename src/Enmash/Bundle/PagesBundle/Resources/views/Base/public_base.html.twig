@@ -4,7 +4,7 @@
     <title>Enmash Store</title>
     {#<meta name="viewport" content="width=device-width, initial-scale=1">#}
     {% block css %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap/dist/css/bootstrap.css') }}">
     <link href="{{ asset('vendor/bootstrap-material-design/dist/css/ripples.min.css') }}" rel="stylesheet">
     <link href="{{ asset('vendor/bootstrap-material-design/dist/css/material-wfont.min.css') }}" rel="stylesheet">
     {% endblock %}
@@ -72,7 +72,17 @@
                             }
                         });
                     }
-                })
+                });
+
+                $(window).on('scroll', function(e){
+                    var topPosition = window.pageYOffset;
+                    console.log(topPosition);
+                    if (topPosition > 70) {
+                        $('.navbar-fixed-top').addClass('hidden-top');
+                    } else {
+                        $('.navbar-fixed-top').removeClass('hidden-top');
+                    }
+                });
 
                 $(function() {
                     $('a[href*=#]:not([href=#]):not([href=#carousel]):not([href*=#city_]):not([href*=-carousel])').click(function() {
