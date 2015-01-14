@@ -17,8 +17,15 @@
             <div class="col-xs-9">
                 <div id="search-box">
                     <ul class="list-inline">
-                        <li>
-                            Ваш город: <a href="#" data-toggle="modal" data-target="#select-city-modal">{% if app.request.cookies.get('userlocation') %}г. {{ app.request.cookies.get('userlocation') }}{% else %}Выбрать{% endif %}</a>
+                        <li id="select-location">
+                            <a href="#" data-toggle="modal" data-target="#select-city-modal" data-city-selected="{% if app.request.cookies.get('userlocation') %}1{% else %}0{% endif %}">
+                                <span class="mdi-action-home"></span>
+                                {% if app.request.cookies.get('userlocation') %}
+                                    г. {{ app.request.cookies.get('userlocation') }}
+                                {% else %}
+                                    Выбрать город
+                                {% endif %}
+                            </a>
                         </li>
                         <li>
                             <a id="find-store-link" data-toggle="modal" data-target="#find-store-map"><span class="glyphicon glyphicon-map-marker"></span> Найти магазин</a>

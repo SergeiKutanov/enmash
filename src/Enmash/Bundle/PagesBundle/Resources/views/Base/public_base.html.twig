@@ -55,6 +55,8 @@
 
                 $.material.init();
 
+                checkCityStatus();
+
                 var map = null;
 
                 $('#find-store-map').on('shown.bs.modal', function(e){
@@ -77,7 +79,6 @@
 
                 $(window).on('scroll', function(e){
                     var topPosition = window.pageYOffset;
-                    console.log(topPosition);
                     if (topPosition > 70) {
                         $('.navbar-fixed-top').addClass('hidden-top');
                     } else {
@@ -100,6 +101,13 @@
                     });
                 });
             });
+
+            function checkCityStatus() {
+                var cityName = document.querySelector('#select-location a');
+                if (cityName.dataset.citySelected == 0) {
+                    cityName.click();
+                }
+            }
 
         </script>
     {% endblock %}

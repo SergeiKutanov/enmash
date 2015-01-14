@@ -246,11 +246,19 @@ hr {
     padding: 0;
 }
 
-#find-store-link span{
+#find-store-link span, #select-location span{
     color: #333399;
 }
 
-#find-store-link:hover span {
+#select-location span {
+    font-size: 20px;
+    top: 3px;
+    display: inline-block;
+    position: relative;
+}
+
+
+#find-store-link:hover span, #select-location:hover span {
     color: #CC9933;
 }
 
