@@ -34,7 +34,9 @@
                     {% for city, city_stores in sorted_stores.getSortedStores %}
                     {% if current_city != city %}
                     <li>
-                        <a href="{{ path('setcity', {store: city_stores[0].id}) }}">
+                        <a
+                                href="{{ path('setcity', {store: city_stores[0].id}) }}"
+                                data-city="{{ city }}">
                             г. {{ city }}
                         </a>
                     </li>

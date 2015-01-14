@@ -246,11 +246,11 @@ hr {
     padding: 0;
 }
 
-#find-store-link span, #select-location span{
+#find-store-link span.icon, #select-location span.icon{
     color: #333399;
 }
 
-#select-location span {
+#select-location span.icon {
     font-size: 20px;
     top: 3px;
     display: inline-block;
@@ -258,7 +258,7 @@ hr {
 }
 
 
-#find-store-link:hover span, #select-location:hover span {
+#find-store-link:hover span.icon, #select-location:hover span.icon {
     color: #CC9933;
 }
 

@@ -57,6 +57,17 @@
 
                 checkCityStatus();
 
+                $('#select-city-modal .modal-body ul a').click(function(e){
+                    e.preventDefault();
+                    var city = $(this).data('city');
+                    if (city != "") {
+                        document.cookie = "userlocation=" + city;
+                        $('#city-name').text(city);
+                    }
+
+                    $('#select-city-modal').modal('hide');
+                });
+
                 var map = null;
 
                 $('#find-store-map').on('shown.bs.modal', function(e){
