@@ -80,6 +80,11 @@ class SpecialOffer
      */
     private $store;
 
+    /**
+     * @ORM\Column(name="publish", type="boolean", nullable=true)
+     */
+    private $publish;
+
     public static function getTypeString($type) {
         switch ($type) {
             case self::TYPE_BONUS : return 'Бонус';
@@ -297,5 +302,28 @@ class SpecialOffer
     public function getStore()
     {
         return $this->store;
+    }
+
+    /**
+     * Set publish
+     *
+     * @param boolean $publish
+     * @return SpecialOffer
+     */
+    public function setPublish($publish)
+    {
+        $this->publish = $publish;
+
+        return $this;
+    }
+
+    /**
+     * Get publish
+     *
+     * @return boolean 
+     */
+    public function getPublish()
+    {
+        return $this->publish;
     }
 }

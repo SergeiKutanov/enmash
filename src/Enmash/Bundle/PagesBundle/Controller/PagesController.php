@@ -215,7 +215,8 @@ class PagesController extends Controller{
             ->getRepository('EnmashStoreBundle:SpecialOffer')
             ->findBy(
                 array(
-                    'type'  => SpecialOffer::TYPE_DISCOUNT,
+                    'type'      => SpecialOffer::TYPE_DISCOUNT,
+                    'publish'   => true
                 )
             );
 
@@ -223,7 +224,8 @@ class PagesController extends Controller{
             ->getRepository('EnmashStoreBundle:SpecialOffer')
             ->findBy(
                 array(
-                    'type'  => SpecialOffer::TYPE_SPECIAL_OFFER
+                    'type'      => SpecialOffer::TYPE_SPECIAL_OFFER,
+                    'publish'   => true
                 )
             );
 
@@ -231,7 +233,8 @@ class PagesController extends Controller{
             ->getRepository('EnmashStoreBundle:SpecialOffer')
             ->findOneBy(
                 array(
-                    'type'  => SpecialOffer::TYPE_BONUS
+                    'type'      => SpecialOffer::TYPE_BONUS,
+                    'publish'   => true
                 )
             );
 

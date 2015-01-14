@@ -55,6 +55,7 @@ class SpecialOfferAdmin extends Admin
             )
             ->add('startDate', 'sonata_type_date_picker')
             ->add('endDate', 'sonata_type_date_picker')
+            ->add('publish')
             ->add('title')
             ->add('store')
             ->add(
