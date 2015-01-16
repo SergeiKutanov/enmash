@@ -60,9 +60,13 @@
                 $('#select-city-modal .modal-body ul a').click(function(e){
                     e.preventDefault();
                     var city = $(this).data('city');
+                    console.log(city);
                     if (city != "") {
                         document.cookie = "userlocation=" + city;
-                        $('#city-name').text(city);
+                        var citySpan = document.querySelector('#city-name');
+                        if (citySpan != undefined) {
+                            citySpan.textContent = city;
+                        }
                     }
 
                     $('#select-city-modal').modal('hide');
