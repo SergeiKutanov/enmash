@@ -1,62 +1,57 @@
-<div class="navbar navbar-fixed-top" role="navigation" id="top-menu">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-3">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ path('index-page') }}">
-                        ЭЛЕКТРОТЕХНИЧЕСКАЯ КОМПАНИЯ
-                        {% image '@EnmashPagesBundle/Resources/public/images/logo_energomash_blue.png' %}
-                        <img src="{{ asset_url }}" alt="Логотип Энергомаш" />
-                        {% endimage %}
-                    </a>
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="glyphicon glyphicon-align-justify"></span>
-                    </button>
-                </div>
-            </div>
-            <div class="col-xs-9">
-                <div id="search-box">
-                    <ul class="list-inline">
-                        <li id="select-location">
-                            <a href="#" data-toggle="modal" data-target="#select-city-modal" data-city-selected="{% if app.request.cookies.get('userlocation') %}1{% else %}0{% endif %}">
-                                <span class="mdi-action-home icon"></span>
-                                {% if app.request.cookies.get('userlocation') %}
-                                    г. <span id='city-name'>{{ app.request.cookies.get('userlocation') }}</span>
-                                {% else %}
-                                    Выбрать город
-                                {% endif %}
-                            </a>
-                        </li>
-                        <li>
-                            <a id="find-store-link" data-toggle="modal" data-target="#find-store-map"><span class="glyphicon glyphicon-map-marker icon"></span> Найти магазин</a>
-                        </li>
-                        {#<li>#}
-                            {#<a href="#">Войти</a>#}
-                        {#</li>#}
-                        <li class="box">
-                            <input type="text" />
-                        </li>
-                        <li class="find-button">
-                            <a href="#" id="select-city"><span class="glyphicon glyphicon-search"></span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<nav class="navbar navbar-fixed-top" role="navigation" id="top-menu">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ path('index-page') }}">
+                <span class="visible-lg">ЭЛЕКТРОТЕХНИЧЕСКАЯ КОМПАНИЯ</span>
+                {% image '@EnmashPagesBundle/Resources/public/images/logo_energomash_blue.png' %}
+                <img src="{{ asset_url }}" alt="Логотип Энергомаш" />
+                {% endimage %}
+            </a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="glyphicon glyphicon-align-justify"></span>
+            </button>
         </div>
-        <div class="row">
-            <div class="collapse navbar-collapse">
-                {#{{ knp_menu_render('EnmashPagesBundle:Builder:catalogMainMenu', {'template': 'EnmashPagesBundle:Menu:topcatalogmenu.html.twig'}) }}#}
-                <ul class="nav navbar-nav">
-                    <li {% if app.request.get('_route') == 'catalog-category-page' or app.request.get('_route') == 'catalog-index-page' %}class="active"{% endif %}><a href="{{ path('catalog-index-page') }}">КАТАЛОГ ТОВАРОВ</a></li>
-                    <li {% if app.request.get('_route') == 'about-page' %}class="active"{% endif %}><a href="{{ path('about-page') }}">О КОМПАНИИ</a></li>
-                    <li {% if app.request.get('_route') == 'stores-page' %}class="active"{% endif %}><a href="{{ path('stores-page') }}">МАГАЗИНЫ</a></li>
-                    <li {% if app.request.get('_route') == 'wholesale-stores-page' %}class="active"{% endif %}><a href="{{ path('wholesale-stores-page') }}">СЛУЖБЫ СБЫТА</a></li>
-                    <li {% if app.request.get('_route') == 'special-offers-page' %}class="active"{% endif %}><a href="{{ path('special-offers-page') }}">БОНУСЫ И СКИДКИ</a></li>
-                    <li {% if app.request.get('_route') == 'your-benefits-page' %}class="active"{% endif %}><a href="{{ path('your-benefits-page') }}">ВАША ПРИБЫЛЬ</a></li>
-                    <li {% if app.request.get('_route') == 'your-safety-page' %}class="active"{% endif %}><a href="{{ path('your-safety-page') }}">ВАША БЕЗОПАСНОСТЬ</a></li>
-                    <li {% if app.request.get('_route') == 'contacts-page' %}class="active"{% endif %}><a href="{{ path('contacts-page') }}">КОНТАКТЫ</a></li>
+
+        <div class="collapse navbar-collapse">
+            {#{{ knp_menu_render('EnmashPagesBundle:Builder:catalogMainMenu', {'template': 'EnmashPagesBundle:Menu:topcatalogmenu.html.twig'}) }}#}
+
+            <div id="search-box">
+                <ul class="list-inline">
+                    <li id="select-location">
+                        <a href="#" data-toggle="modal" data-target="#select-city-modal" data-city-selected="{% if app.request.cookies.get('userlocation') %}1{% else %}0{% endif %}">
+                            <span class="mdi-action-home icon"></span>
+                            {% if app.request.cookies.get('userlocation') %}
+                                г. <span id='city-name'>{{ app.request.cookies.get('userlocation') }}</span>
+                            {% else %}
+                                Выбрать город
+                            {% endif %}
+                        </a>
+                    </li>
+                    <li>
+                        <a id="find-store-link" data-toggle="modal" data-target="#find-store-map"><span class="glyphicon glyphicon-map-marker icon"></span> Найти магазин</a>
+                    </li>
+                    {#<li>#}
+                    {#<a href="#">Войти</a>#}
+                    {#</li>#}
+                    <li class="box">
+                        <input type="text" />
+                    </li>
+                    <li class="find-button">
+                        <a href="#" id="select-city"><span class="glyphicon glyphicon-search"></span></a>
+                    </li>
                 </ul>
             </div>
+            <ul class="nav navbar-nav">
+                <li {% if app.request.get('_route') == 'catalog-category-page' or app.request.get('_route') == 'catalog-index-page' %}class="active"{% endif %}><a href="{{ path('catalog-index-page') }}">КАТАЛОГ</a></li>
+                <li class="{% if app.request.get('_route') == 'about-page' %}active {% endif %}visible-xs visible-md visible-lg"><a href="{{ path('about-page') }}">О КОМПАНИИ</a></li>
+                <li {% if app.request.get('_route') == 'stores-page' %}class="active"{% endif %}><a href="{{ path('stores-page') }}">МАГАЗИНЫ</a></li>
+                <li {% if app.request.get('_route') == 'wholesale-stores-page' %}class="active"{% endif %}><a href="{{ path('wholesale-stores-page') }}">СЛУЖБЫ СБЫТА</a></li>
+                <li {% if app.request.get('_route') == 'special-offers-page' %}class="active"{% endif %}><a href="{{ path('special-offers-page') }}">БОНУСЫ И СКИДКИ</a></li>
+                <li class="{% if app.request.get('_route') == 'your-benefits-page' %}active {% endif %}visible-xs visible-lg"><a href="{{ path('your-benefits-page') }}">ВАША ПРИБЫЛЬ</a></li>
+                <li class="{% if app.request.get('_route') == 'your-safety-page' %}active {% endif %}visible-xs visible-lg"><a href="{{ path('your-safety-page') }}">ВАША БЕЗОПАСНОСТЬ</a></li>
+                <li {% if app.request.get('_route') == 'contacts-page' %}class="active"{% endif %}><a href="{{ path('contacts-page') }}">КОНТАКТЫ</a></li>
+            </ul>
         </div>
     </div>
-</div>
+</nav>
