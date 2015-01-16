@@ -128,6 +128,23 @@
             $('[data-toggle="offcanvas"]').click(function () {
                 $('.row-offcanvas').toggleClass('active')
             });
+
+            checkCityStatus();
+
+            $('#select-city-modal .modal-body ul a').click(function(e){
+                e.preventDefault();
+                var city = $(this).data('city');
+                console.log(city);
+                if (city != "") {
+                    document.cookie = "userlocation=" + city;
+                    var citySpan = document.querySelector('#city-name');
+                    if (citySpan != undefined) {
+                        citySpan.textContent = city;
+                    }
+                }
+
+                $('#select-city-modal').modal('hide');
+            });
         });
     </script>
 {% endblock %}
