@@ -7,9 +7,9 @@
 
     TitleBanners.prototype.init = function() {
         this.$items = this.$element.find('.item a.banner-opener');
-        this.$items.on('click',  function(e){
+        this.$items.on('click', function(e){
             e.preventDefault();
-            var sectionId = $(e.target).parent().attr('data-section-id');
+            var sectionId = $(e.target).parent().parent().attr('data-section-id');
             if (sectionId) {
                 var section = $(document).find('#bannersection' + sectionId);
                 if (section) {

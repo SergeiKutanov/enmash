@@ -566,7 +566,7 @@ div.container.landing-map {
 
 /*---------------------title banners-----------------------------*/
 #banners-carousel .carousel-inner .item > div {
-    height: 367px;
+    /*height: 367px;*/
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
