@@ -22,6 +22,28 @@
         display: block;
         background-color: rgba(255, 255, 255, .8);
     }
+
+    @media screen and (min-width: 992px){
+        .featured-articles .col-md-4 {
+            min-height: 300px;
+        }
+
+        .featured-articles > div[class^=col-] {
+            border-left: 1px solid #555555;
+        }
+
+        .featured-articles > div[class^=col-]:first-child {
+            border-left: none;
+        }
+    }
+
+    @media screen and (max-width: 992px) {
+        .featured-articles div[class^=col-] {
+            margin-bottom: 20px;
+            min-height: 150px;
+        }
+    }
+
 </style>
 <h2 class="text-center">ВАША ПРИБЫЛЬ</h2>
 <div class="row featured-articles">
@@ -38,6 +60,7 @@
         <div class="text-right read-more">
             <a href="{{ path('article-page', {'slug': article.slug}) }}">Читать далее</a>
         </div>
+        <hr class="visible-xs visible-sm">
     </div>
     {% endfor %}
 </div>

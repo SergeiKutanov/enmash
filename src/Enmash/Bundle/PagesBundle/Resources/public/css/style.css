@@ -759,21 +759,6 @@ a.featured-image img {
 }
 
 /*------------------------articles page--------------------------*/
-.featured-articles {
-    display: table-row;
-    width: 100%;
-}
-
-.featured-articles > div[class^=col-] {
-    display: table-cell;
-    float: none;
-    border-left: 1px solid #555555;
-}
-
-.featured-articles > div[class^=col-]:first-child {
-    border-left: none;
-}
-
 .featured-articles div.read-more {
     position: absolute;
     right: 15px;
