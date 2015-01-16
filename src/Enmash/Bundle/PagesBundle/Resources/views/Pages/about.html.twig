@@ -1,67 +1,13 @@
 {% extends 'EnmashPagesBundle:Base:public_base.html.twig' %}
 
-{% block js %}
-    {{ parent() }}
-    {#<script type="text/javascript" src="{{ asset('vendor/skrollr/dist/skrollr.min.js') }}"></script>#}
-    <script type="text/javascript">
-//        $(document).ready(function(){
-//            var windowWidth = $(window).width();
-//            if(windowWidth > 767){
-//                $('body').attr('data-0', 'background-position: 0px 0px');
-//                $('body').attr('data-1000', 'background-position: 0px -100%');
-//
-//                skrollr.init({
-//                    forceHeight: false
-//                });
-//            }
-//        });
-
-    </script>
-{% endblock %}
-
 {% block no_container %}
-    <style type="text/css">
-
-        body {
-            {#background:url({{ asset('bundles/enmashpages/images/map_grey.png') }}) no-repeat fixed;#}
-            /*background-size: cover;*/
-        }
-
-    </style>
-
-    {#<div id="about-page-content">#}
-        {#<div id="skrollr-body">#}
-            {#<div class="row pusher">#}
-                {#<div class="col-sx-12">#}
-                    {#<h1 class="text-center">О КОМПАНИИ</h1>#}
-                    {#<div class="text-center">#}
-                        {#<div id="est-year">#}
-                            {#<h4 class="text-center">Год создания</h4>#}
-                            {#<hr>#}
-                            {#<span class="text-center">1994</span>#}
-                        {#</div>#}
-                    {#</div>#}
-                {#</div>#}
-            {#</div>#}
-            {#<div class="row">#}
-                {#<div class="col-sm-12 text-center" id="first-paragraph">#}
-                    {#<p>Сегодня "ЭНЕРГОМАШ" — это электротехническая компания, в состав которой входит более 20 филиалов и специализированных магазинов.</p>#}
-                {#</div>#}
-                {#<div class="col-sm-12 text-center">#}
-                    {#<p>Основные направления розничной и оптовой сети "ЭНЕРГОМАШ"  обеспечение офисно-бытовых, ремонтно-эксплуатационных и строительных нужд предприятий и граждан низковольтной аппаратурой, светотехникой, кабельно-проводниковой и другой продукцией. В номенклатуру компании входят тысячи изделий для различных групп потребителей от лампочек и розеток до люстр и подстанций.</p>#}
-                    {#<p>Главная задача, которую ставит перед собой коллектив "ЭНЕРГОМАША" — предоставить всем потребителям возможность получения как можно более широкого ассортимента продукции комплексно, в одном месте.</p>#}
-                    {#<p>Нас связывают дилерские отношения с крупнейшими российскими и зарубежными производителями.</p>#}
-                    {#<p>Это позволяет сформировать на электротехнические изделия и материалы доступные, конкурентноспособные цены, в ряде случаев — на уровне и ниже, чем у производителей.</p>#}
-                    {#<p>Компания понимает насколько важны, сложны и одновременно опасны в использовании электротехнические изделия. Поэтому в розничной торговле и сбыте во главу угла ставит не обезличенное самообслуживание, а квалифицированные консультации специалистов по подбору оборудования. Этому способствуют созданные во всех филиалах и магазинах обширные экспозиции изделий основной номенклатуры.</p>#}
-                {#</div>#}
-            {#</div>#}
-        {#</div>#}
-    {#</div>#}
 
     <style>
+
         .fill {
             height: 100%;
             position: relative;
+            overflow: hidden;
         }
 
         .background {
@@ -106,13 +52,13 @@
         }
 
         .about-jumbo .grey-bg {
-            background-color: rgba(0,0,0, .5);
+            background-color: rgba(0,0,0, .8);
             color: #ffffff;
             overflow: auto;
         }
 
         .about-jumbo .white-bg {
-            background-color: rgba(255, 255, 255, .5);
+            background-color: rgba(255, 255, 255, .8);
             color: #555555;
             overflow: auto;
         }
