@@ -59,12 +59,12 @@
         <span>Товаров в категории - {{ products.getTotalItemCount }} шт.</span>
     </div>
     {% for item in products %}
-    <div class="col-xs-12 col-md-4">
+    <div class="col-xs-12 col-sm-4 col-md-6 col-lg-4">
         {% include 'EnmashPagesBundle:Pages:Catalog/Block/item-catalog.html.twig' with {item: item}%}
     </div>
-    {% if loop.index is divisibleby(3) %}
-        <div class="clearfix"></div>
-    {% endif %}
+    {#{% if loop.index is divisibleby(3) %}#}
+        {#<div class="clearfix"></div>#}
+    {#{% endif %}#}
     {% endfor %}
     <div class="pagination col-xs-12 text-center">
         {{ knp_pagination_render(products) }}

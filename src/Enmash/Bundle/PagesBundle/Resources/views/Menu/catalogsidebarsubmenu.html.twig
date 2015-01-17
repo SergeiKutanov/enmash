@@ -1,0 +1,39 @@
+{% extends 'knp_menu.html.twig' %}
+
+{% block root %}
+
+    <style>
+        #subcategories ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #subcategories ul li {
+            padding: 5px 0;
+        }
+
+        #subcategories li.current {
+            background-color: #005f8d;
+        }
+
+        #subcategories li.current a {
+            color: #ffffff !important;
+        }
+
+        #subcategories h3 {
+            font-size: 1.5em;
+        }
+
+        #subcategories {
+            width: 300px;
+        }
+    </style>
+
+    {% set listAttributes = item.childrenAttributes %}
+    {% if item.children | length > 0 %}
+    <div class="well" id="subcategories">
+        <h3>{{ item.name }}</h3>
+        {{ block('list') -}}
+    </div>
+    {% endif %}
+{% endblock %}

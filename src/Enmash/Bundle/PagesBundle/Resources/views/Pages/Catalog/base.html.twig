@@ -1,123 +1,42 @@
 {% extends 'EnmashPagesBundle:Base:public_base.html.twig' %}
 
-{% block content %}
+{% block no_container %}
 <style>
-    /*
- * Style tweaks
- * --------------------------------------------------
- */
-    html,
-    body {
-        overflow-x: hidden; /* Prevent scroll on narrow devices */
-        height: initial;
-    }
-    footer {
-        padding: 30px 0;
+
+    body .well, .container .well, .container-fluid .well, body .jumbotron, .container .jumbotron, .container-fluid .jumbotron {
+        margin-bottom: 0px;
     }
 
-    /*
-     * Off Canvas
-     * --------------------------------------------------
-     */
-    @media screen and (max-width: 767px) {
-        .row-offcanvas {
-            position: relative;
-            -webkit-transition: all .25s ease-out;
-            -o-transition: all .25s ease-out;
-            transition: all .25s ease-out;
-        }
-
-        .row-offcanvas-right {
-            right: 0;
-        }
-
-        .row-offcanvas-left {
-            left: 0;
-        }
-
-        .row-offcanvas-right
-        .sidebar-offcanvas {
-            right: -50%; /* 6 columns */
-        }
-
-        .row-offcanvas-left
-        .sidebar-offcanvas {
-            left: -50%; /* 6 columns */
-        }
-
-        .row-offcanvas-right.active {
-            right: 50%; /* 6 columns */
-        }
-
-        .row-offcanvas-left.active {
-            left: 50%; /* 6 columns */
-        }
-
-        .sidebar-offcanvas {
-            position: absolute;
-            top: 0;
-            width: 50%; /* 6 columns */
-        }
-
-
+    .breadcrumbs-row {
+        margin-top: 20px;
     }
 
-    /*breadcrumbs style*/
-    ul.breadcrumb {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        background-color: initial;
-    }
-
-    .breadcrumb>li+li:before {
-        content: "";
-        padding: 0;
-    }
-
-    ul.breadcrumb li {
-        display: inline;
-        font-size: .9em;
-    }
-
-    ul.breadcrumb li span.separator {
-        margin: 0px 10px;
-        color: #aaaaaa;
-    }
-
-    ul.breadcrumb a {
-        text-decoration: none;
-        color: #000000;
-    }
-
-    ul.breadcrumb a:hover {
-        text-decoration: underline;
-    }
 </style>
 
+<div class="container-fluid">
+    <div class="row row-offcanvas row-offcanvas-left pusher">
 
-<div class="row row-offcanvas row-offcanvas-left pusher">
+        <div class="col-sm-12 col-md-4 col-lg-3">
+            <h1>Каталог</h1>
+            <div class="hide-mobile well well-sm visible-xs visible-sm breadcrumb">
+                {{ wo_render_breadcrumbs() }}
+            </div>
+            {{ knp_menu_render('EnmashPagesBundle:Builder:catalogMobileMenu', {'template': 'EnmashPagesBundle:Menu:mobilecatalogmenu.html.twig'}) }}
+            {{ knp_menu_render('EnmashPagesBundle:Builder:catalogSidebarSubMenu', {'template': 'EnmashPagesBundle:Menu:catalogsidebarsubmenu.html.twig'}) }}
+        </div>
 
-    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-        {{ knp_menu_render('EnmashPagesBundle:Builder:catalogSidebarMenu', {'template': 'EnmashPagesBundle:Menu:catalogsidebarmenu.html.twig'}) }}
-    </div>
-
-    <div class="col-md-9">
-        <p class="pull-left visible-xs">
-            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Каталог</button>
-        </p>
-        <h1>Каталог Товаров</h1>
-        <div class="row breadcrumbs-row">
-            <div class="col-xs-12">
-                {% block breadcrumbs %}
-                    <div class="hide-mobile well well-sm">
+        <div class="col-sm-12 col-md-8 col-lg-9">
+            <div class="row breadcrumbs-row">
+                <div class="col-xs-12">
+                    <div class="hide-mobile well well-sm visible-md visible-lg">
                         {{ wo_render_breadcrumbs() }}
                     </div>
-                {% endblock %}
+                    {% block maincontent %}{% endblock %}
+                </div>
             </div>
         </div>
-        {% block maincontent %}{% endblock %}
     </div>
+
 </div>
 {% endblock %}
 

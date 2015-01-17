@@ -11,130 +11,213 @@
 {% block root %}
 
     <style>
-        #sidebar {
-            position: relative;
+
+        div#main-catalog:before {
+            content: "";
+            display: block;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            position: absolute;
+            top: -10px;
+            transform: rotate(45deg);
         }
 
-        #sidebar ul {
-            list-style: none;
-        }
-
-        #sidebar ul li {
-            position: relative;
-            padding: 10px 0;
-            border-bottom: 1px solid #555555;
-        }
-
-        #sidebar ul li.current > a, li.current_ancestor > a {
-            font-weight: 700;
-        }
-
-        #sidebar > ul > li > ul {
+        #main-catalog {
+            /*display: none;*/
+            width: 350px;
+            position: absolute;
+            top: 45px;
+            z-index: 5;
             display: none;
         }
 
-        #sidebar ul li.has-children a{
+        #main-catalog a {
+            color: #005f8d !important;
+            font-weight: 100 !important;
+            padding: 0px 20px 0px 0px !important;
+        }
+
+        #main-catalog .level_1 {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 700px;
+            left: 100%;
+            z-index: 5;
+            background-color: white;
+            border: 1px solid #aaa;
+            box-shadow: 0px 3px 10px 0px #999;
+            padding: 5px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            display: none;
+            transition: all .3s ease;
+        }
+
+        #main-catalog .level_2 {
+            border-bottom: 1px solid #cccccc;
+        }
+
+        #main-catalog > ul > li.hovered {
+            background-color: #005f8d;
+            color: #FFFFFF !important;
+        }
+
+        #main-catalog li.hovered > a {
+            color: #ffffff !important;
+        }
+
+        #main-catalog .level_1.shown, #main-catalog.shown {
+            display: block;
+        }
+
+        #main-catalog .level_2 {
+            padding-left: 10px;
+        }
+
+        #main-catalog .level_2 a {
+            color: #555 !important;
+        }
+
+        #main-catalog .level_2 li {
+            padding: 2px 0px;
+        }
+
+        #main-catalog ul {
             position: relative;
-            margin-right: 20px;
-            display: table;
+            list-style: none;
+            padding: 0;
+        }
+
+        #main-catalog ul li {
+            /*position: relative;*/
+            border: none !important;
+            padding: 10px 0;
+            /*border-bottom: 1px solid #555555;*/
+        }
+
+        #main-catalog ul li.current > a, li.current_ancestor > a {
+            font-weight: 700;
+        }
+
+        .menu-column {
+            float: left;
+            width: 50%;
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 991px){
+            .menu-column {
+                width: 100%;
+            }
+
+            #main-catalog .level_1 {
+                width: 400px;
+            }
+        }
+
+        @media screen and (min-width: 992px) and (max-width: 1199px){
+            #main-catalog .level_1 {
+                width: 600px;
+            }
+        }
+
+        .menu-column > a {
+            margin: 10px 0px 0px 0px;
+        }
+
+        #main-catalog ul li.has-children a{
+            position: relative;
+            display: block;
+            padding-right: 20px;
             z-index: 1;
         }
 
         .menu-opener {
-            position: relative;
-            right: -20px;
+            position: absolute;
             top: 0;
+            right: 0;
             height: 100%;
-            display: table-cell;
-            vertical-align: middle;
             z-index: 5;
             cursor: pointer;
         }
 
-        #submenus {
-            position: absolute;
-            display: none;
-            background-color: #ffffff;
-            border: 1px solid #cccccc;
-            box-shadow: 0px 0px 10px 0px #aaaaaa;
-            max-height: 100%;
-            top: 10px;
-            left: 100%;
-            padding: 10px 45px 10px 10px;
-            overflow-y: scroll;
-            /*overflow-x: hidden;*/
-            z-index: 99;
+        .menu-opener > span {
+            display: block;
+            top: 50%;
+            margin-top: -50%;
         }
 
-        #submenus > ul {
-            padding-left: 0;
-            max-height: 9999px;
-            column-count: 3;
-            -webkit-column-count: 3;
-            -moz-column-count: 3;
-            column-fill: balance;
-            -webkit-column-fill: balance;
-            -moz-column-fill: balance;
+        #main-catalog a.other-categories {
+            color: #005f8d !important;
+            font-weight: 900 !important;
+            font-size: .9em !important;
+            margin: 5px 0 0 5px;
+            display: inline-block;
+            position: relative;
+            left: 70%;
         }
 
-        #submenus > ul > li li {
-            border-bottom: none !important;
-        }
-
-        #submenus #close-submenus {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-            z-index: 20;
-        }
-
-        #submenus #close-submenus:hover {
-            color: #337ab7;
-        }
     </style>
 
     <script>
         $(document).ready(function(){
 
-            //fix submenus popup width
-            var submenusDiv = $('#submenus');
-            var sidebarDiv = $('#sidebar');
-            var container = $(sidebarDiv).parent();
-            $(submenusDiv).width($(container).width() - $(sidebarDiv).width() - 45);
+            $('#main-catalog > ul > li').hover(
+                    function (e) {
 
-            //fix submenus height
-            var windowHeight = $(window).height();
-            var topMenuHeight = $('#top-menu').height();
-            $('#submenus').css('max-height', windowHeight - topMenuHeight - 80);
+                        var openMenus = document.querySelectorAll('#main-catalog .level_1.shown');
+                        for (var i = 0; i < openMenus.length; i++) {
+                            openMenus[i].classList.remove('shown');
+                        }
+                        showMenu(this);
+                    }, null
+            );
 
-            //create columns for submenus
+            $('#main-catalog').hover(
+                    null,
+                    function() {
+                        setTimeout(
+                                function() {
+                                    if (document.querySelector('#main-catalog:hover') == null) {
+                                        var menu = document.querySelectorAll('#main-catalog .level_1.shown');
+                                        for (var i = 0; i < menu.length; i++) {
+                                            menu[i].classList.remove('shown');
+                                        }
+                                        var catalogMenu = document.querySelector('#main-catalog');
+                                        removeHoveredClasses(catalogMenu);
+                                        catalogMenu.classList.remove('shown');
+                                    }
+                                },
+                                500
+                        );
 
+                    }
+            );
 
-            $('.menu-opener').click(function(e){
-                e.preventDefault();
-                var currentLi = $(this).closest('li.has-children').find('ul').first();
-                $('#submenus > ul').html($(currentLi).html());
-                $('#submenus').css('display', 'block');
-                $('html, body').animate(
-                        {
-                            'scrollTop': 0
-                        }, 500
-                )
-            });
-
-            $('#close-submenus').click(function(){
-                $('#submenus').css('display', 'none');
-            });
         });
+
+        function showMenu(li) {
+            var submenu = li.querySelector(".level_1");
+            if (submenu == null) return;
+            submenu.classList.add('shown');
+            if (document.querySelector('#main-catalog .level_1:hover') == null) {
+                removeHoveredClasses(li.parentNode.parentNode);
+            }
+            li.classList.add('hovered');
+        }
+
+        function removeHoveredClasses(sidebar) {
+            var targets = sidebar.querySelectorAll('li.hovered');
+            for (var i = 0; i < targets.length; i++) {
+                targets[i].classList.remove('hovered');
+            }
+        }
     </script>
 
     {% set listAttributes = item.childrenAttributes %}
-    {{ block('list') -}}
-
-    <div id="submenus">
-        <span class="glyphicon glyphicon-remove" aria-hidden="true" id="close-submenus"></span>
-        <ul></ul>
+    <div class="well hidden-xs" id="main-catalog">
+        {{ block('list') -}}
     </div>
 
 {% endblock %}
@@ -148,4 +231,112 @@
             </div>
         {% endif %}
     </a>
+{% endblock %}
+
+{% block list %}
+    {% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
+
+        {% if item.level == 0 %}
+        <ul{{ _self.attributes(listAttributes) }}>
+        {% endif %}
+
+        {% if item.level > 0 %}
+        <div class="level_{{ item.level }}">
+            {% if item.level == 1 %}
+            <div class="menu-column">
+            {% endif %}
+        {% endif %}
+
+            {{ block('children') }}
+
+        {% if item.level > 0 %}
+            {% if item.level == 1 %}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if item.level == 0 %}
+        </ul>
+        {% endif %}
+
+    {% endif %}
+{% endblock %}
+
+{% block children %}
+    {# save current variables #}
+    {% set currentOptions = options %}
+    {% set currentItem = item %}
+    {# update the depth for children #}
+    {% if options.depth is not none %}
+        {% set options = currentOptions|merge({'depth': currentOptions.depth - 1}) %}
+    {% endif %}
+    {% for item in currentItem.children %}
+
+        {% if item.level == 2 %}
+            {% if not loop.first and ((loop.index - 1) is divisibleby(4)) %}
+                <div class="menu-column">
+            {% endif %}
+        {% endif %}
+
+        {% if item.level != 3 %}
+        {{ block('item') }}
+        {% else %}
+            {% if loop.index < 6 %}
+                {{ block('item') }}
+            {% elseif loop.index == 6 %}
+                <a href="{{ path('catalog-category-page', {slug: item.parent.getExtra('slug')}) }}" class="other-categories">Все категории ></a>
+            {% endif %}
+        {% endif %}
+
+        {% if item.level == 2 %}
+            {% if (loop.index is divisibleby(4)) and not loop.last %}
+                </div>
+            {% endif %}
+        {% endif %}
+
+    {% endfor %}
+    {# restore current variables #}
+    {% set item = currentItem %}
+    {% set options = currentOptions %}
+{% endblock %}
+
+{% block item %}
+{% if item.displayed %}
+    {# building the class of the item #}
+    {%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
+    {%- if item.current %}
+        {%- set classes = classes|merge([options.currentClass]) %}
+    {%- elseif item.currentAncestor %}
+        {%- set classes = classes|merge([options.ancestorClass]) %}
+    {%- endif %}
+    {%- if item.actsLikeFirst %}
+        {%- set classes = classes|merge([options.firstClass]) %}
+    {%- endif %}
+    {%- if item.actsLikeLast %}
+        {%- set classes = classes|merge([options.lastClass]) %}
+    {%- endif %}
+    {%- set attributes = item.attributes %}
+    {%- if classes is not empty %}
+        {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
+    {%- endif %}
+    {# displaying the item #}
+    {% if item.level == 1 %}
+    <li{{ _self.attributes(attributes) }}>
+    {% endif %}
+
+        {%- if item.uri is not empty and (not item.current or options.currentAsLink) %}
+            {{ block('linkElement') }}
+        {%- else %}
+            {{ block('spanElement') }}
+        {%- endif %}
+        {# render the list of children#}
+        {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
+        {%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}
+        {%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
+        {{ block('list') }}
+    {% if item.level == 1 %}
+    </li>
+    {% endif %}
+{% endif %}
 {% endblock %}

@@ -112,6 +112,12 @@ hr {
     margin-top: 120px;
 }
 
+@media screen and (max-width: 767px) {
+    .pusher {
+        margin-top: 65px;
+    }
+}
+
 .modal-backdrop {
     background-color: #000000;
 }
@@ -700,6 +706,12 @@ a.offset-anchor{
     padding-top: 119px;
 }
 
+@media screen and (max-width: 767px) {
+    #bigmap {
+        padding-top: 65px;
+    }
+}
+
 #bigmap #map-canvas{
     height: 100%;
 }
@@ -925,4 +937,41 @@ a.featured-image img {
 
 .special-offers-submenu {
     margin-top: 10px;
+}
+
+ul.breadcrumb {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: initial;
+}
+
+@media screen and (max-width: 991px){
+    div.breadcrumb {
+        margin-bottom: 20px !important;
+    }
+}
+
+.breadcrumb>li+li:before {
+    content: "";
+    padding: 0;
+}
+
+ul.breadcrumb li {
+    display: inline;
+    font-size: .9em;
+}
+
+ul.breadcrumb li span.separator {
+    margin: 0px 10px;
+    color: #aaaaaa;
+}
+
+ul.breadcrumb a {
+    text-decoration: none;
+    color: #000000;
+}
+
+ul.breadcrumb a:hover {
+    text-decoration: underline;
 }

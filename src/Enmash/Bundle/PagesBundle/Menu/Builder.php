@@ -46,6 +46,94 @@ class Builder extends ContainerAware {
 
     }
 
+    public function catalogMobileMenu(FactoryInterface $factoryInterface, array $options) {
+        $request = $this->container->get('request');
+        $categorySlug = $request->get('slug');
+
+        $menu = $factoryInterface->createItem('root');
+
+        $em = $this->container->get('doctrine');
+        if (!$categorySlug) {
+            $categories = $em
+                ->getRepository(
+                    'EnmashStoreBundle:Category'
+                )
+                ->findBy(
+                    array(
+                        'parentCategory'    => null
+                    ),
+                    array(
+                        'name'  => 'ASC'
+                    )
+                );
+            foreach ($categories as $category) {
+                /* @var $category Category */
+                $options['route'] = 'catalog-category-page';
+                $options['routeParameters'] = array(
+                    'slug'  => $category->getSlug()
+                );
+                $menu->addChild(
+                    $category->getName(),
+                    $options
+                );
+                if ($category->getSlug() == $categorySlug) {
+                    $menu[$category->getName()]->setCurrent(true);
+                }
+            }
+
+        }
+
+        return $menu;
+    }
+
+    public function catalogSidebarSubMenu(FactoryInterface $factory, array $options) {
+        $request = $this->container->get('request');
+        $categorySlug = $request->get('slug');
+
+        $menu = null;
+
+        $em = $this->container->get('doctrine')->getManager();
+        /* @var $categories Category */
+        $categories = $em
+            ->getRepository('EnmashStoreBundle:Category')
+            ->findOneBy(
+                array(
+                    'slug'  => $categorySlug
+                )
+            );
+        if ($categories) {
+
+            $menu = $factory->createItem($categories->getName());
+
+            if (count($categories->getSubCategories()) == 0) {
+                $categories = $categories->getParentCategory();
+            }
+            foreach ($categories->getSubCategories() as $category) {
+                /* @var $category Category */
+
+                $options['route'] = 'catalog-category-page';
+                $options['routeParameters'] = array(
+                    'slug'  => $category->getSlug()
+                );
+
+                $menu->addChild(
+                    $category->getName(),
+                    $options
+                );
+
+                if ($category->getSlug() == $categorySlug) {
+                    $menu[$category->getName()]->setCurrent(true);
+                }
+            }
+        }
+
+        if (!$menu) {
+            $menu = $factory->createItem('root');
+        }
+
+        return $menu;
+    }
+
     public function catalogSidebarMenu(FactoryInterface $factory, array $options) {
 
         $request = $this->container->get('request');
@@ -77,7 +165,7 @@ class Builder extends ContainerAware {
 
             if ($item->getSubCategories()) {
                 $options['attributes'] = array(
-                    'class' => 'has-children'
+                    'class'     => 'has-children'
                 );
             }
 
@@ -106,6 +194,9 @@ class Builder extends ContainerAware {
                 array(
                     'route'             => 'catalog-category-page',
                     'routeParameters'   => array(
+                        'slug'  => $subCategory->getSlug()
+                    ),
+                    'extras'    => array(
                         'slug'  => $subCategory->getSlug()
                     )
                 )

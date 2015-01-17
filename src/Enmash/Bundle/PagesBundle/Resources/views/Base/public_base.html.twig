@@ -103,6 +103,26 @@
                         }
                     });
                 });
+
+                //catalog menu shower
+                $("#catalog-menu-item").hover(
+                        function(e) {
+                            var catalogMenu = document.querySelector('#main-catalog');
+                            if (catalogMenu == null) return;
+                            catalogMenu.classList.add('shown');
+                        },
+                        function(e) {
+                            setTimeout(function(){
+                                var catalogMenu = document.querySelector('#main-catalog:hover');
+                                if (catalogMenu == null) {
+                                    var catalogMenu = document.querySelector('#main-catalog');
+                                    catalogMenu.classList.remove('shown');
+                                }
+
+                            }, 500);
+                        }
+                );
+
             });
 
             function checkCityStatus() {

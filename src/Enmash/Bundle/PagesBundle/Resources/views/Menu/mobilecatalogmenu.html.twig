@@ -1,0 +1,26 @@
+{% extends 'knp_menu.html.twig' %}
+
+{% block root %}
+
+    <style>
+        #mobile-catalog ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #mobile-catalog ul li {
+            padding: 5px 0px;
+        }
+
+        #mobile-catalog ul li a {
+            display: block;
+        }
+    </style>
+
+    {% set listAttributes = item.childrenAttributes %}
+    {% if item.children | length > 0 %}
+    <div class="well visible-xs" id="mobile-catalog">
+        {{ block('list') -}}
+    </div>
+    {% endif %}
+{% endblock %}

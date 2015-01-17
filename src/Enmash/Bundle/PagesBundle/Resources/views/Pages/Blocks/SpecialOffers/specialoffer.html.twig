@@ -1,5 +1,5 @@
 {#<div class="item" style="width: {{ offer.width }}%">#}
-<div class="col-xs-12 item">
+<div class="item" style="min-height: {{ minheight }}">
     <div >
     <div class="offer-image" id="links">
         <a href="{% path offer.image, 'big' %}" title="{{ offer.image.name }}" data-gallery="offer_{{ offer.id }}" >
@@ -7,7 +7,7 @@
         </a>
     </div>
     {% if offer.title | length > 0 %}
-    <div class="offer-title">
+    <div class="offer-title text-center">
         <h3>{{ offer.title }}</h3>
     </div>
     {% endif %}
