@@ -4,6 +4,7 @@
     {{ parent() }}
     <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
     <link rel="stylesheet" href="{{ asset('vendor/blueimp-bootstrap-image-gallery/css/bootstrap-image-gallery.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/slick.js/slick/slick.css') }}">
 {% endblock %}
 
 {% block maincontent %}
@@ -144,19 +145,24 @@
     {% endif %}
 
     {% if product.analogs | length > 0 %}
+    {#<div class="analogs">#}
+        {#<hr>#}
+        {#<h2>Аналоги</h2>#}
+        {#{% include 'EnmashPagesBundle:Pages:Catalog/Block/similars.html.twig' with {products: product.analogs, title: 'analogs-carousel'} %}#}
+    {#</div>#}
     <div class="analogs">
         <hr>
         <h2>Аналоги</h2>
-        {% include 'EnmashPagesBundle:Pages:Catalog/Block/similars.html.twig' with {products: product.analogs, title: 'analogs-carousel'} %}
+        {% include 'EnmashPagesBundle:Pages:Catalog/Block/slicksliderforproducts.html.twig' with {products: product.analogs, sliderId: 'analogsSlider'} %}
     </div>
     {% endif %}
 
     {% if product.similars | length > 0 %}
-        <div class="analogs">
-            <hr>
-            <h2>Похожие товары</h2>
-            {% include 'EnmashPagesBundle:Pages:Catalog/Block/similars.html.twig' with {products: product.similars, title: 'similars-carousel'} %}
-        </div>
+    <div class="analogs">
+        <hr>
+        <h2>Похожие товары</h2>
+        {% include 'EnmashPagesBundle:Pages:Catalog/Block/slicksliderforproducts.html.twig' with {products: product.similars, sliderId: 'similarsSlider'} %}
+    </div>
     {% endif %}
 
 {% endblock %}
@@ -165,4 +171,39 @@
     {{ parent() }}
     <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
     <script src="{{ asset('vendor/blueimp-bootstrap-image-gallery/js/bootstrap-image-gallery.min.js') }}"></script>
+    <script src="{{ asset('vendor/slick.js/slick/slick.min.js') }}"></script>
+    <script>
+        $('#analogsSlider, #similarsSlider').slick({
+            dots: true,
+            infinite: true,
+            speed: 300,
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            responsive: [
+                {
+                    breakpoint: 1200,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        infinite: true,
+                        dots: true
+                    }
+                },
+                {
+                    breakpoint: 800,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+    </script>
 {% endblock %}

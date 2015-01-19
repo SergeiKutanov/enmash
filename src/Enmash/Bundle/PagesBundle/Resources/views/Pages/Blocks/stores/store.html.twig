@@ -2,18 +2,47 @@
 {% set renderAs = constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::RETAIL_TYPE') %}
 {% endif %}
 
-{% set storeTitle = 'магазине' %}
+{% set storeTitle = 'Магазин' %}
 {% if renderAs == constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::WHOLESALE_TYPE') %}
-    {% set storeTitle = 'службе сбыта' %}
+    {% if constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::WHOLESALE_TYPE') in store.storeType %}
+        {% set storeTitle = 'Cлужба сбыта' %}
+    {% else %}
+        {% set storeTitle = 'Стол заказов' %}
+    {% endif %}
 {% endif %}
 
 <div class="row store-row">
     <a class="offset-anchor" id="store_{{ store.id }}"></a>
     <div class="col-xs-12 text-center">
-        <h2>{{ store.name }}</h2>
+        <h2>
+            {% spaceless %}
+            {% if renderAs == constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::RETAIL_TYPE') %}
+            {{ store.name | raw }}
+            {% else %}
+            {{ store.whName | raw }}
+            {% endif %}
+            {% endspaceless %}
+        </h2>
     </div>
+
+    {% if renderAs == constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::WHOLESALE_TYPE') %}
+        {% if store.whInfo %}
+            <div class="col-xs-12">
+                {#<h3>Дополнительная информация</h3>#}
+                {{ store.whInfo | raw }}
+            </div>
+        {% endif %}
+    {% elseif renderAs == constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::RETAIL_TYPE') %}
+        {% if store.info %}
+            <div class="col-xs-12">
+                {#<h3>Дополнительная информация</h3>#}
+                {{ store.info | raw }}
+            </div>
+        {% endif %}
+    {% endif %}
+
     <div class="col-xs-12 col-md-6">
-        <h3>Информация о {{ storeTitle }}</h3>
+        <h3>{{ storeTitle }}</h3>
         <table class="table table-striped">
             <tr>
                 <td>Адрес</td>
@@ -57,21 +86,6 @@
         {% endif %}
     </div>
 
-    {% if renderAs == constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::WHOLESALE_TYPE') %}
-        {% if store.whInfo %}
-            <div class="col-xs-12">
-                <h3>Дополнительная информация</h3>
-                {{ store.whInfo | raw }}
-            </div>
-        {% endif %}
-    {% elseif renderAs == constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::RETAIL_TYPE') %}
-        {% if store.info %}
-            <div class="col-xs-12">
-                <h3>Дополнительная информация</h3>
-                {{ store.info | raw }}
-            </div>
-        {% endif %}
-    {% endif %}
 </div>
 <div class="text-right back-to-map-arrow">
     <a href="#map-container" title="К карте">

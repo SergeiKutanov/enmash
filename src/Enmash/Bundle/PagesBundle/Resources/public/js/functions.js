@@ -64,7 +64,6 @@ function getFitZoom() {
 
 }
 
-//find store map
 function initializeBigMap(stores, markerPath, createFakePoints, wholesaleStore) {
 
     var initZoomLevel = getFitZoom();
@@ -150,7 +149,7 @@ function initializeBigMap(stores, markerPath, createFakePoints, wholesaleStore) 
                 //pseudo point for vladimir
                 var title = '6 ';
                 if (wholesaleStore) {
-                    title = title + 'столов заказов'
+                    title = '1 служба сбыта и 5 столов заказов'
                 } else {
                     title = title + 'магазинов'
                 }
@@ -223,7 +222,7 @@ function initializeBigMap(stores, markerPath, createFakePoints, wholesaleStore) 
 
                 //pseudo point for kovrov
                 if (wholesaleStore) {
-                    title = '1 стол заказов'
+                    title = '1 служба сбыта'
                 } else {
                     title = '2 магазина'
                 }

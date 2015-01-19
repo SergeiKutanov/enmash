@@ -1,14 +1,15 @@
 {
-    "name": "enmash",
-    "version": "1.0.0",
-    "dependencies": {
-        "bootstrap": "latest",
-        "blueimp-bootstrap-image-gallery": "latest",
-        "skrollr": "latest",
-        "lite-accordion": "latest",
-        "isotope": "latest",
-        "polymer": "Polymer/polymer",
-        "core-elements": "Polymer/core-elements",
-        "paper-elements": "Polymer/paper-elements"
-    }
+  "name": "enmash",
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap": "latest",
+    "blueimp-bootstrap-image-gallery": "latest",
+    "skrollr": "latest",
+    "lite-accordion": "latest",
+    "isotope": "latest",
+    "polymer": "Polymer/polymer",
+    "core-elements": "Polymer/core-elements",
+    "paper-elements": "Polymer/paper-elements",
+    "slick.js": "~1.3.15"
+  }
 }

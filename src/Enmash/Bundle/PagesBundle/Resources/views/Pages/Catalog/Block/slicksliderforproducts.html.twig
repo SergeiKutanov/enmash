@@ -1,0 +1,32 @@
+<style>
+    .slick-responsive .item-image img {
+        margin: 0 auto;
+    }
+
+    .slick-responsive .catalog-item {
+        height: 270px !important;
+        position: relative;
+    }
+
+    .slick-responsive .catalog-item a:hover, .slick-responsive .catalog-item a:active, .slick-responsive .catalog-item a:focus {
+        text-decoration: none;
+    }
+
+    .catalog-item h3, .catalog-item span {
+        color: #000000 !important;
+    }
+
+    .catalog-item .buy-btn {
+        position: absolute;
+        display: block;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+</style>
+<div class="slick-responsive" id="{{ sliderId }}">
+    {% for product in products %}
+        {% include 'EnmashPagesBundle:Pages:Catalog/Block/item-catalog.html.twig' with {item: product} %}
+    {% endfor %}
+</div>

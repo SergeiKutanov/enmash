@@ -35,6 +35,13 @@ class Store
     /**
      * @var string
      *
+     * @ORM\Column(name="whname", type="string", length=255, nullable=true)
+     */
+    private $whName;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="city", type="string", length=255)
      */
     private $city;
@@ -70,7 +77,7 @@ class Store
     /**
      * @var string
      *
-     * @ORM\Column(name="whschedule", type="string", length=255)
+     * @ORM\Column(name="whschedule", type="string", length=255, nullable=true)
      */
     private $wholesaleSchedule;
 
@@ -498,5 +505,28 @@ class Store
     public function getWholesaleSchedule()
     {
         return $this->wholesaleSchedule;
+    }
+
+    /**
+     * Set whName
+     *
+     * @param string $whName
+     * @return Store
+     */
+    public function setWhName($whName)
+    {
+        $this->whName = $whName;
+
+        return $this;
+    }
+
+    /**
+     * Get whName
+     *
+     * @return string 
+     */
+    public function getWhName()
+    {
+        return $this->whName;
     }
 }

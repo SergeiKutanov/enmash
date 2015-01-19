@@ -14,6 +14,14 @@
 
         {% include 'EnmashPagesBundle:Pages:Blocks/gallerymodal.html.twig' %}
 
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <h1>Службы сбыта и столы заказов</h1>
+            </div>
+        </div>
+
+        {% include 'EnmashPagesBundle:Pages:Blocks/stores/whstoresintro.html.twig' %}
+
         {% for store in stores %}
             {% include 'EnmashPagesBundle:Pages:Blocks/stores/store.html.twig' with {'store': store, 'renderAs': constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::WHOLESALE_TYPE')} %}
         {% endfor %}

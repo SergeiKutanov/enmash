@@ -59,11 +59,14 @@ class StoreAdmin extends Admin
                     'multiple'  => true
                 ))
             ->add('name')
+            ->add('whName')
             ->add('publish', null, array(
                     'required'  => false
                 ))
             ->add('schedule')
-            ->add('wholesaleSchedule')
+            ->add('wholesaleSchedule', null, array(
+                'required'      => false
+            ))
             ->add('city')
             ->add('address')
             ->add('latitude')
