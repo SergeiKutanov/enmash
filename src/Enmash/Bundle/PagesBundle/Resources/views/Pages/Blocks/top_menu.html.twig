@@ -22,11 +22,13 @@
                     <li id="select-location">
                         <a href="#" data-toggle="modal" data-target="#select-city-modal" data-city-selected="{% if app.request.cookies.get('userlocation') %}1{% else %}0{% endif %}">
                             <span class="mdi-action-home icon"></span>
+                            <span id='city-name'>
                             {% if app.request.cookies.get('userlocation') %}
-                                г. <span id='city-name'>{{ app.request.cookies.get('userlocation') }}</span>
+                                {{ app.request.cookies.get('userlocation') }}
                             {% else %}
                                 Выбрать город
                             {% endif %}
+                            </span>
                         </a>
                     </li>
                     {% endif %}

@@ -53,7 +53,6 @@
             $('#select-city-modal .modal-body ul a').click(function(e){
                 e.preventDefault();
                 var city = $(this).data('city');
-                console.log(city);
                 if (city != "") {
                     document.cookie = "userlocation=" + city;
                     var citySpan = document.querySelector('#city-name');
