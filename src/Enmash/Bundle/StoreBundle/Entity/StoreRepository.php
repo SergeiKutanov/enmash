@@ -21,6 +21,7 @@ class StoreRepository extends EntityRepository {
             ->createQueryBuilder('s')
             ->select('s')
             ->where('s.publish = true')
+            ->orderBy('s.position')
             ->getQuery();
 
         $stores = $query->getResult();

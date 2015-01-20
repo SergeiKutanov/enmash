@@ -60,6 +60,9 @@ class PagesController extends Controller{
             ->findBy(
                 array(
                     'isPublished'   => true
+                ),
+                array(
+                    'position'  => 'ASC'
                 )
             );
 

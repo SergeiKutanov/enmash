@@ -5,6 +5,7 @@ namespace Enmash\Bundle\PagesBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\MediaBundle\Model\Gallery;
 use Sonata\MediaBundle\Model\MediaInterface;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Banner
@@ -22,6 +23,14 @@ class Banner
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var integer
+     *
+     * @Gedmo\SortablePosition
+     * @ORM\Column(name="position", type="integer")
+     */
+    private $position;
 
     /**
      * @var string
@@ -265,5 +274,28 @@ class Banner
     public function getAdditionalInfoFiles()
     {
         return $this->additionalInfoFiles;
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     * @return Banner
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer 
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }

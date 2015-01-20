@@ -7,10 +7,32 @@ use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 class BannerAdmin extends Admin
 {
+    public $last_position = 0;
+
+    private $container;
+    private $positionService;
+
+    public function setContainer(\Symfony\Component\DependencyInjection\ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
+    public function setPositionService(\Pix\SortableBehaviorBundle\Services\PositionHandler $positionHandler)
+    {
+        $this->positionService = $positionHandler;
+    }
+
+    protected $datagridValues = array(
+        '_page' => 1,
+        '_sort_order' => 'ASC',
+        '_sort_by' => 'position',
+    );
+
     /**
      * @param DatagridMapper $datagridMapper
      */
@@ -29,6 +51,8 @@ class BannerAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
+        $this->last_position = $this->positionService->getLastPosition($this->getRoot()->getClass());
+
         $listMapper
             ->add('photo', null, array(
                     'template'  => 'SonataAdminBundle::imagelistview.html.twig'
@@ -39,6 +63,7 @@ class BannerAdmin extends Admin
             ->add('endDate', 'date')
             ->add('_action', 'actions', array(
                 'actions' => array(
+                    'move' => array('template' => 'PixSortableBehaviorBundle:Default:_sort.html.twig'),
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
@@ -107,4 +132,8 @@ class BannerAdmin extends Admin
         ;
     }
 
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('move', $this->getRouterIdParameter() . '/move/{position}');
+    }
 }

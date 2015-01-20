@@ -15,9 +15,13 @@ services:
 
     enmash_store.admin.store:
         class: Enmash\Bundle\StoreBundle\Admin\StoreAdmin
-        arguments: [~, Enmash\Bundle\StoreBundle\Entity\Store, EnmashStoreBundle:StoreAdmin]
+        arguments: [~, Enmash\Bundle\StoreBundle\Entity\Store, 'PixSortableBehaviorBundle:SortableAdmin']
         tags:
             - {name: sonata.admin, manager_type: orm, group: Магазины, label: Магазины}
+        calls:
+            - [ setTranslationDomain, [EnmashStoreBundle]]
+            - [ setContainer, [ @service_container ] ]
+            - [ setPositionService, [@pix_sortable_behavior.position]]
 
     enmash_store.admin.store_image:
         class: Enmash\Bundle\StoreBundle\Admin\StoreImageAdmin

@@ -44,7 +44,9 @@ class AppKernel extends Kernel
 
             //php excel helpers
             new \Liuggio\ExcelBundle\LiuggioExcelBundle(),
-            new \CoopTilleuls\Bundle\CKEditorSonataMediaBundle\CoopTilleulsCKEditorSonataMediaBundle()
+            new \CoopTilleuls\Bundle\CKEditorSonataMediaBundle\CoopTilleulsCKEditorSonataMediaBundle(),
+
+            new \Pix\SortableBehaviorBundle\PixSortableBehaviorBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

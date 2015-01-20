@@ -1,9 +1,14 @@
 services:
     enmash_pages.admin.banner:
         class: Enmash\Bundle\PagesBundle\Admin\BannerAdmin
-        arguments: [~, Enmash\Bundle\PagesBundle\Entity\Banner, SonataAdminBundle:CRUD]
+        arguments: [~, Enmash\Bundle\PagesBundle\Entity\Banner, 'PixSortableBehaviorBundle:SortableAdmin']
         tags:
             - {name: sonata.admin, manager_type: orm, group: Содержание, label: Баннеры}
+        calls:
+            - [ setTranslationDomain, [EnmashStoreBundle]]
+            - [ setContainer, [ @service_container ] ]
+            - [ setPositionService, [@pix_sortable_behavior.position]]
+
 
     enmash_pages.admin.article:
         class: Enmash\Bundle\PagesBundle\Admin\ArticleAdmin

@@ -46,7 +46,15 @@
         <table class="table table-striped">
             <tr>
                 <td>Адрес</td>
-                <td>{{ store.city }}, {{ store.address }} | <a href="#" class="show-store-on-map" data-store-id="{{ store.id }}">Карта</a></td>
+                <td>{{ store.city }},
+                    {% spaceless %}
+                    {% if renderAs == constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::WHOLESALE_TYPE') %}
+                    {{ store.whAddress }}
+                    {% else %}
+                    {{ store.whAddress }}
+                    {% endif %}
+                    {% endspaceless %}
+                    | <a href="#" class="show-store-on-map" data-store-id="{{ store.id }}">Карта</a></td>
             </tr>
             <tr>
                 {% if renderAs == constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::RETAIL_TYPE') %}

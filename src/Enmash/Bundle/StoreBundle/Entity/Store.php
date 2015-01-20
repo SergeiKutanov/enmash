@@ -3,6 +3,7 @@
 namespace Enmash\Bundle\StoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Store
@@ -24,6 +25,12 @@ class Store
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @Gedmo\SortablePosition
+     * @ORM\Column(name="position", type="integer")
+     */
+    private $position;
 
     /**
      * @var string
@@ -52,6 +59,13 @@ class Store
      * @ORM\Column(name="address", type="string", length=255)
      */
     private $address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="whaddress", type="string", length=255, nullable=true)
+     */
+    private $whAddress;
 
     /**
      * @var float
@@ -528,5 +542,51 @@ class Store
     public function getWhName()
     {
         return $this->whName;
+    }
+
+    /**
+     * Set position
+     *
+     * @param integer $position
+     * @return Store
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return integer 
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Set whAddress
+     *
+     * @param string $whAddress
+     * @return Store
+     */
+    public function setWhAddress($whAddress)
+    {
+        $this->whAddress = $whAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get whAddress
+     *
+     * @return string 
+     */
+    public function getWhAddress()
+    {
+        return $this->whAddress;
     }
 }
