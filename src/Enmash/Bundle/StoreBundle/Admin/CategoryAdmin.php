@@ -56,6 +56,7 @@ class CategoryAdmin extends Admin
                 )
             )
             ->add('name')
+            ->add('order')
             ->add(
                 'parameters',
 //                'sonata_type_collection',

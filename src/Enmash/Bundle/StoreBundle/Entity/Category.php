@@ -2,6 +2,7 @@
 
 namespace Enmash\Bundle\StoreBundle\Entity;
 
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -13,6 +14,7 @@ use JMS\Serializer\Annotation\Expose;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Enmash\Bundle\StoreBundle\Entity\CategoryRepository")
+ * @ORM\HasLifecycleCallbacks
  *
  * @ExclusionPolicy("all")
  */
@@ -51,10 +53,16 @@ class Category
 
     /**
      * @OneToMany(targetEntity="Category", mappedBy="parentCategory", cascade={"persist", "remove"}, orphanRemoval=true)
-     *
      * @ORM\OrderBy({"name" = "ASC"})
      */
     private $subCategories;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="order", type="integer", nullable=true)
+     */
+    private $order;
 
     /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="subCategories", cascade={"all"})
@@ -75,6 +83,16 @@ class Category
      * )
      */
     private $parameters;
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+//    public function buildOrder(PreUpdateEventArgs $eventArgs) {
+//        $em = $eventArgs->getEntityManager();
+//        $order = (integer) $this->name;
+//        $entity->setOrder($order);
+//    }
 
 
     /**
@@ -277,5 +295,28 @@ class Category
 
         return $products;
 
+    }
+
+    /**
+     * Set order
+     *
+     * @param integer $order
+     * @return Category
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return integer 
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 }
