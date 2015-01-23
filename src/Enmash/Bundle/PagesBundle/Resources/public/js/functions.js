@@ -222,7 +222,7 @@ function initializeBigMap(stores, markerPath, createFakePoints, wholesaleStore) 
 
                 //pseudo point for kovrov
                 if (wholesaleStore) {
-                    title = '1 служба сбыта'
+                    title = '1 служба сбыта и 1 стол заказов'
                 } else {
                     title = '2 магазина'
                 }
