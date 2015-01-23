@@ -51,7 +51,7 @@
                     {% if renderAs == constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::WHOLESALE_TYPE') %}
                     {{ store.whAddress }}
                     {% else %}
-                    {{ store.whAddress }}
+                    {{ store.address }}
                     {% endif %}
                     {% endspaceless %}
                     | <a href="#" class="show-store-on-map" data-store-id="{{ store.id }}">Карта</a></td>

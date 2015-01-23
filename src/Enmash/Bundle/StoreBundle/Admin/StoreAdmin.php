@@ -109,7 +109,7 @@ class StoreAdmin extends Admin
                         'toolbar'   => array(
 
                             array(
-                                'items' => array('Source', '-', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat')
+                                'items' => array('Source', '-', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'Link', '-', 'RemoveFormat')
                             )
                         )
                     )

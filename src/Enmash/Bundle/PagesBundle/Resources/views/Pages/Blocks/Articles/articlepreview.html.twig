@@ -14,7 +14,7 @@
         <div class="">
             <p>Серия статей на тему:</p>
             <ul class="list-unstyled">
-                {% for connectedArticle in article.connectedArticles %}
+                {% for connectedArticle in article.connectedArticles if connectedArticle.publish %}
                     <li class=""><a href="{{ path('article-page', {'slug': connectedArticle.slug}) }}">{{ connectedArticle.title }}</a></li>
                 {% endfor %}
             </ul>

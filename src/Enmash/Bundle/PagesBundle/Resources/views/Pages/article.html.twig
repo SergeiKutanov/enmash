@@ -21,7 +21,7 @@
         <h2>Похожие статьи</h2>
     </div>
 </div>
-{% for connectedArticle in article.connectedArticles %}
+{% for connectedArticle in article.connectedArticles if connectedArticle.publish %}
     {% include 'EnmashPagesBundle:Pages:Blocks/Articles/articlepreview.html.twig' with {'article': connectedArticle} %}
 {% endfor %}
 {% endif %}

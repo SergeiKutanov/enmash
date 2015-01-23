@@ -5,7 +5,7 @@
 html, body {
     font-family: 'Roboto', sans-serif;
     height: 100%;
-    background-color: initial;
+    background-color: transparent !important;
 }
 
 body.article {
@@ -17,6 +17,10 @@ body.article {
 
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
     font-weight: initial;
+}
+
+ul.breadcrumb {
+    background-color: transparent !important;
 }
 
 .bmargin-5 {
@@ -416,13 +420,13 @@ div.go-down:hover span{
     background-color: rgba(0, 124, 194, .7);
     text-shadow: 2px 2px #555;
     box-shadow: 5px 5px 0px 0px rgba(0, 124, 194, .9);
-    top: 10px;
+    /*top: 10px;*/
     padding: 0;
-    bottom: initial;
+    /*bottom: initial;*/
     /*left: 10px;*/
     color: #fdda0a;
     /*max-width: 30%; */
-    right: initial;
+    /*right: initial;*/
 }
 
 .jumbo-logo {
@@ -976,7 +980,6 @@ ul.breadcrumb li span.separator {
 
 ul.breadcrumb a {
     text-decoration: none;
-    color: #000000;
 }
 
 ul.breadcrumb a:hover {
