@@ -2,6 +2,7 @@
 
 namespace Enmash\Bundle\StoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
@@ -58,13 +59,6 @@ class Category
     private $subCategories;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="order", type="integer", nullable=true)
-     */
-    private $order;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="subCategories", cascade={"all"})
      * @ORM\JoinColumn(name="parent_category_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -83,17 +77,6 @@ class Category
      * )
      */
     private $parameters;
-
-    /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
-//    public function buildOrder(PreUpdateEventArgs $eventArgs) {
-//        $em = $eventArgs->getEntityManager();
-//        $order = (integer) $this->name;
-//        $entity->setOrder($order);
-//    }
-
 
     /**
      * Get id
@@ -297,26 +280,4 @@ class Category
 
     }
 
-    /**
-     * Set order
-     *
-     * @param integer $order
-     * @return Category
-     */
-    public function setOrder($order)
-    {
-        $this->order = $order;
-
-        return $this;
-    }
-
-    /**
-     * Get order
-     *
-     * @return integer 
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
 }
