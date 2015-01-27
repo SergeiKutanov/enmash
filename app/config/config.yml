@@ -285,3 +285,14 @@ white_october_breadcrumbs:
 knp_paginator:
     template:
         pagination: EnmashPagesBundle:Base:pagination.html.twig
+
+sonata_seo:
+    page:
+        title: Электротехническая компания "Энергомаш"
+        metas:
+            name:
+                description: Компания "Энергомаш" занимается продажей электротехнических изделий, поставкой товаров на предприятия
+                keywords: Энергомаш, продажа электротехнических изделий, поставка электротоваров на предприятия
+
+cmf_seo:
+    content_key: ~
