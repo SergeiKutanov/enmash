@@ -9,6 +9,9 @@
     <link href="{{ asset('vendor/bootstrap-material-design/dist/css/material-wfont.min.css') }}" rel="stylesheet">
     {% endblock %}
 
+    <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png" />
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+
     {% block customcss %}
     {% stylesheets 'bundles/enmashpages/css/*' filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
