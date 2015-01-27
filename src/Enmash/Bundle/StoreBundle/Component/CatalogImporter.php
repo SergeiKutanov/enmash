@@ -363,7 +363,7 @@ class CatalogImporter {
 
     }
 
-    public function importGoods(\PHPExcel $file = null, $offset, $limit = null) {
+    public function importGoods(\PHPExcel $file = null, $offset = null, $limit = null) {
         if (!$file) {
             $file = $this->getFile();
         }
@@ -452,6 +452,9 @@ class CatalogImporter {
                 ->getCellByColumnAndRow(self::PRODUCT_PHOTO, $rowIndex)
                 ->getValue();
             $photosArray = array();
+
+            if (!$fileNames) $fileNames = $product->getSku() . '.jpg';
+
             if ($fileNames !== null) {
                 $fileNames = explode(',', $fileNames);
                 foreach($fileNames as $fileName) {
