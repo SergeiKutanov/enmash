@@ -293,3 +293,83 @@ sonata_seo:
             name:
                 description: Компания "Энергомаш" занимается продажей электротехнических изделий, поставкой товаров на предприятия
                 keywords: Энергомаш, продажа электротехнических изделий, поставка электротоваров на предприятия
+    sitemap:
+        doctrine_orm:
+            #main page
+            -
+                connection: doctrine.dbal.default_connection
+                route: index-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #about page
+            -
+                connection: doctrine.dbal.default_connection
+                route: about-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #stores page
+            -
+                connection: doctrine.dbal.default_connection
+                route: stores-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #wholesale stores page
+            -
+                connection: doctrine.dbal.default_connection
+                route: wholesale-stores-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #special offers page
+            -
+                connection: doctrine.dbal.default_connection
+                route: special-offers-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #benefits page
+            -
+                connection: doctrine.dbal.default_connection
+                route: your-benefits-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #your safety page
+            -
+                connection: doctrine.dbal.default_connection
+                route: your-safety-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #contacts page
+            -
+                connection: doctrine.dbal.default_connection
+                route: contacts-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #catalog page
+            -
+                connection: doctrine.dbal.default_connection
+                route: catalog-index-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #catalog categories page
+            -
+                connection: doctrine.dbal.default_connection
+                route: catalog-category-page
+                parameters:
+                    slug: null
+                query: "SELECT slug, '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority FROM Category"
+            #catalog product page
+            -
+                connection: doctrine.dbal.default_connection
+                route: catalog-single-item
+                parameters:
+                    slug: null
+                    product: null
+                query: "SELECT Product.id as product, Category.slug as slug, '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority FROM Product LEFT JOIN Category ON Category.id = Product.category_id"
