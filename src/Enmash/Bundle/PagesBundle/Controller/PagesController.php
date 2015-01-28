@@ -112,12 +112,6 @@ class PagesController extends BaseController{
      */
     public function storesAction() {
 
-        $this->setSeoData(
-            'Магизины',
-            'Перечень магазинов электротехнической компании "Энергомаш"',
-            'Магазины Энергомаш, найти магазин Энергомаш, адреса магазинов'
-        );
-
         $em = $this->getDoctrine()->getManager();
         $stores = $em
             ->getRepository('EnmashStoreBundle:Store')
@@ -126,6 +120,14 @@ class PagesController extends BaseController{
         if (!$stores) {
             throw new NotFoundHttpException('No stores found');
         }
+
+        $storeCount = count($stores);
+
+        $this->setSeoData(
+            'Магизины',
+            "Электротехническая компания \"Энергомаш\" объединяет в своей сети $storeCount магазинов, 6 из которых располагаются во Владимире.",
+            'Магазины Энергомаш, найти магазин Энергомаш, адреса магазинов'
+        );
 
         return $this->render(
             'EnmashPagesBundle:Pages:stores.html.twig',
@@ -141,12 +143,6 @@ class PagesController extends BaseController{
      */
     public function wholesaleStoresAction() {
 
-        $this->setSeoData(
-            'Службы сбыта и столы заказов',
-            'Перечень служб сбыта и столов заказов электротехнической компании "Энергомаш"',
-            'Службы сбыта Энергомаш, найти службу сбыта Энергомаш, столы заказов Энергомаш, найти стол заказов Энергомаш'
-        );
-
         $em = $this->getDoctrine()->getManager();
         $stores = $em
             ->getRepository('EnmashStoreBundle:Store')
@@ -160,6 +156,14 @@ class PagesController extends BaseController{
         if (!$stores) {
             throw new NotFoundHttpException('No stores found');
         }
+
+        $storeCount = count($stores);
+
+        $this->setSeoData(
+            'Службы сбыта и столы заказов',
+            "Сеть электротехнической компании \"Энергомаш\" состоит из $storeCount служб сбыта и столов заказов, работающих по безналичному расчету.",
+            'Службы сбыта Энергомаш, найти службу сбыта Энергомаш, столы заказов Энергомаш, найти стол заказов Энергомаш'
+        );
 
         return $this->render(
             'EnmashPagesBundle:Pages:wholesalestores.html.twig',
