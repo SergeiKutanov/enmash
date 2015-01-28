@@ -2,4 +2,9 @@
     <div id="bigmap" data-path="{{ path('getStoresCoordinates') }}" data-type="[{{ storeType | join(',') }}]" data-icon-path="{{ asset('bundles/enmashpages/images/logo_sm.png') }}">
         <div id="map-canvas"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></div>
     </div>
+    <div class="scroll-down">
+        <a href="#{{ first_store_link }}">
+            <span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span>
+        </a>
+    </div>
 </div>

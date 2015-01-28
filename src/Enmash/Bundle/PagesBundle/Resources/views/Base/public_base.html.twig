@@ -121,7 +121,9 @@
                                 var catalogMenu = document.querySelector('#main-catalog:hover');
                                 if (catalogMenu == null) {
                                     var catalogMenu = document.querySelector('#main-catalog');
-                                    catalogMenu.classList.remove('shown');
+                                    if (catalogMenu != undefined) {
+                                        catalogMenu.classList.remove('shown');
+                                    }
                                 }
 
                             }, 500);

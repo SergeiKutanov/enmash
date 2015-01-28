@@ -706,6 +706,16 @@ a.offset-anchor{
     height: 100%;
 }
 
+#map-container .scroll-down {
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+}
+
+#map-container .scroll-down span {
+    font-size: 2.5em;
+}
+
 #bigmap {
     height: 100%;
     padding-top: 119px;
