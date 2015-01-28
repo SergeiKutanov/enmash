@@ -19,7 +19,7 @@ use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
 /**
  * @Route("/catalog")
  */
-class CatalogController extends Controller
+class CatalogController extends BaseController
 {
     const PAGINATION_LIMIT = 12;
 
@@ -28,6 +28,12 @@ class CatalogController extends Controller
      * @Method("GET")
      */
     public function indexAction() {
+
+        $this->setSeoData(
+            'Каталог товаров',
+            'Каталог товаров электротехнической компании "Энергомаш"',
+            'Каталог, товары, Энергомаш'
+        );
 
         $this->buildBreadcrumbs(null);
 
@@ -58,6 +64,12 @@ class CatalogController extends Controller
 
         $products = $category->getAllProducts();
 
+        $this->setSeoData(
+            $category->getName(),
+            "Товары категории {$category->getName()} электротехнической компании \"Энергомаш\"",
+            $category->getName() . ", Энергомаш"
+        );
+
         return $this->render(
             'EnmashPagesBundle:Pages:Catalog/singlecategory.html.twig',
             array(
@@ -75,6 +87,12 @@ class CatalogController extends Controller
     public function showSingleItemAction(Product $product, Request $request) {
 
         $this->buildBreadcrumbs($product->getCategory());
+
+        $this->setSeoData(
+            $product->getName(),
+            "Купить {$product->getName()} в электротехнической компании \"Энергомаш\"",
+            "Купить, {$product->getName()}, Энергомаш"
+        );
 
         return $this
             ->render(
@@ -149,31 +167,31 @@ class CatalogController extends Controller
 //
 //    }
 
-    /**
-     * @Route("/{slug}/{product}", name="catalog-product-page")
-     * @Method({"GET", "POST"})
-     * @ParamConverter("category", options={"mapping": {"slug": "slug"}})
-     * @ParamConverter("product")
-     */
-    public function showSingleProductAction(Category $category, Product $product, Request $request) {
-
-        if ($request->getMethod() == 'GET') {
-
-            $this->buildBreadcrumbs($category);
-
-            return $this->render(
-                'EnmashPagesBundle:Pages:Catalog/singleitem.html.twig',
-                array(
-                    'product'   => $product
-                )
-            );
-        }
-
-        $serializer = $this->get('serializer');
-        /* @var $serializer Serializer */
-        $productJson = $serializer->serialize($product, 'json');
-        return new Response($productJson);
-    }
+//    /**
+//     * @Route("/{slug}/{product}", name="catalog-product-page")
+//     * @Method({"GET", "POST"})
+//     * @ParamConverter("category", options={"mapping": {"slug": "slug"}})
+//     * @ParamConverter("product")
+//     */
+//    public function showSingleProductAction(Category $category, Product $product, Request $request) {
+//
+//        if ($request->getMethod() == 'GET') {
+//
+//            $this->buildBreadcrumbs($category);
+//
+//            return $this->render(
+//                'EnmashPagesBundle:Pages:Catalog/singleitem.html.twig',
+//                array(
+//                    'product'   => $product
+//                )
+//            );
+//        }
+//
+//        $serializer = $this->get('serializer');
+//        /* @var $serializer Serializer */
+//        $productJson = $serializer->serialize($product, 'json');
+//        return new Response($productJson);
+//    }
 
     /**
      * @Route("/polymer/elements/{name}", name="get_polymer_element")

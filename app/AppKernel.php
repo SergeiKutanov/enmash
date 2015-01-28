@@ -49,8 +49,7 @@ class AppKernel extends Kernel
             new \Pix\SortableBehaviorBundle\PixSortableBehaviorBundle(),
 
             //seo staff
-            new Sonata\SeoBundle\SonataSeoBundle(),
-            new \Symfony\Cmf\Bundle\SeoBundle\CmfSeoBundle()
+            new Sonata\SeoBundle\SonataSeoBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
