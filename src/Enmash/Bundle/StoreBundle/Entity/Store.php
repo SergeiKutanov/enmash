@@ -68,16 +68,16 @@ class Store
     private $whAddress;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="latitude", type="float")
+     * @ORM\Column(name="latitude", type="string")
      */
     private $latitude;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="longitude", type="float")
+     * @ORM\Column(name="longitude", type="string")
      */
     private $longitude;
 
@@ -230,52 +230,7 @@ class Store
     {
         return $this->address;
     }
-
-    /**
-     * Set latitude
-     *
-     * @param float $latitude
-     * @return Store
-     */
-    public function setLatitude($latitude)
-    {
-        $this->latitude = $latitude;
-
-        return $this;
-    }
-
-    /**
-     * Get latitude
-     *
-     * @return float 
-     */
-    public function getLatitude()
-    {
-        return $this->latitude;
-    }
-
-    /**
-     * Set longitude
-     *
-     * @param float $longitude
-     * @return Store
-     */
-    public function setLongitude($longitude)
-    {
-        $this->longitude = $longitude;
-
-        return $this;
-    }
-
-    /**
-     * Get longitude
-     *
-     * @return float 
-     */
-    public function getLongitude()
-    {
-        return $this->longitude;
-    }
+    
     /**
      * Constructor
      */
@@ -588,5 +543,51 @@ class Store
     public function getWhAddress()
     {
         return $this->whAddress;
+    }
+
+    /**
+     * Set latitude
+     *
+     * @param string $latitude
+     * @return Store
+     */
+    public function setLatitude($latitude)
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return string 
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Set longitude
+     *
+     * @param string $longitude
+     * @return Store
+     */
+    public function setLongitude($longitude)
+    {
+        $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return string 
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
     }
 }
