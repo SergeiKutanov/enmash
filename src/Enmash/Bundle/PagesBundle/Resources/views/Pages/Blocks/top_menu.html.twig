@@ -52,7 +52,7 @@
                         <a href="{{ path('catalog-index-page') }}">КАТАЛОГ</a>
                         {{ knp_menu_render('EnmashPagesBundle:Builder:catalogSidebarMenu', {'template': 'EnmashPagesBundle:Menu:catalogsidebarmenu.html.twig'}) }}
                     {% else %}
-                        <a href="http://legacy.enmash.ru/component/virtuemart/?page=shop.browse">КАТАЛОГ</a>
+                        <a href="http://legacy.enmash.ru/component/virtuemart/?page=shop.browse&category_id=235">КАТАЛОГ</a>
                     {% endif %}
                 </li>
                 <li class="{% if app.request.get('_route') == 'about-page' %}active {% endif %}visible-xs visible-md visible-lg"><a href="{{ path('about-page') }}">О КОМПАНИИ</a></li>
