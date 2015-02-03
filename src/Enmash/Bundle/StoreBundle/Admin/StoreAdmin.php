@@ -192,7 +192,7 @@ class StoreAdmin extends Admin
 
     protected function clearInfos($object) {
         /* @var $object Store */
-        if (!in_array(Store::WHOLESALE_TYPE, $object->getStoreType())) {
+        if (!in_array(Store::WHOLESALE_TYPE, $object->getStoreType()) && !in_array(Store::ORDER_TYPE, $object->getStoreType())) {
             $object->setWhInfo(null);
         }
 

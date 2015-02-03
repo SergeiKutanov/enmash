@@ -1,10 +1,11 @@
 <div id="footer">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-md-6">
-                <ul>
+            <div class="">
+                <ul class="list-unstyled">
                     <li>Меню</li>
                     <li><a href="{{ path('about-page') }}">О компании</a></li>
+                    <li><a href="{{ path('catalog-index-page') }}">Новый Каталог</a></li>
                     <li><a href="{{ path('stores-page') }}">Магазины</a></li>
                     <li><a href="{{ path('wholesale-stores-page') }}">Службы сбыта</a></li>
                     <li><a href="{{ path('special-offers-page') }}">Бонусы и скидки</a></li>
@@ -13,7 +14,58 @@
                     <li><a href="{{ path('contacts-page') }}">Контакты</a></li>
                 </ul>
             </div>
-            <div class="col-xs-12 col-md-6">
+
+            <div class="" id="social-buttons">
+                {% include 'SonataSeoBundle:Block:_facebook_sdk.html.twig' %}
+
+                {% include 'SonataSeoBundle:Block:_twitter_sdk.html.twig' %}
+
+                {% include 'SonataSeoBundle:Block:_pinterest_sdk.html.twig' %}
+
+                <style>
+
+                    #footer .row > div {
+                        float: left;
+                        margin: 0 20px;
+                    }
+
+                    #footer .logo {
+                        float: right !important;
+                    }
+
+                    #vk-button a{
+                        height: 21px !important;
+                    }
+
+                    .social-item {
+                        margin: 10px 0;
+                    }
+                </style>
+
+                <div class="social-item">
+                    {{ sonata_block_render({ 'type': 'sonata.seo.block.pinterest.pin_button'}) }}
+                </div>
+                <div class="social-item">
+                    {{ sonata_block_render({ 'type': 'sonata.seo.block.twitter.share_button'}) }}
+                </div>
+                <div class="social-item">
+                    {{ sonata_block_render({ 'type': 'sonata.seo.block.facebook.share_button'}) }}
+                </div>
+                <div class="social-item" id="vk-button">
+                    <script type="text/javascript" src="http://vk.com/js/api/share.js?90" charset="UTF-8"></script>
+                    <script type="text/javascript">
+                        document.write(VK.Share.button(
+                        false,
+                        {
+                        type: 'round_nocount',
+                        text: 'Поделиться'
+                        })
+                        );
+                    </script>
+                </div>
+            </div>
+
+            <div class="logo">
                 <a class="navbar-brand pull-right" href="{{ path('index-page') }}">
                     ЭЛЕКТРОТЕХНИЧЕСКАЯ КОМПАНИЯ
                     {% image '@EnmashPagesBundle/Resources/public/images/logo_energomash_blue.png' %}

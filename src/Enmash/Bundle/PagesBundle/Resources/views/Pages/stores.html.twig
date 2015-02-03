@@ -7,7 +7,7 @@
     {% endblock %}
 
     {% block jumbotron %}
-        {% include 'EnmashPagesBundle:Pages:Blocks/stores/bigmap.html.twig' with {'storeType' : constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::RETAIL_TYPE')} %}
+        {% include 'EnmashPagesBundle:Pages:Blocks/stores/bigmap.html.twig' with {'storeType' : constant('Enmash\\Bundle\\StoreBundle\\Entity\\Store::RETAIL_TYPE'), 'first_store_link' : 'store_' ~ stores[0].id} %}
     {% endblock %}
 
     {% block content %}

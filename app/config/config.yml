@@ -110,6 +110,18 @@ sonata_block:
         sonata.admin.block.admin_list:
             contexts: [admin]
         sonata.block.service.text:
+        sonata.seo.block.social.container:
+        sonata.seo.block.email.share_button:
+        sonata.seo.block.facebook.like_box:
+        sonata.seo.block.facebook.like_button:
+        sonata.seo.block.facebook.send_button:
+        sonata.seo.block.facebook.share_button:
+        sonata.seo.block.twitter.share_button:
+        sonata.seo.block.twitter.follow_button:
+        sonata.seo.block.twitter.hashtag_button:
+        sonata.seo.block.twitter.mention_button:
+        sonata.seo.block.twitter.embed:
+        sonata.seo.block.pinterest.pin_button:
 
 fos_user:
     db_driver:      orm # can be orm or odm
@@ -285,3 +297,91 @@ white_october_breadcrumbs:
 knp_paginator:
     template:
         pagination: EnmashPagesBundle:Base:pagination.html.twig
+
+sonata_seo:
+    page:
+        title: Электротехническая компания "Энергомаш"
+        metas:
+            name:
+                description: Компания "Энергомаш" занимается продажей электротехнических изделий, поставкой товаров на предприятия
+                keywords: Энергомаш, продажа электротехнических изделий, поставка электротоваров на предприятия
+    sitemap:
+        doctrine_orm:
+            #main page
+            -
+                connection: doctrine.dbal.default_connection
+                route: index-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #about page
+            -
+                connection: doctrine.dbal.default_connection
+                route: about-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #stores page
+            -
+                connection: doctrine.dbal.default_connection
+                route: stores-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #wholesale stores page
+            -
+                connection: doctrine.dbal.default_connection
+                route: wholesale-stores-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #special offers page
+            -
+                connection: doctrine.dbal.default_connection
+                route: special-offers-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #benefits page
+            -
+                connection: doctrine.dbal.default_connection
+                route: your-benefits-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #your safety page
+            -
+                connection: doctrine.dbal.default_connection
+                route: your-safety-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #contacts page
+            -
+                connection: doctrine.dbal.default_connection
+                route: contacts-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #catalog page
+            -
+                connection: doctrine.dbal.default_connection
+                route: catalog-index-page
+                parameters:
+                    path: null
+                query: "SELECT '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority"
+            #catalog categories page
+            -
+                connection: doctrine.dbal.default_connection
+                route: catalog-category-page
+                parameters:
+                    slug: null
+                query: "SELECT slug, '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority FROM Category"
+            #catalog product page
+            -
+                connection: doctrine.dbal.default_connection
+                route: catalog-single-item
+                parameters:
+                    slug: null
+                    product: null
+                query: "SELECT Product.id as product, Category.slug as slug, '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority FROM Product LEFT JOIN Category ON Category.id = Product.category_id"

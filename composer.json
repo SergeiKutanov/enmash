@@ -31,7 +31,8 @@
         "tilleuls/ckeditor-sonata-media-bundle": "dev-master",
         "whiteoctober/breadcrumbs-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "dev-master",
-        "pixassociates/sortable-behavior-bundle": "0.1.*@dev"
+        "pixassociates/sortable-behavior-bundle": "0.1.*@dev",
+        "symfony-cmf/seo-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

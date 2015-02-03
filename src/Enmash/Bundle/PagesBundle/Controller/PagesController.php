@@ -33,7 +33,7 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-class PagesController extends Controller{
+class PagesController extends BaseController{
 
     const COOKIE_LOCATION = 'userlocation';
 
@@ -94,6 +94,12 @@ class PagesController extends Controller{
      */
     public function aboutAction() {
 
+        $this->setSeoData(
+            'О Компании',
+            'Описание электротехнической компании "Энергомаш"',
+            'Электротехническая компания, Энергомаш, продажа электротоваров'
+        );
+
         return $this->render(
             'EnmashPagesBundle:Pages:about.html.twig'
         );
@@ -114,6 +120,14 @@ class PagesController extends Controller{
         if (!$stores) {
             throw new NotFoundHttpException('No stores found');
         }
+
+        $storeCount = count($stores);
+
+        $this->setSeoData(
+            'Магизины',
+            "Электротехническая компания \"Энергомаш\" объединяет в своей сети $storeCount магазинов, 6 из которых располагаются во Владимире.",
+            'Магазины Энергомаш, найти магазин Энергомаш, адреса магазинов'
+        );
 
         return $this->render(
             'EnmashPagesBundle:Pages:stores.html.twig',
@@ -143,6 +157,15 @@ class PagesController extends Controller{
             throw new NotFoundHttpException('No stores found');
         }
 
+        $storeCount = count($stores);
+
+        $this->setSeoData(
+            'Службы сбыта и столы заказов - Электротехническая компания "Энергомаш-Комплект"',
+            "Сеть электротехнической компании \"Энергомаш-Комплект\" состоит из $storeCount служб сбыта и столов заказов, работающих по безналичному расчету.",
+            'Службы сбыта Энергомаш-Комплект, найти службу сбыта Энергомаш-Комлпект, столы заказов Энергомаш, найти стол заказов Энергомаш-Комлпект',
+            true
+        );
+
         return $this->render(
             'EnmashPagesBundle:Pages:wholesalestores.html.twig',
             array(
@@ -156,6 +179,13 @@ class PagesController extends Controller{
      * @Method("GET")
      */
     public function contactsPageAction() {
+
+        $this->setSeoData(
+            'Контакты',
+            'Список контактов электротехнической компании "Энергомаш"',
+            'Список контактов Энергомаш, телефоны компании Энергомаш'
+        );
+
         $em = $this->getDoctrine()->getManager();
         $stores = $em
             ->getRepository('EnmashStoreBundle:Store')
@@ -178,6 +208,13 @@ class PagesController extends Controller{
      * @Method("GET")
      */
     public function yourBenefitsPage() {
+
+        $this->setSeoData(
+            'Ваша прибыль',
+            'Прибыль и выгода в магазинах электротехнической компании "Энергомаш"',
+            'Прибыль, выгода, Энергомаш'
+        );
+
         $em = $this->getDoctrine()->getManager();
         $articles = $em
             ->getRepository('EnmashPagesBundle:Article')
@@ -195,6 +232,13 @@ class PagesController extends Controller{
      * @Method("GET")
      */
     public function yourSafetyPage() {
+
+        $this->setSeoData(
+            'Ваша безопасность',
+            'Статьи о безопасности товаров Энергомаш',
+            'Безопасность, подсказки, Энергомаш'
+        );
+
         $em = $this->getDoctrine()->getManager();
         $articles = $em
             ->getRepository('EnmashPagesBundle:Article')
@@ -212,6 +256,12 @@ class PagesController extends Controller{
      * @Method("GET")
      */
     public function specialOfferPageAction() {
+
+        $this->setSeoData(
+            'Специальные предложения',
+            'Специальные предложения электротехнической компании "Энергомаш"',
+            'Скидки, специальные предложения, электротехническая компания Энергомаш'
+        );
 
         $em = $this->getDoctrine()->getManager();
         $discounts = $em
@@ -257,6 +307,13 @@ class PagesController extends Controller{
      * @ParamConverter("article", class="EnmashPagesBundle:Article", options={"mapping": {"slug": "slug"}})
      */
     public function articlePageAction(Article $article) {
+
+        $this->setSeoData(
+            $article->getTitle(),
+            'Статья на тему: ' . $article->getTitle(),
+            'Статья, ' . $article->getTitle()
+        );
+
         return $this->render(
             'EnmashPagesBundle:Pages:article.html.twig',
             array(

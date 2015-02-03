@@ -38,18 +38,22 @@
                     {#<li>#}
                     {#<a href="#">Войти</a>#}
                     {#</li>#}
-                    <li class="box">
-                        <input type="text" />
-                    </li>
-                    <li class="find-button">
-                        <a href="#" id="select-city"><span class="glyphicon glyphicon-search"></span></a>
-                    </li>
+                    {#<li class="box">#}
+                        {#<input type="text" />#}
+                    {#</li>#}
+                    {#<li class="find-button">#}
+                        {#<a href="#" id="select-city"><span class="glyphicon glyphicon-search"></span></a>#}
+                    {#</li>#}
                 </ul>
             </div>
             <ul class="nav navbar-nav">
                 <li class="{% spaceless %}{% if app.request.get('_route') == 'catalog-category-page' or app.request.get('_route') == 'catalog-index-page' %} active{% endif %}"{% endspaceless %} id="catalog-menu-item">
-                    <a href="{{ path('catalog-index-page') }}">КАТАЛОГ</a>
-                    {{ knp_menu_render('EnmashPagesBundle:Builder:catalogSidebarMenu', {'template': 'EnmashPagesBundle:Menu:catalogsidebarmenu.html.twig'}) }}
+                    {% if app.request.get('_route') == 'catalog-index-page' or app.request.get('_route') == 'catalog-category-page' or app.request.get('_route') == 'catalog-single-item' %}
+                        <a href="{{ path('catalog-index-page') }}">КАТАЛОГ</a>
+                        {{ knp_menu_render('EnmashPagesBundle:Builder:catalogSidebarMenu', {'template': 'EnmashPagesBundle:Menu:catalogsidebarmenu.html.twig'}) }}
+                    {% else %}
+                        <a href="http://legacy.enmash.ru/component/virtuemart/?page=shop.browse&category_id=235">КАТАЛОГ</a>
+                    {% endif %}
                 </li>
                 <li class="{% if app.request.get('_route') == 'about-page' %}active {% endif %}visible-xs visible-md visible-lg"><a href="{{ path('about-page') }}">О КОМПАНИИ</a></li>
                 <li {% if app.request.get('_route') == 'stores-page' %}class="active"{% endif %}><a href="{{ path('stores-page') }}">МАГАЗИНЫ</a></li>

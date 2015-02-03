@@ -158,6 +158,16 @@ hr {
     top: -66px;
 }
 
+@media screen and (min-width: 1335px){
+    .navbar-fixed-top.hidden-top {
+        top: -55px;
+    }
+
+    .navbar-fixed-top.hidden-top .navbar-header {
+        display: none;
+    }
+}
+
 
 /*------------------------shadows------------------------------------*/
 .z1 {
@@ -390,9 +400,15 @@ div.go-down:hover span{
     padding-top: 60px;
 }
 
-@media screen and (min-width: 768px){
+@media screen and (min-width: 768px) {
     #carousel {
         padding-top: 119px;
+    }
+}
+
+@media screen and (min-width: 1335px) {
+    #carousel {
+        padding-top: 110px;
     }
 }
 
@@ -697,13 +713,23 @@ div.container.landing-map {
 /*--------------stores page----------------------------------*/
 a.offset-anchor{
     position: relative;
-    top: -100px;
+    top: -40px;
     visibility: hidden;
     display: block;
 }
 
 #map-container {
     height: 100%;
+}
+
+#map-container .scroll-down {
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+}
+
+#map-container .scroll-down span {
+    font-size: 2.5em;
 }
 
 #bigmap {
@@ -714,6 +740,12 @@ a.offset-anchor{
 @media screen and (max-width: 767px) {
     #bigmap {
         padding-top: 65px;
+    }
+}
+
+@media screen and (min-width: 1335px) {
+    #bigmap {
+        padding-top: 110px;
     }
 }
 

@@ -46,7 +46,10 @@ class AppKernel extends Kernel
             new \Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new \CoopTilleuls\Bundle\CKEditorSonataMediaBundle\CoopTilleulsCKEditorSonataMediaBundle(),
 
-            new \Pix\SortableBehaviorBundle\PixSortableBehaviorBundle()
+            new \Pix\SortableBehaviorBundle\PixSortableBehaviorBundle(),
+
+            //seo staff
+            new Sonata\SeoBundle\SonataSeoBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
