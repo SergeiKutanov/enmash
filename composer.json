@@ -32,7 +32,8 @@
         "whiteoctober/breadcrumbs-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "dev-master",
         "pixassociates/sortable-behavior-bundle": "0.1.*@dev",
-        "symfony-cmf/seo-bundle": "dev-master"
+        "symfony-cmf/seo-bundle": "dev-master",
+        "oro/doctrine-extensions": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
