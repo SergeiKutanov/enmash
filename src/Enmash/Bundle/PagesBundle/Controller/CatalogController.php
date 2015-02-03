@@ -2,6 +2,7 @@
 
 namespace Enmash\Bundle\PagesBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Enmash\Bundle\StoreBundle\Entity\Category;
 use Enmash\Bundle\StoreBundle\Entity\Product;
 use JMS\Serializer\Serializer;
@@ -35,21 +36,32 @@ class CatalogController extends BaseController
             'Каталог, товары, Энергомаш'
         );
 
-        $this->buildBreadcrumbs(null);
-
         $em = $this->getDoctrine()->getManager();
-        $catalog = $em
-            ->getRepository('EnmashStoreBundle:Category')
+
+        //todo this is temporary
+        $banners = $em
+            ->getRepository(
+                'EnmashStoreBundle:SpecialOffer'
+            )
             ->findBy(
                 array(
-                    'parentCategory'    => null
+                    'publish'   => true,
+                    'type'       => 3
                 )
             );
 
+        /* @var $em EntityManager */
+        $products = $em
+            ->getRepository(
+                'EnmashStoreBundle:Product'
+            )
+            ->findBy(array(), null, 3);
+
         return $this->render(
-            'EnmashPagesBundle:Pages:Catalog/base.html.twig',
+            'EnmashPagesBundle:Pages:Catalog/index.html.twig',
             array(
-//                'catalog'   => $catalog
+                'banners'   => $banners,
+                'products'  => $products
             )
         );
     }

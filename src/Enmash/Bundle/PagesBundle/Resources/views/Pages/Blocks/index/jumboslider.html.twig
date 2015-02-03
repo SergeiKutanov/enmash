@@ -26,9 +26,37 @@
     div.carousel-inner div.item.active .carousel-caption {
         opacity: 1;
     }
+
+    #carousel .jumbo-banner {
+        position: absolute;
+        z-index: 99;
+        right: 50px;
+        width: 250px;
+        bottom: 20px;
+        box-shadow: 3px 3px 5px 0px #000000;
+        border: 5px solid #fff;
+        border-radius: 5px;
+        -webkit-transition: all .5s;
+        -moz-transition: all .5s;
+        -ms-transition: all .5s;
+        -o-transition: all .5s;
+        transition: all .5s;
+    }
+
+    #carousel .jumbo-banner:hover {
+        -webkit-box-shadow: 0px 0px 0px 0px #000000;
+        -moz-box-shadow: 0px 0px 0px 0px #000000;
+        box-shadow: 0px 0px 0px 0px #000000;
+    }
 </style>
 
 <div id="carousel" class="carousel slide" data-ride="carousel">
+
+    <div class="jumbo-banner">
+        <a href="{% path banner.image, 'big' %}" title="{{ banner.image.name }}" data-gallery="banner_{{ banner.id }}" class="featured-image z1">
+            <img src="{% path banner.image, 'big' %}" alt="{{ banner.image.name  }}">
+        </a>
+    </div>
 
     {% set firstslide = random(3) %}
 
