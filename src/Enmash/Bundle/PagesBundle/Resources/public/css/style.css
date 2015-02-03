@@ -356,6 +356,10 @@ hr {
 }
 
 /*-----------------------carousel--------------------------------*/
+a.carousel-control {
+    background: none !important;
+}
+
 div.go-down, div.go-down:focus{
     position: absolute;
     display: block;
