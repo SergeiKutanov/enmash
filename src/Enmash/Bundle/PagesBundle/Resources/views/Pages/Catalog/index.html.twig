@@ -6,7 +6,6 @@
 
     <style>
         .best-sellers h2 {
-            margin: 30px 50px;
             border-bottom: 1px solid #999;
         }
 
@@ -16,15 +15,17 @@
     </style>
 {% endblock %}
 
-{% block maincontentwrapper %}
+{% block no_container %}
 
 
-
-    <div class="row pusher">
-        {% include 'EnmashPagesBundle:Pages:Catalog/Block/bannerslider.html.twig' %}
+    <div class="container-fluid">
+        <div class="row pusher">
+            {% include 'EnmashPagesBundle:Pages:Catalog/Block/bannerslider.html.twig' %}
+        </div>
     </div>
-
-    {% include 'EnmashPagesBundle:Pages:Catalog/Block/bestsellinggoods.html.twig' %}
+    <div class="container">
+        {% include 'EnmashPagesBundle:Pages:Catalog/Block/bestsellinggoods.html.twig' %}
+    </div>
 
 {% endblock %}
 
