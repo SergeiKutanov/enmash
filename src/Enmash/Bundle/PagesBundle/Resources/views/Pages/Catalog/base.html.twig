@@ -54,7 +54,7 @@
                 e.preventDefault();
                 var city = $(this).data('city');
                 if (city != "") {
-                    document.cookie = "userlocation=" + city;
+                    setCookie('userlocation', city, 5);
                     var citySpan = document.querySelector('#city-name');
                     if (citySpan != undefined) {
                         citySpan.textContent = city;

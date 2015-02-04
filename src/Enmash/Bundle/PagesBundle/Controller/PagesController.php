@@ -74,6 +74,11 @@ class PagesController extends BaseController{
                 )
             );
 
+        //test
+        $banner = $em
+            ->getRepository('EnmashStoreBundle:SpecialOffer')
+            ->find(2);
+
         return $this->render(
             'EnmashPagesBundle:Pages:index.html.twig',
             array(
@@ -82,7 +87,8 @@ class PagesController extends BaseController{
                 'cheapbannerpath'   => $cheapBannerPath,
                 'banners'           => $banners,
                 'catalog'           => $catalog,
-                'city'              => $request->attributes->get(LocationChangeEventListener::LOCATION_COOKIE_NAME)
+                'city'              => $request->attributes->get(LocationChangeEventListener::LOCATION_COOKIE_NAME),
+                'banner'            => $banner
             )
         );
 
