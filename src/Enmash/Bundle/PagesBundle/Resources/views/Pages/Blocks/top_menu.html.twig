@@ -38,12 +38,12 @@
                     {#<li>#}
                     {#<a href="#">Войти</a>#}
                     {#</li>#}
-                    {#<li class="box">#}
-                        {#<input type="text" />#}
-                    {#</li>#}
-                    {#<li class="find-button">#}
-                        {#<a href="#" id="select-city"><span class="glyphicon glyphicon-search"></span></a>#}
-                    {#</li>#}
+                    <li class="box">
+                        <input type="text" id="search-query-input"/>
+                    </li>
+                    <li class="find-button">
+                        <a href="{{ path('search') }}" id="search-button"><span class="glyphicon glyphicon-search"></span></a>
+                    </li>
                 </ul>
             </div>
             <ul class="nav navbar-nav">

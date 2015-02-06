@@ -130,6 +130,16 @@
                         }
                 );
 
+                $('#search-button').click(function(){
+                    var searchQuery = $('#search-query-input').val();
+                    if (searchQuery == '') {
+                        alert('Строка поиска не может быть пустой');
+                        return false;
+                    }
+                    $(this).attr('href', $(this).attr('href') + "?q=" + encodeURI(searchQuery));
+                    return true;
+                });
+
             });
 
             function checkCityStatus() {

@@ -1,5 +1,5 @@
 {
-    "name": "symfony/framework-standard-edition",
+    "name": "Energomash Site",
     "license": "MIT",
     "type": "project",
     "description": "The \"Symfony Standard Edition\" distribution",
@@ -33,7 +33,8 @@
         "knplabs/knp-paginator-bundle": "dev-master",
         "pixassociates/sortable-behavior-bundle": "0.1.*@dev",
         "symfony-cmf/seo-bundle": "dev-master",
-        "oro/doctrine-extensions": "dev-master"
+        "oro/doctrine-extensions": "dev-master",
+        "google/apiclient": "1.1.*@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

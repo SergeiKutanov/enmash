@@ -404,4 +404,20 @@ class PagesController extends BaseController{
 
     }
 
+    /**
+     * @Route("/search", name="search")
+     */
+    public function searchAction(Request $request) {
+        $query = $request->get('q');
+
+        if (!$query) {
+            return new \Exception('Search query can not be empty');
+        }
+
+        return $this->render(
+            'EnmashPagesBundle:Pages:Search/index.html.twig'
+        );
+
+    }
+
 } 
