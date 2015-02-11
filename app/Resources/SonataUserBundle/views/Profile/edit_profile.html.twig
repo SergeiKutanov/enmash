@@ -22,19 +22,54 @@ file that was distributed with this source code.
 
     {% form_theme form _self %}
 
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{ "title_user_account" | trans({}, 'SonataUserBundle')}}</h3>
-        </div>
-        <div class="panel-body">
-            <form action="{{ path('sonata_user_profile_edit') }}" method="POST" class="form-horizontal">
-                {{ form_widget(form) }}
-                <div class="form-actions">
-                    <button type="submit" name="submit"  class="btn btn-primary pull-right">{{ 'sonata_user_submit'|trans({}, 'SonataUserBundle') }}</button>
-                </div>
-            </form>
-        </div>
-    </div>
+        <h3>{{ "title_user_account" | trans({}, 'SonataUserBundle')}}</h3>
+        <form action="{{ path('sonata_user_profile_edit') }}" method="POST" class="">
+            <div class="col-xs-6">
+                {{ form_label(form.gender) }}
+                {{ form_widget(form.gender, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="col-xs-6">
+                {{ form_label(form.dateOfBirth) }}
+                {{ form_widget(form.dateOfBirth) }}
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-xs-6">
+                {{ form_widget(form.firstname, {'attr': {'class': 'form-control', 'placeholder': 'Имя'}}) }}
+            </div>
+            <div class="col-xs-6">
+                {{ form_widget(form.lastname, {'attr': {'class': 'form-control', 'placeholder': 'Фамилия'}}) }}
+            </div>
 
-    {% render url("sonata_user_profile_edit_authentication") %}
+            <div class="col-xs-6">
+                {{ form_widget(form.website, {'attr': {'class': 'form-control', 'placeholder': 'Веб-Сайт'}}) }}
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="col-xs-12">
+                {{ form_widget(form.biography, {'attr': {'class': 'form-control', 'placeholder': 'О себе'}}) }}
+            </div>
+
+            <div class="col-xs-6">
+                <label>Ваш язык</label>
+                {{ form_widget(form.locale, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="col-xs-6">
+                <label>Часовой пояс</label>
+                {{ form_widget(form.timezone, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="col-xs-6">
+                {{ form_widget(form.phone, {'attr': {'class': 'form-control', 'placeholder': 'Телефон'}}) }}
+            </div>
+
+            <div class="clearfix"></div>
+
+            {{ form_widget(form) }}
+            <div class="form-actions">
+                <button type="submit" name="submit"  class="btn btn-primary pull-right">{{ 'sonata_user_submit'|trans({}, 'SonataUserBundle') }}</button>
+            </div>
+        </form>
+
+    {#{% render url("sonata_user_profile_edit_authentication") %}#}
 {% endblock %}
