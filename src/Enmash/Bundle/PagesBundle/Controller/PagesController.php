@@ -79,6 +79,13 @@ class PagesController extends BaseController{
             ->getRepository('EnmashStoreBundle:SpecialOffer')
             ->find(2);
 
+        $request->getSession()
+            ->getFlashBag()
+            ->add(
+                'notice',
+                'test notice content'
+            );
+
         return $this->render(
             'EnmashPagesBundle:Pages:index.html.twig',
             array(
@@ -417,6 +424,15 @@ class PagesController extends BaseController{
         return $this->render(
             'EnmashPagesBundle:Pages:Search/index.html.twig'
         );
+
+    }
+
+    /**
+     * @Route("/test")
+     */
+    public function testAction() {
+
+        die('wrong');
 
     }
 

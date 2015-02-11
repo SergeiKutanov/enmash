@@ -26,6 +26,10 @@
     {% block modals %}
         {% include('EnmashPagesBundle:Pages:Blocks/modals/findstoremap.html.twig') %}
         {% include('EnmashPagesBundle:Pages:Blocks/modals/selectcity.html.twig') %}
+        {% if not app.user %}
+            {% include('EnmashPagesBundle:Pages:Blocks/modals/authmodal.html.twig') %}
+        {% endif %}
+        {% include 'EnmashPagesBundle:Pages:Blocks/modals/notificationmodal.html.twig' %}
     {% endblock %}
 
     {% block top_menu %}
@@ -39,6 +43,7 @@
     {% block no_container %}
     <div class="container">
         {% block content %}
+
         {% endblock %}
     </div>
     {% endblock %}
@@ -80,6 +85,9 @@
                     }
                 });
 
+                //todo show only if flash messages exist
+//                $('#notification-modal').modal();
+
                 //top menu scroll
                 $(window).on('scroll', function(e){
                     if (window.innerWidth > 767) {
@@ -95,7 +103,7 @@
                 });
 
                 $(function() {
-                    $('a[href*=#]:not([href=#]):not([href=#carousel]):not([href*=#city_]):not([href*=-carousel])').click(function() {
+                    $('a[href*=#]:not([href=#]):not([href=#carousel]):not([href*=#city_]):not([href*=-carousel]):not(data-toggle=tab)').click(function() {
                         if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
                             var target = $(this.hash);
                             target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
@@ -139,6 +147,21 @@
                     $(this).attr('href', $(this).attr('href') + "?q=" + encodeURI(searchQuery));
                     return true;
                 });
+
+                //login/register popup
+//                $('#login-button').click(function(e){
+//                    e.preventDefault();
+//                    var htmlPath = this.dataset.path;
+//                    $.ajax({
+//                        method: 'GET',
+//                        url: htmlPath,
+//                        success: function(data) {
+//                            var emptyModal = document.querySelector('#auth-modal .modal-body');
+//                            emptyModal.innerHTML = data;
+//                            $('#auth-modal').modal();
+//                        }
+//                    });
+//                });
 
             });
 

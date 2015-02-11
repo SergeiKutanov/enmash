@@ -19,7 +19,7 @@ body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4 {
     font-weight: initial;
 }
 
-ul.breadcrumb {
+ul.breadcrumb, ol.breadcrumb {
     background-color: transparent !important;
 }
 
@@ -85,16 +85,21 @@ hr {
     border-top-color: #888888;
 }
 
+.nav-tabs>li>a, .nav-tabs>li>a:hover, .nav-tabs>li>a:focus {
+     color: inherit !important;
+}
+
 .nav-tabs {
     border-color: #888888;
     margin-bottom: 20px;
+    background-color: initial;
 }
 
-.nav-tabs>li>a {
+.nav-tabs li>a {
     border-radius: initial;
     border-bottom-width: 3px;
     font-size: 1.5em;
-    color: #333399;
+    color: #333399 !important;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -102,7 +107,11 @@ hr {
     transition: all 0.5s ease;
 }
 
-.nav-tabs>li.active>a, .nav-tabs>li:hover>a, .nav-tabs>li.active:hover>a {
+.nav-tabs li.active>a {
+    color: #555555 !important;
+}
+
+.nav-tabs li.active>a, .nav-tabs>li:hover>a, .nav-tabs>li.active:hover>a {
     border-color: transparent;
     border-bottom: 3px solid #333399;
     background-color: initial;
@@ -259,8 +268,12 @@ hr {
     margin-bottom: 10px;
 }
 
-#search-box ul li:first-child {
+#search-box ul li {
     border-right: 1px solid #000000;
+}
+
+#search-box ul li:last-child {
+    border-right: none;
 }
 
 #search-box ul li:last-child {
@@ -982,7 +995,7 @@ a.featured-image img {
     margin-top: 10px;
 }
 
-ul.breadcrumb {
+ul.breadcrumb, ol.breadcrumb {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -1000,20 +1013,39 @@ ul.breadcrumb {
     padding: 0;
 }
 
-ul.breadcrumb li {
-    display: inline;
+ul.breadcrumb li, ol.breadcrumb li {
+    display: inline-block;
     font-size: .9em;
 }
 
-ul.breadcrumb li span.separator {
+ol.breadcrumb li {
+    margin: 0 10px 0px 0px;
+}
+
+ul.breadcrumb li span.separator, ol.breadcrumb li span.separator {
     margin: 0px 10px;
     color: #aaaaaa;
 }
 
-ul.breadcrumb a {
+ul.breadcrumb a, ol.breadcrumb a {
     text-decoration: none;
 }
 
-ul.breadcrumb a:hover {
+ul.breadcrumb a:hover, ol.breadcrumb a:hover {
     text-decoration: underline;
+}
+
+/*material override, can cause issues*/
+.list-group .list-group-item.active:hover, .list-group .list-group-item.active:focus {
+    outline: initial;
+}
+
+.sonata-user-show .cms-block .list-group-item {
+    display: block;
+    padding: 10px;
+}
+
+.sonata-user-show .cms-block .list-group-item.active {
+    color: #555555;
+    background-color: rgba(0, 0, 0, .15);
 }
