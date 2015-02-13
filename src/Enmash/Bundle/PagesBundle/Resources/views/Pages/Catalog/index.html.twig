@@ -1,0 +1,69 @@
+{% extends 'EnmashPagesBundle:Pages:Catalog/base.html.twig' %}
+
+{% block customcss %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('vendor/slick.js/slick/slick.css') }}">
+
+    <style>
+        .best-sellers h2 {
+            border-bottom: 1px solid #999;
+        }
+
+        .best-sellers img {
+            height: 100px;
+        }
+    </style>
+{% endblock %}
+
+{% block no_container %}
+
+
+    <div class="container-fluid">
+        <div class="row pusher">
+            {% include 'EnmashPagesBundle:Pages:Catalog/Block/bannerslider.html.twig' %}
+        </div>
+    </div>
+    <div class="container">
+        {% include 'EnmashPagesBundle:Pages:Catalog/Block/bestsellinggoods.html.twig' %}
+    </div>
+
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+<script src="{{ asset('vendor/slick.js/slick/slick.min.js') }}"></script>
+<script>
+    $('#bestSellerSlider').slick({
+        dots: true,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    infinite: true,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 800,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    });
+</script>
+{% endblock %}

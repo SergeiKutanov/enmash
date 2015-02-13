@@ -26,10 +26,15 @@
     div.carousel-inner div.item.active .carousel-caption {
         opacity: 1;
     }
-
 </style>
 
 <div id="carousel" class="carousel slide" data-ride="carousel">
+
+    <div class="jumbo-banner">
+        <a href="{% path banner.image, 'big' %}" title="{{ banner.image.name }}" data-gallery="banner_{{ banner.id }}" class="featured-image z1">
+            <img src="{% path banner.image, 'big' %}" alt="{{ banner.image.name  }}">
+        </a>
+    </div>
 
     {% set firstslide = random(3) %}
 

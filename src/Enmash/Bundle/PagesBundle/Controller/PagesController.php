@@ -79,13 +79,6 @@ class PagesController extends BaseController{
             ->getRepository('EnmashStoreBundle:SpecialOffer')
             ->find(2);
 
-        $request->getSession()
-            ->getFlashBag()
-            ->add(
-                'notice',
-                'test notice content'
-            );
-
         return $this->render(
             'EnmashPagesBundle:Pages:index.html.twig',
             array(
