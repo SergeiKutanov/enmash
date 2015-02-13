@@ -124,7 +124,7 @@
                 {% endif %}
             </dl>
             <div class="text-center">
-                <button class="btn btn-success">Купить</button>
+                <a href="{{ path('add-product-to-shopping-cart', {'product': product.id}) }}" class="btn btn-success">Купить</a>
             </div>
         </div>
     </div>

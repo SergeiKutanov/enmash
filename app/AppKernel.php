@@ -41,6 +41,7 @@ class AppKernel extends Kernel
             new \Sonata\FormatterBundle\SonataFormatterBundle(),
             new \WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
             //php excel helpers
             new \Liuggio\ExcelBundle\LiuggioExcelBundle(),

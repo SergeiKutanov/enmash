@@ -50,6 +50,19 @@
 
     {% block footer %}
     {% include ('EnmashPagesBundle:Pages:Blocks/footer.html.twig') %}
+
+        {% set msgs = app.session.flashbag.get('notice') %}
+        {% if msgs | length > 0 %}
+            <div class="alert alert-info alert-dismissible flash-msgs" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {% for flashMsg in msgs %}
+                    <div>
+                        <span>{{ flashMsg }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
     {% endblock %}
 
     {% block js %}

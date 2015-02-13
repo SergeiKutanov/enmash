@@ -42,6 +42,7 @@ twig:
             - 'SonataFormatterBundle:Form:formatter.html.twig'
     globals:
         sorted_stores: '@enmash_pages.store.sortedStores'
+        catalog_in_dev: true
 
 # Assetic Configuration
 assetic:
@@ -85,6 +86,14 @@ doctrine:
             string_functions:
                 cast: Oro\ORM\Query\AST\Functions\Cast
 
+stof_doctrine_extensions:
+    default_locale: en_US
+    orm:
+        default:
+            tree: true
+            timestampable: true # not needed: listeners are not enabled by default
+
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"
@@ -110,7 +119,8 @@ sonata_user:
 #                - { position: right, type: sonata.news.block.recent_comments, settings: { title: Recent Comments, number: 5, mode: public }}
         # Customize user portal menu by setting links
         menu:
-            - { route: 'sonata_user_profile_show', label: 'sonata_profile_title', domain: 'SonataUserBundle'}
+            - { route: 'profile-show-orders', label: 'Ваши заказы' }
+#            - { route: 'sonata_user_profile_show', label: 'sonata_profile_title', domain: 'SonataUserBundle'}
             - { route: 'sonata_user_profile_edit', label: 'link_edit_profile', domain: 'SonataUserBundle'}
 #            - { route: 'sonata_customer_addresses', label: 'link_list_addresses', domain: 'SonataCustomerBundle'}
 #            - { route: 'sonata_user_profile_edit_authentication', label: 'link_edit_authentication', domain: 'SonataUserBundle'}
