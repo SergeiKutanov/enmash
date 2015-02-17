@@ -6,7 +6,7 @@
  * Time: 9:35 AM
  */
 
-namespace Enmash\Bundle\StoreBundle\Component;
+namespace Enmash\Bundle\StoreBundle\Component\Catalog;
 
 use Application\Sonata\MediaBundle\Entity\Gallery;
 use Application\Sonata\MediaBundle\Entity\GalleryHasMedia;
@@ -20,48 +20,13 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
-class CatalogImporter {
+class CatalogImporter extends Catalog{
 
-    const PATH = 'web/catalog/';
-    const PATH_PHOTO = 'photo/';
-    const FILENAME = 'catalog.ods';
-    const GOODS_LIST_NAME = 'goods';
-    const MANUFACTURERS_LIST_NAME = 'manufacturers';
-    const TREE_LEVEL_1_LIST_NAME = 'TreeLevel1';
-    const TREE_LEVEL_2_LIST_NAME = 'TreeLevel2';
-    const TREE_LEVEL_3_LIST_NAME = 'TreeLevel3';
-    const TREE_FULL_LIST = 'Tree';
-
-    //cell coordinates
-    const MANUFACTURERS_NAME_COLUMN = 0;
-    const MANUFACTURERS_SITE_COLUMN = 1;
-
-    const PRODUCT_CODE_COLUMN = 0;
-    const PRODUCT_CATEGORY_COLUMN = 1;
-    const PRODUCT_NAME_COLUMN = 2;
-    const PRODUCT_ACRONYM_COLUMN = 3;
-    const PRODUCT_MAN_SKU = 4;
-    const PRODUCT_MAN = 5;
-    const PRODUCT_ANALOGS_COLUMN = 6;
-    const PRODUCT_SIMILAR_COLUMN = 7;
-    const PRODUCT_PHOTO = 8;
-
-
-    const TREE_LEVEL_1_CATEGORY_NAME_COLUMN = 0;
-    const TREE_SUBLEVEL_CATEGORY_NAME_COLUMN = 1;
-    const TREE_SUBLEVEL_PARENT_CATEGORY_NAME_COLUMN = 0;
-
-    /* @var $em \Doctrine\ORM\EntityManager */
-    private $em;
-    private $container;
-    /* @var $kernel \AppKernel */
-    private $kernel;
-
-    public function __construct($em, $container, $kernel) {
-        $this->em = $em;
-        $this->container = $container;
-        $this->kernel = $kernel;
-    }
+    private static $legitFileExtensions = array(
+        'jpg',
+        'png',
+        'jpeg'
+    );
 
     public function importFullCatalog(\PHPExcel $file = null) {
         if (!$file) {
@@ -82,21 +47,6 @@ class CatalogImporter {
         //removing unused manufacturers
         $this->removeUnusedManufacturers($file);
 
-
-    }
-
-    protected function getFile() {
-        /* @var $phpExcelObject \PHPExcel */
-        try {
-            $phpExcelObject = $this
-                ->container
-                ->get('phpexcel')
-                ->createPHPExcelObject(self::PATH . self::FILENAME);
-        } catch (\Exception $ex) {
-            return null;
-        }
-
-        return $phpExcelObject;
 
     }
 
@@ -446,19 +396,17 @@ class CatalogImporter {
                 throw new NotFoundHttpException('Manufacturer - ' . $manufacturerName . ' - for product - ' . $product->getSku() . ' - not found.');
             }
             $product->setManufacturer($manufacturer);
-
             //photo
             $fileNames = $sheet
                 ->getCellByColumnAndRow(self::PRODUCT_PHOTO, $rowIndex)
                 ->getValue();
             $photosArray = array();
-
-            if (!$fileNames) $fileNames = $product->getSku() . '.jpg';
-
             if ($fileNames !== null) {
                 $fileNames = explode(',', $fileNames);
+
                 foreach($fileNames as $fileName) {
                     $photo = $this->getPhoto($fileName);
+
                     if ($photo) {
                         $photosArray[] = $photo;
                     }
@@ -505,14 +453,35 @@ class CatalogImporter {
 
         }
 
-        $this->importAnalogsAndSimilarGoods($file, $offset, $copyLimit);
+//        $this->importAnalogsAndSimilarGoods($file, $offset, $copyLimit);
 
+    }
+
+    protected function getPhotoFilename($filename) {
+
+        $validFileName = null;
+        $dir = self::PATH . self::PATH_PHOTO;
+
+        if (pathinfo($dir . $filename, PATHINFO_EXTENSION)) {
+            if (is_file($dir . $filename)) return $filename;
+            return null;
+        }
+
+        foreach (self::$legitFileExtensions as $ext) {
+            if (is_file($dir . $filename . '.' . $ext)) {
+                return $filename . '.' . $ext;
+            }
+        }
+
+        return null;
     }
 
     protected function getPhoto($fileName) {
         $fileName = trim($fileName);
 
-        if (file_exists(self::PATH . self::PATH_PHOTO . $fileName)) {
+        $fileName = $this->getPhotoFilename($fileName);
+
+        if ($fileName) {
             //todo think of a different way of getting context parameter
             $media = $this
                 ->em
@@ -540,26 +509,6 @@ class CatalogImporter {
 
         return null;
 
-    }
-
-    protected function getConsoleApp() {
-        $app = new Application($this->kernel);
-        $app->setAutoExit(false);
-        return $app;
-    }
-
-    protected function runCommand($app, $filename) {
-        $options = array(
-            'command'   => 'sonata:media:add'
-        );
-        $options['providerName'] = 'sonata.media.provider.image';
-        $options['context'] = 'productimage';
-        $options['binaryContent'] = self::PATH . self::PATH_PHOTO . $filename;
-
-        $input = new ArrayInput($options);
-        $error = $app->run($input, null);
-
-        return $error;
     }
 
     public function removeUnusedStuff(\PHPExcel $file = null) {
@@ -626,6 +575,54 @@ class CatalogImporter {
         }
         $this->em->flush();
 //        var_dump(count($categories)); die();
+    }
+
+    public function fixPhotoFile(\PHPExcel $file, \PHPExcel $noPhotoFile)
+    {
+
+        $file->setActiveSheetIndex();
+        $noPhotoFile->setActiveSheetIndex();
+
+        $originalSheet = $file->getActiveSheet();
+        $legacyFileSheet = $noPhotoFile->getActiveSheet();
+
+        $rowIndex = 1;
+        while ($legacyFileSheet->cellExistsByColumnAndRow(0, $rowIndex)) {
+            $goodSku = $legacyFileSheet
+                ->getCellByColumnAndRow(0, $rowIndex)
+                ->getValue();
+
+            $goodPhoto = $legacyFileSheet
+                ->getCellByColumnAndRow(3, $rowIndex)
+                ->getValue();
+
+            if (!$goodPhoto) continue;
+
+            $originalIndex = 1;
+            while ($originalSheet->cellExistsByColumnAndRow(0, $originalIndex)) {
+                $originalGoodSku = $originalSheet
+                    ->getCellByColumnAndRow(0, $originalIndex);
+                if ($originalGoodSku->getValue() == $goodSku) {
+                    $photoCell = $originalSheet->getCellByColumnAndRow(self::PRODUCT_PHOTO, $originalIndex);
+                    $photoCell->setValue((string) $goodPhoto);
+                    break;
+                }
+                $originalIndex++;
+            }
+
+            echo $rowIndex . '. ' . $goodSku . " --- " . $goodPhoto . PHP_EOL;
+            $rowIndex++;
+        }
+
+        $this->saveFile($file);
+
+        die('in');
+    }
+
+    private function saveFile(\PHPExcel $file)
+    {
+        $writer = new \PHPExcel_Writer_Excel2007($file);
+        $writer->save(realpath('') . '/web/catalog/demo' . date('Y-m-d') . '.xlsx');
     }
 
 } 

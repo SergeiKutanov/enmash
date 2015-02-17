@@ -54,7 +54,11 @@ services:
             - {name: sonata.admin, manager_type: orm, group: admin, label: StoreContact}
 
     enmash_store.catalog_importer:
-        class: Enmash\Bundle\StoreBundle\Component\CatalogImporter
+        class: Enmash\Bundle\StoreBundle\Component\Catalog\CatalogImporter
+        arguments: [@doctrine.orm.entity_manager, @service_container, @kernel]
+
+    enmash_store.catalog_exporter:
+        class: Enmash\Bundle\StoreBundle\Component\Catalog\CatalogExporter
         arguments: [@doctrine.orm.entity_manager, @service_container, @kernel]
 
     enmash_store.admin.special_offer:
