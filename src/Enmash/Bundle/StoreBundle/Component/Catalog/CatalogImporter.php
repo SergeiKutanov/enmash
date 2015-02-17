@@ -22,6 +22,12 @@ use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class CatalogImporter extends Catalog{
 
+    private static $legitFileExtensions = array(
+        'jpg',
+        'png',
+        'jpeg'
+    );
+
     public function importFullCatalog(\PHPExcel $file = null) {
         if (!$file) {
             $file = $this->getFile();
@@ -390,16 +396,18 @@ class CatalogImporter extends Catalog{
                 throw new NotFoundHttpException('Manufacturer - ' . $manufacturerName . ' - for product - ' . $product->getSku() . ' - not found.');
             }
             $product->setManufacturer($manufacturer);
-
             //photo
             $fileNames = $sheet
                 ->getCellByColumnAndRow(self::PRODUCT_PHOTO, $rowIndex)
                 ->getValue();
             $photosArray = array();
+
             if ($fileNames !== null) {
                 $fileNames = explode(',', $fileNames);
+
                 foreach($fileNames as $fileName) {
                     $photo = $this->getPhoto($fileName);
+
                     if ($photo) {
                         $photosArray[] = $photo;
                     }
@@ -446,14 +454,35 @@ class CatalogImporter extends Catalog{
 
         }
 
-        $this->importAnalogsAndSimilarGoods($file, $offset, $copyLimit);
+//        $this->importAnalogsAndSimilarGoods($file, $offset, $copyLimit);
 
+    }
+
+    protected function getPhotoFilename($filename) {
+
+        $validFileName = null;
+        $dir = self::PATH . self::PATH_PHOTO;
+
+        if (pathinfo($dir . $filename, PATHINFO_EXTENSION)) {
+            if (is_file($dir . $filename)) return $filename;
+            return null;
+        }
+
+        foreach (self::$legitFileExtensions as $ext) {
+            if (is_file($dir . $filename . '.' . $ext)) {
+                return $filename . '.' . $ext;
+            }
+        }
+
+        return null;
     }
 
     protected function getPhoto($fileName) {
         $fileName = trim($fileName);
 
-        if (file_exists(self::PATH . self::PATH_PHOTO . $fileName)) {
+        $fileName = $this->getPhotoFilename($fileName);
+
+        if ($fileName) {
             //todo think of a different way of getting context parameter
             $media = $this
                 ->em
@@ -547,6 +576,54 @@ class CatalogImporter extends Catalog{
         }
         $this->em->flush();
 //        var_dump(count($categories)); die();
+    }
+
+    public function fixPhotoFile(\PHPExcel $file, \PHPExcel $noPhotoFile)
+    {
+
+        $file->setActiveSheetIndex();
+        $noPhotoFile->setActiveSheetIndex();
+
+        $originalSheet = $file->getActiveSheet();
+        $legacyFileSheet = $noPhotoFile->getActiveSheet();
+
+        $rowIndex = 1;
+        while ($legacyFileSheet->cellExistsByColumnAndRow(0, $rowIndex)) {
+            $goodSku = $legacyFileSheet
+                ->getCellByColumnAndRow(0, $rowIndex)
+                ->getValue();
+
+            $goodPhoto = $legacyFileSheet
+                ->getCellByColumnAndRow(3, $rowIndex)
+                ->getValue();
+
+            if (!$goodPhoto) continue;
+
+            $originalIndex = 1;
+            while ($originalSheet->cellExistsByColumnAndRow(0, $originalIndex)) {
+                $originalGoodSku = $originalSheet
+                    ->getCellByColumnAndRow(0, $originalIndex);
+                if ($originalGoodSku->getValue() == $goodSku) {
+                    $photoCell = $originalSheet->getCellByColumnAndRow(self::PRODUCT_PHOTO, $originalIndex);
+                    $photoCell->setValue((string) $goodPhoto);
+                    break;
+                }
+                $originalIndex++;
+            }
+
+            echo $rowIndex . '. ' . $goodSku . " --- " . $goodPhoto . PHP_EOL;
+            $rowIndex++;
+        }
+
+        $this->saveFile($file);
+
+        die('in');
+    }
+
+    private function saveFile(\PHPExcel $file)
+    {
+        $writer = new \PHPExcel_Writer_Excel2007($file);
+        $writer->save(realpath('') . '/web/catalog/demo' . date('Y-m-d') . '.xlsx');
     }
 
 } 

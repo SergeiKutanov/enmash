@@ -9,6 +9,9 @@
 namespace Enmash\Bundle\StoreBundle\Component\Catalog;
 
 
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+
 class Catalog {
 
     const PATH = 'web/catalog/';
@@ -70,7 +73,7 @@ class Catalog {
     }
 
     protected function getConsoleApp() {
-        $app = new Application($this->kernel);
+        $app = new \Symfony\Bundle\FrameworkBundle\Console\Application($this->kernel);
         $app->setAutoExit(false);
         return $app;
     }
@@ -81,8 +84,7 @@ class Catalog {
         );
         $options['providerName'] = 'sonata.media.provider.image';
         $options['context'] = 'productimage';
-        $options['binaryContent'] = self::PATH . self::PATH_PHOTO . $filename;
-
+        $options['binaryContent'] =  self::PATH . self::PATH_PHOTO . $filename;
         $input = new ArrayInput($options);
         $error = $app->run($input, null);
 

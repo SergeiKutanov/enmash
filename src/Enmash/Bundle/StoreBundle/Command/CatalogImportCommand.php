@@ -40,6 +40,7 @@ class CatalogImportCommand extends ContainerAwareCommand {
     const OPTION_MODE_GOODS = 'goods';
     const OPTION_MODE_CLEAR = 'clear';
     const OPTION_MODE_FLUSH_CATEGORIES = 'flush-categories';
+    const OPTION_MODE_FIX_PHOTO_FILE = 'fix';
 
     private $em;
     /* @var $catalogImporter CatalogImporter */
@@ -132,6 +133,14 @@ class CatalogImportCommand extends ContainerAwareCommand {
                     catalogImporter
                     ->flushCategories();
                 break;
+            case self::OPTION_MODE_FIX_PHOTO_FILE:
+                $this
+                    ->catalogImporter
+                    ->fixPhotoFile(
+                        $file,
+                        $this->getFile(self::PATH . '/no_photo.ods')
+                    );
+                break;
             default:
                 $output->writeln('Invalid mode');
                 break;
@@ -139,13 +148,16 @@ class CatalogImportCommand extends ContainerAwareCommand {
         $output->writeln('Import is done');
     }
 
-    protected function getFile() {
+    protected function getFile($path = null) {
+        if (!$path) {
+            $path = self::PATH . self::FILENAME;
+        }
         /* @var $phpExcelObject PHPExcel */
         try {
             $phpExcelObject = $this
                 ->getContainer()
                 ->get('phpexcel')
-                ->createPHPExcelObject(self::PATH . self::FILENAME);
+                ->createPHPExcelObject($path);
         } catch (\Exception $ex) {
             return null;
         }
