@@ -42,6 +42,7 @@ twig:
             - 'SonataFormatterBundle:Form:formatter.html.twig'
     globals:
         sorted_stores: '@enmash_pages.store.sortedStores'
+        catalog_in_dev: true
 
 # Assetic Configuration
 assetic:
@@ -81,11 +82,17 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
-#        entity_managers:
-#            default:
-#                mappings:
-#                    ApplicationSonataUserBundle: ~
-#                    SonataUserBundle: ~
+        dql:
+            string_functions:
+                cast: Oro\ORM\Query\AST\Functions\Cast
+
+stof_doctrine_extensions:
+    default_locale: en_US
+    orm:
+        default:
+            tree: true
+            timestampable: true # not needed: listeners are not enabled by default
+
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -93,7 +100,7 @@ swiftmailer:
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
-    spool:     { type: memory }
+#    spool:     { type: memory }
 
 # Sonata User Bundle
 sonata_user:
@@ -101,6 +108,23 @@ sonata_user:
     manager_type: orm
     class:
         user: Enmash\Bundle\UserControlBundle\Entity\User
+    profile:
+        # Profile show page is a dashboard as in SonataAdminBundle
+        dashboard:
+            blocks:
+#                - { position: left, type: sonata.block.service.text, settings: { content: "<h2>Welcome!</h2> This is a sample user profile dashboard, feel free to override it in the configuration! Want to make this text dynamic? For instance display the user's name? Create a dedicated block and edit the configuration!"} }
+#                - { position: left, type: sonata.order.block.recent_orders, settings: { title: Recent Orders, number: 5, mode: public }}
+#                - { position: right, type: sonata.timeline.block.timeline, settings: { max_per_page: 15 }}
+#                - { position: right, type: sonata.news.block.recent_posts, settings: { title: Recent Posts, number: 5, mode: public }}
+#                - { position: right, type: sonata.news.block.recent_comments, settings: { title: Recent Comments, number: 5, mode: public }}
+        # Customize user portal menu by setting links
+        menu:
+            - { route: 'profile-show-orders', label: 'Ваши заказы' }
+#            - { route: 'sonata_user_profile_show', label: 'sonata_profile_title', domain: 'SonataUserBundle'}
+            - { route: 'sonata_user_profile_edit', label: 'link_edit_profile', domain: 'SonataUserBundle'}
+#            - { route: 'sonata_customer_addresses', label: 'link_list_addresses', domain: 'SonataCustomerBundle'}
+#            - { route: 'sonata_user_profile_edit_authentication', label: 'link_edit_authentication', domain: 'SonataUserBundle'}
+#            - { route: 'sonata_order_index', label: 'order_list', domain: 'SonataOrderBundle'}
 
 sonata_block:
     default_contexts: [sonata_page_bundle]
@@ -129,12 +153,20 @@ fos_user:
 #    user_class:     Application\Sonata\UserBundle\Entity\User
     user_class: Enmash\Bundle\UserControlBundle\Entity\User
 
+    from_email:
+        address: store@enmash.ru
+        sender_name: Сеть магазинов "Энергомаш"
+
     group:
         group_class:   Application\Sonata\UserBundle\Entity\Group
         group_manager: sonata.user.orm.group_manager                    # If you're using doctrine orm (use sonata.user.mongodb.user_manager for mongodb)
 
     service:
         user_manager: sonata.user.orm.user_manager
+
+    registration:
+        confirmation:
+            enabled: true
 
 sonata_admin:
 #    title: Энергомаш

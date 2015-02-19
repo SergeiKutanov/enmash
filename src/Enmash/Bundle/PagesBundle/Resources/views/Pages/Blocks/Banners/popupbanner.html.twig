@@ -1,0 +1,56 @@
+<style>
+    #newsBanner {
+        position: absolute;
+        bottom: 15px;
+        left: 100px;
+        z-index: 1;
+        /*background-color: rgba(0, 0, 0, .8);*/
+        background-color: rgba(0, 124, 194, .8);
+        padding: 10px;
+        box-shadow: 5px 5px 0px 0px rgba(0, 124, 194, .9);
+        font-weight: 700;
+        color: #FFFFFF;
+        z-index: 20;
+    }
+
+    #newsBanner a {
+        color: #FFFFFF;
+        font-size: .8em;
+    }
+
+    #newsBanner h2 {
+        color: #fdda0a;
+        margin: 0;
+        text-shadow: 2px 2px #555;
+        font-weight: 700;
+        font-size: 1.5em;
+    }
+
+    .popup-banner-trigger {
+        bottom: 110px !important;
+    }
+</style>
+
+<div class="popup-banner-trigger" id="newsBanner">
+    <h2>Акция для пенсионеров и льготников</h2>
+    <p class="text-right">
+        <a href="#" data-toggle="modal" data-target="#popup-banner">Подробнее</a>
+    </p>
+</div>
+
+<div class="modal fade" id="popup-banner" tabindex="-1" role="dialog" aria-labelledby="popupBannerLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="popupBannerLabel">Акция для пенсионеров и льготников</h4>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{% path banner.image, 'big' %}" alt="{{ banner.image.name  }}" style="width: 100%">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>

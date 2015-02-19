@@ -1,5 +1,5 @@
 {
-    "name": "symfony/framework-standard-edition",
+    "name": "Energomash Site",
     "license": "MIT",
     "type": "project",
     "description": "The \"Symfony Standard Edition\" distribution",
@@ -18,7 +18,7 @@
         "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
-        "sonata-project/user-bundle": "~2.2",
+        "sonata-project/user-bundle": "2.3.*@dev",
         "sonata-project/doctrine-orm-admin-bundle": "~2.3",
         "sonata-project/admin-bundle": "~2.3",
         "knplabs/knp-menu": "~1.1",
@@ -32,7 +32,10 @@
         "whiteoctober/breadcrumbs-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "dev-master",
         "pixassociates/sortable-behavior-bundle": "0.1.*@dev",
-        "symfony-cmf/seo-bundle": "dev-master"
+        "symfony-cmf/seo-bundle": "dev-master",
+        "oro/doctrine-extensions": "dev-master",
+        "sonata-project/datagrid-bundle": "2.2.*@dev",
+        "stof/doctrine-extensions-bundle": "1.2.*@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

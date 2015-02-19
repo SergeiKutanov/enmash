@@ -1,0 +1,59 @@
+{% extends 'EnmashPagesBundle:Base:public_base.html.twig' %}
+
+{% block content %}
+<div class="row pusher">
+    <div class="col-xs-12">
+        <h1>Корзина</h1>
+    </div>
+    {% if shoppingCartItems | length > 0 %}
+        <div class="col-xs-12 col-md-6">
+            <p>В вашей корзине находятся следующие товары:</p>
+        </div>
+        <div class="col-xs-12 col-md-6 text-right">
+            <a href="{{ path('shopping-cart-clear') }}">Очистить корзину</a>
+        </div>
+        <div class="col-xs-12">
+            <table class="table table-striped table-hover shopping-cart-table">
+                <thead>
+                <tr>
+                    <th>Фото</th>
+                    <th>Наименовани</th>
+                    <th>Количество</th>
+                    <th>Удалить</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in shoppingCartItems %}
+                    <tr>
+                        <td>
+                            {% set image = item.product.productImages %}
+                            {% if image %}
+                                {% set image = image.galleryHasMedias %}
+                                {% if image | length > 0 %}
+                                    <img class="product-image" src="{% path image[0].media, 'reference' %}">
+                                {% else %}
+                                    <img class="product-image" src="{{ asset('bundles/enmashpages/images/noimageyet.jpg') }}">
+                                {% endif %}
+                            {% else %}
+                                <img class="product-image" src="{{ asset('bundles/enmashpages/images/noimageyet.jpg') }}">
+                            {% endif %}
+                        </td>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td><a href="{{ path('shopping-cart-remove-item', {'product': item.product.id}) }}"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-12">
+            <a class="btn btn-success" href="{{ path('confirm-order') }}">Оформить заказ</a>
+        </div>
+    {% else %}
+        <div class="col-xs-12">
+            <p>Ваша корзина пуста</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+

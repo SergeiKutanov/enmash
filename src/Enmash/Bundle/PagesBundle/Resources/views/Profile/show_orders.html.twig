@@ -1,0 +1,48 @@
+{% extends 'SonataUserBundle:Profile:action.html.twig' %}
+
+{% block sonata_profile_title %}
+    Ваши заказы
+{% endblock %}
+
+{% block sonata_profile_content %}
+    {% if app.user.paymentOrders | length > 0 %}
+        <table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Товары</th>
+        <th>Подтвержден</th>
+        <th>Создан</th>
+        <th>Отменить</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for paymentOrder in app.user.paymentOrders %}
+        <tr>
+            <td>
+                <ul>
+                    {% for product in paymentOrder.products %}
+                    <li>{{ product.product.name }} - {{ product.product.acronym }} - {{ product.quantity }} {% if product.product.manufacturer.name != constant('Enmash\\Bundle\\StoreBundle\\Entity\\Product::NO_MANUFACTURER') %}({{ product.product.manufacturer.name }}){% endif %} шт.</li>
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>
+                {% if paymentOrder.confirmed %}
+                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                {% else %}
+                    <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                {% endif %}
+            </td>
+            <td>
+                {{ paymentOrder.updated | date('d/m/Y H:i') }}
+            </td>
+            <td>
+                <a href="{{ path('profile-order-remove', {'paymentOrder': paymentOrder.id}) }}"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+    {% else %}
+        <p>Заказов не найдено</p>
+    {% endif %}
+{% endblock %}

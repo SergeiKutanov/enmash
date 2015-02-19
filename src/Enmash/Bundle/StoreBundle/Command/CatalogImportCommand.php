@@ -43,6 +43,7 @@ class CatalogImportCommand extends ContainerAwareCommand {
     const OPTION_MODE_FLUSH_CATEGORIES = 'flush-categories';
     const OPTION_MODE_FIX_PHOTO_FILE = 'fix-photo';
     const OPTION_MODE_FIX_ANALOGS = 'fix-analogs';
+    const OPTION_MODE_PHOTOS_ONLY = 'photos-only';
 
     private $em;
     /* @var $catalogImporter CatalogImporter */
@@ -56,8 +57,8 @@ class CatalogImportCommand extends ContainerAwareCommand {
                 'mode',
                 'm',
                 InputArgument::OPTIONAL,
-                'Import type: ' . self::OPTION_MODE_ALL . '|' . self::OPTION_MODE_MANUFACTURERS . '|' . self::OPTION_MODE_CATEGORIES . '|' . self::OPTION_MODE_GOODS . '|' . self::OPTION_MODE_CLEAR,
-                self::OPTION_MODE_ALL . ' | ' . self::OPTION_MODE_FLUSH_CATEGORIES
+                'Import type: ' . self::OPTION_MODE_ALL . '|' . self::OPTION_MODE_MANUFACTURERS . '|' . self::OPTION_MODE_CATEGORIES . '|' . self::OPTION_MODE_GOODS . '|' . self::OPTION_MODE_CLEAR . '|' .
+                self::OPTION_MODE_ALL . ' | ' . self::OPTION_MODE_FLUSH_CATEGORIES . '|' . self::OPTION_MODE_PHOTOS_ONLY
             )
             ->addOption(
                 'offset',
@@ -140,6 +141,12 @@ class CatalogImportCommand extends ContainerAwareCommand {
                 $this->
                     catalogImporter
                     ->flushCategories();
+                break;
+            case self::OPTION_MODE_PHOTOS_ONLY:
+                $output->writeln('Storing Photos Only');
+                $this
+                    ->catalogImporter
+                    ->importGoods($file, $offset);
                 break;
             case self::OPTION_MODE_FIX_PHOTO_FILE:
                 $this

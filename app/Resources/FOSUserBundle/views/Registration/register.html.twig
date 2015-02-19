@@ -1,0 +1,24 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <h2>Регистрация</h2>
+    <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register ">
+        <div class="form-group">
+            {{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder': 'Имя'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Электронная почта'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': 'Пароль'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder': 'Подтвердите пароль'}}) }}
+        </div>
+        {{ form_rest(form) }}
+        <div>
+            <input type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-success"/>
+        </div>
+    </form>
+
+{% endblock fos_user_content %}

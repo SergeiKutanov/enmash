@@ -74,6 +74,11 @@ class PagesController extends BaseController{
                 )
             );
 
+        //test
+        $banner = $em
+            ->getRepository('EnmashStoreBundle:SpecialOffer')
+            ->find(2);
+
         return $this->render(
             'EnmashPagesBundle:Pages:index.html.twig',
             array(
@@ -82,7 +87,8 @@ class PagesController extends BaseController{
                 'cheapbannerpath'   => $cheapBannerPath,
                 'banners'           => $banners,
                 'catalog'           => $catalog,
-                'city'              => $request->attributes->get(LocationChangeEventListener::LOCATION_COOKIE_NAME)
+                'city'              => $request->attributes->get(LocationChangeEventListener::LOCATION_COOKIE_NAME),
+                'banner'            => $banner
             )
         );
 
@@ -395,6 +401,31 @@ class PagesController extends BaseController{
                 $cookie
             )
         );
+
+    }
+
+    /**
+     * @Route("/search", name="search")
+     */
+    public function searchAction(Request $request) {
+        $query = $request->get('q');
+
+        if (!$query) {
+            return new \Exception('Search query can not be empty');
+        }
+
+        return $this->render(
+            'EnmashPagesBundle:Pages:Search/index.html.twig'
+        );
+
+    }
+
+    /**
+     * @Route("/test")
+     */
+    public function testAction() {
+
+        die('wrong');
 
     }
 

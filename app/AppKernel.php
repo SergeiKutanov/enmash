@@ -41,6 +41,7 @@ class AppKernel extends Kernel
             new \Sonata\FormatterBundle\SonataFormatterBundle(),
             new \WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
             //php excel helpers
             new \Liuggio\ExcelBundle\LiuggioExcelBundle(),
@@ -49,7 +50,7 @@ class AppKernel extends Kernel
             new \Pix\SortableBehaviorBundle\PixSortableBehaviorBundle(),
 
             //seo staff
-            new Sonata\SeoBundle\SonataSeoBundle()
+            new Sonata\SeoBundle\SonataSeoBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

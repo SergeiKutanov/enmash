@@ -42,6 +42,9 @@ sonata_user_resetting:
     resource: '@SonataUserBundle/Resources/config/routing/sonata_resetting_1.xml'
     prefix: /resetting
 
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
 gallery:
     resource: '@SonataMediaBundle/Resources/config/routing/gallery.xml'
     prefix: /media/gallery

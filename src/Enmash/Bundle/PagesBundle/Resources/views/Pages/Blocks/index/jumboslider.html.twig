@@ -26,6 +26,7 @@
     div.carousel-inner div.item.active .carousel-caption {
         opacity: 1;
     }
+
 </style>
 
 <div id="carousel" class="carousel slide" data-ride="carousel">
@@ -39,7 +40,9 @@
     </div>
 
     {% include('EnmashPagesBundle:Pages:Blocks/Banners/cheap.html.twig') %}
-    {#{% include('EnmashPagesBundle:Pages:Blocks/Banners/news.html.twig') %}#}
+    {% include('EnmashPagesBundle:Pages:Blocks/Banners/news.html.twig') %}
+
+    {% include('EnmashPagesBundle:Pages:Blocks/Banners/popupbanner.html.twig') %}
 
     <!-- Indicators -->
     {#<ol class="carousel-indicators">#}

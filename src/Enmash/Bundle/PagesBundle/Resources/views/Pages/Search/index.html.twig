@@ -1,0 +1,46 @@
+{% extends 'EnmashPagesBundle:Base:public_base.html.twig' %}
+
+{% block customcss %}
+    {{ parent() }}
+    <style>
+        .gsc-input-box {
+            height: 32px !important;
+        }
+
+        .gstl_50 {
+            height: 100% !important;
+        }
+
+        .gsst_b {
+            font-size: 20px !important;
+        }
+
+        .cse .gsc-search-button input.gsc-search-button-v2, input.gsc-search-button-v2 {
+            height: 32px !important;
+        }
+
+        .gsc-selected-option-container {
+            padding-right: 80px !important;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="row pusher">
+        <div class="col-xs-12">
+            <script>
+                (function() {
+                    var cx = '009455544049867087318:ywb6qkzj4c0';
+                    var gcse = document.createElement('script');
+                    gcse.type = 'text/javascript';
+                    gcse.async = true;
+                    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                    '//www.google.com/cse/cse.js?cx=' + cx;
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(gcse, s);
+                })();
+            </script>
+            <gcse:search></gcse:search>
+        </div>
+    </div>
+{% endblock %}

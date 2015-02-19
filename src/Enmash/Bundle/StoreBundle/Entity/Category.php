@@ -2,6 +2,8 @@
 
 namespace Enmash\Bundle\StoreBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OneToMany;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -13,6 +15,7 @@ use JMS\Serializer\Annotation\Expose;
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Enmash\Bundle\StoreBundle\Entity\CategoryRepository")
+ * @ORM\HasLifecycleCallbacks
  *
  * @ExclusionPolicy("all")
  */
@@ -51,7 +54,6 @@ class Category
 
     /**
      * @OneToMany(targetEntity="Category", mappedBy="parentCategory", cascade={"persist", "remove"}, orphanRemoval=true)
-     *
      * @ORM\OrderBy({"name" = "ASC"})
      */
     private $subCategories;
@@ -75,7 +77,6 @@ class Category
      * )
      */
     private $parameters;
-
 
     /**
      * Get id
@@ -278,4 +279,5 @@ class Category
         return $products;
 
     }
+
 }

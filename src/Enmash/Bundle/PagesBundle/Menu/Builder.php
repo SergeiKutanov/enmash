@@ -58,14 +58,7 @@ class Builder extends ContainerAware {
                 ->getRepository(
                     'EnmashStoreBundle:Category'
                 )
-                ->findBy(
-                    array(
-                        'parentCategory'    => null
-                    ),
-                    array(
-                        'name'  => 'ASC'
-                    )
-                );
+                ->getSortedCategories();
             foreach ($categories as $category) {
                 /* @var $category Category */
                 $options['route'] = 'catalog-category-page';
@@ -108,7 +101,14 @@ class Builder extends ContainerAware {
             if (count($categories->getSubCategories()) == 0) {
                 $categories = $categories->getParentCategory();
             }
-            foreach ($categories->getSubCategories() as $category) {
+
+            $subCategories = $em
+                ->getRepository(
+                    'EnmashStoreBundle:Category'
+                )
+                ->getSortedCategories($categories);
+
+            foreach ($subCategories as $category) {
                 /* @var $category Category */
 
                 $options['route'] = 'catalog-category-page';
@@ -144,14 +144,7 @@ class Builder extends ContainerAware {
         $em = $this->container->get('doctrine')->getManager();
         $catalog = $em
             ->getRepository('EnmashStoreBundle:Category')
-            ->findBy(
-                array(
-                    'parentCategory'    => null
-                ),
-                array(
-                    'name'  => 'ASC'
-                )
-            );
+            ->getSortedCategories();
 
         foreach ($catalog as $item) {
             /* @var $item \Enmash\Bundle\StoreBundle\Entity\Category */
@@ -188,7 +181,19 @@ class Builder extends ContainerAware {
     }
 
     protected function addSecondLevel($item, $menu, $categorySlug){
-        foreach ($item->getSubCategories() as $subCategory) {
+
+        $em = $this
+            ->container
+            ->get('doctrine')
+            ->getManager();
+
+        $subCategories = $em
+            ->getRepository(
+                'EnmashStoreBundle:Category'
+            )
+            ->getSortedCategories($item);
+
+        foreach ($subCategories as $subCategory) {
             $menu[$item->getName()]->addChild(
                 $subCategory->getName(),
                 array(
@@ -214,7 +219,19 @@ class Builder extends ContainerAware {
     }
 
     protected function addThirdLevel($subCategory, $item, $menu, $categorySlug) {
-        foreach ($subCategory->getSubCategories() as $subSubCategory) {
+
+        $em = $this
+            ->container
+            ->get('doctrine')
+            ->getManager();
+
+        $subCategories = $em
+            ->getRepository(
+                'EnmashStoreBundle:Category'
+            )
+            ->getSortedCategories($subCategory);
+
+        foreach ($subCategories as $subSubCategory) {
             $menu[$item->getName()][$subCategory->getName()]->addChild(
                 $subSubCategory->getName(),
                 array(

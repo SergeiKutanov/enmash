@@ -3,6 +3,8 @@
 namespace Enmash\Bundle\StoreBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 /**
  * CategoryRepository
@@ -12,4 +14,33 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoryRepository extends EntityRepository
 {
+    public function getSortedCategories(Category $parentCategory = null) {
+
+
+        if ($parentCategory) {
+            $query = $this
+                ->getEntityManager()
+                ->createQuery(
+                    'SELECT c, CAST(c.name as INT) as HIDDEN sort_order FROM EnmashStoreBundle:Category c ' .
+                    'WHERE c.parentCategory = :parent_category_id ' .
+                    'ORDER BY sort_order ASC, c.name ASC'
+                )
+                ->setParameter(
+                    'parent_category_id',
+                    $parentCategory->getId()
+                );
+        } else {
+            $query = $this
+                ->getEntityManager()
+                ->createQuery(
+                    'SELECT c, CAST(c.name as INT) as HIDDEN sort_order FROM EnmashStoreBundle:Category c ' .
+                    'WHERE c.parentCategory IS NULL ' .
+                    'ORDER BY sort_order ASC, c.name ASC'
+                );
+        }
+
+        return $query
+            ->getResult();
+
+    }
 }

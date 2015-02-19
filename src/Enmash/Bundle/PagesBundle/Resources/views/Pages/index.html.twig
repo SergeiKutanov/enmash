@@ -7,7 +7,6 @@
     {% endblock %}
 
     {% block jumbotron %}
-        {#top jumbotron slider#}
         {% include('EnmashPagesBundle:Pages:Blocks/index/jumboslider.html.twig') %}
     {% endblock %}
 
@@ -35,7 +34,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-            var slideTimeout = 5000;
+            var slideTimeout = 3000;
 
             $('#banners-carousel').titleBanners();
 
@@ -54,6 +53,19 @@
                 }
             }, slideTimeout);
             */
+
+            setTimeout(function(){
+                if (getCookie('popupbanner') == '') {
+                    $("#popup-banner").modal('show');
+                    setCookie('popupbanner', true, 1);
+
+                    setTimeout(function(){
+                        $("#popup-banner").modal('hide');
+                    }, 10000);
+
+                }
+            }, slideTimeout);
+
 
         });
 

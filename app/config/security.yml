@@ -10,8 +10,8 @@ security:
 
     firewalls:
 
-        main:
-            pattern: .*
+        admin_firewall:
+            pattern: /admin/.*
             form-login:
                 provider: fos_userbundle
                 login_path: /admin/login
@@ -20,6 +20,19 @@ security:
                 failure_path: null
             logout:
                 path: /admin/logout
+                target: /
+            anonymous: true
+
+        site_firewall:
+            pattern: .*
+            form-login:
+                provider: fos_userbundle
+                login_path: /login
+                use_forward: false
+                check_path: fos_user_security_check
+                failure_path: null
+            logout:
+                path: /logout
                 target: /
             anonymous: true
 
@@ -61,6 +74,7 @@ security:
 
         # URL of FOSUserBundle which need to be available to anonymous users
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
