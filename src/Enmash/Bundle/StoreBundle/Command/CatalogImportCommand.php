@@ -38,9 +38,11 @@ class CatalogImportCommand extends ContainerAwareCommand {
     const OPTION_MODE_MANUFACTURERS = 'manufacturers';
     const OPTION_MODE_CATEGORIES = 'categories';
     const OPTION_MODE_GOODS = 'goods';
+    const OPTION_MODE_ANALOGS_AND_SIMILARS = 'analogs';
     const OPTION_MODE_CLEAR = 'clear';
     const OPTION_MODE_FLUSH_CATEGORIES = 'flush-categories';
-    const OPTION_MODE_FIX_PHOTO_FILE = 'fix';
+    const OPTION_MODE_FIX_PHOTO_FILE = 'fix-photo';
+    const OPTION_MODE_FIX_ANALOGS = 'fix-analogs';
 
     private $em;
     /* @var $catalogImporter CatalogImporter */
@@ -121,6 +123,12 @@ class CatalogImportCommand extends ContainerAwareCommand {
                     ->catalogImporter
                     ->importGoods($file, $offset, $limit);
                 break;
+            case self::OPTION_MODE_ANALOGS_AND_SIMILARS:
+                $output->writeln('Analogs and similars catalog import started');
+                $this
+                    ->catalogImporter
+                    ->importAnalogsAndSimilarGoods($file, $offset, $limit);
+                break;
             case self::OPTION_MODE_CLEAR:
                 $output->writeln('Removing unused stuff');
                 $this
@@ -139,6 +147,13 @@ class CatalogImportCommand extends ContainerAwareCommand {
                     ->fixPhotoFile(
                         $file,
                         $this->getFile(self::PATH . '/no_photo.ods')
+                    );
+                break;
+            case self::OPTION_MODE_FIX_ANALOGS:
+                $this->catalogImporter
+                    ->fixAnalogs(
+                        $file,
+                        $this->getFile(self::PATH . '/legacy_catalog.ods')
                     );
                 break;
             default:

@@ -72,7 +72,7 @@ class CatalogImporter extends Catalog{
         $this->em->flush();
     }
 
-    protected function importAnalogsAndSimilarGoods(\PHPExcel $file, $offset = null, $limit = null) {
+    public function importAnalogsAndSimilarGoods(\PHPExcel $file, $offset = null, $limit = null) {
         $file->setActiveSheetIndexByName(self::GOODS_LIST_NAME);
         $sheet = $file->getActiveSheet();
 
@@ -81,6 +81,10 @@ class CatalogImporter extends Catalog{
             $rowIndex += $offset;
         }
         $goodsRepository = $this->em->getRepository('EnmashStoreBundle:Product');
+
+        if (!$limit) {
+            $limit = 9999;
+        }
 
         while ($sheet->cellExistsByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex) && $limit > 0) {
             $limit--;
@@ -454,7 +458,7 @@ class CatalogImporter extends Catalog{
 
         }
 
-//        $this->importAnalogsAndSimilarGoods($file, $offset, $copyLimit);
+        $this->importAnalogsAndSimilarGoods($file, $offset, $copyLimit);
 
     }
 
@@ -617,13 +621,66 @@ class CatalogImporter extends Catalog{
 
         $this->saveFile($file);
 
-        die('in');
+    }
+
+    public function fixAnalogs(\PHPExcel $file, \PHPExcel $legacyFile) {
+        $file->setActiveSheetIndex();
+        $legacyFile->setActiveSheetIndexByName('analogs');
+
+        $originalSheet = $file->getActiveSheet();
+        $legacyFileSheet = $legacyFile->getActiveSheet();
+
+        $rowIndex = 2;
+        while ($originalSheet->cellExistsByColumnAndRow(0, $rowIndex)) {
+            $sku = $originalSheet->getCellByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex)->getValue();
+
+            echo "$rowIndex: Searching for $sku" . PHP_EOL;
+            $legacyCellValue = $this->getLegacyAnalogAndSimilarCellValue($sku, 7, $legacyFileSheet);
+
+            if ($legacyCellValue['analogs'] && $legacyCellValue['analogs'] != '') {
+                echo "Found analogs are: " . $legacyCellValue['analogs'] . PHP_EOL;
+                $analogsCell = $originalSheet->getCellByColumnAndRow(self::PRODUCT_ANALOGS_COLUMN, $rowIndex);
+                $analogsCell->setValue((string)$legacyCellValue['analogs']);
+            }
+
+            if ($legacyCellValue['similars'] && $legacyCellValue['similars'] != '') {
+                echo "Found similars are: " . $legacyCellValue['similars'] . PHP_EOL;
+                $analogsCell = $originalSheet->getCellByColumnAndRow(self::PRODUCT_SIMILAR_COLUMN, $rowIndex);
+                $analogsCell->setValue((string)$legacyCellValue['similars']);
+            }
+
+            $rowIndex++;
+        }
+
+        $this->saveFile($file);
+
     }
 
     private function saveFile(\PHPExcel $file)
     {
         $writer = new \PHPExcel_Writer_Excel2007($file);
         $writer->save(realpath('') . '/web/catalog/demo' . date('Y-m-d') . '.xlsx');
+    }
+
+    private function getLegacyAnalogAndSimilarCellValue($sku, $int, \PHPExcel_Worksheet $legacySheet)
+    {
+        $result = array(
+            'analogs'   => null,
+            'similars'  => null
+        );
+        $rowIndex = 1;
+        while ($legacySheet->cellExistsByColumnAndRow(0, $rowIndex)) {
+            $legacySku = $legacySheet->getCellByColumnAndRow(1, $rowIndex)->getValue();
+            if ($legacySku == $sku) {
+                return array(
+                    'analogs'   => $legacySheet->getCellByColumnAndRow(7, $rowIndex),
+                    'similars'  => $legacySheet->getCellByColumnAndRow(8, $rowIndex)
+                );
+            }
+            $rowIndex++;
+        }
+
+        return $result;
     }
 
 } 

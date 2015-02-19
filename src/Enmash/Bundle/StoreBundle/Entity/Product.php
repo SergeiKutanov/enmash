@@ -104,14 +104,14 @@ class Product
     private $articles;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Product", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity="Product", cascade={"persist", "remove"})
      * @ORM\JoinTable(
      *      name="product_analogs",
      *      joinColumns={
-     *          @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE"),
+     *          @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      *      },
      *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="analog_id", referencedColumnName="id", onDelete="CASCADE")
+     *          @ORM\JoinColumn(name="analog_id", referencedColumnName="id")
      *      }
      * )
      */
@@ -122,10 +122,10 @@ class Product
      * @ORM\JoinTable(
      *      name="product_similar",
      *      joinColumns={
-     *          @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE"),
+     *          @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      *      },
      *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="similar_product_id", referencedColumnName="id", onDelete="CASCADE")
+     *          @ORM\JoinColumn(name="similar_product_id", referencedColumnName="id")
      *      }
      * )
      */

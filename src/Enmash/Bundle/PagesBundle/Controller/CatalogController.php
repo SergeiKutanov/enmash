@@ -87,7 +87,6 @@ class CatalogController extends BaseController
     public function showSingleItemAction(Product $product, Request $request) {
 
         $this->buildBreadcrumbs($product->getCategory());
-
         $this->setSeoData(
             $product->getName(),
             "Купить {$product->getName()} в электротехнической компании \"Энергомаш\"",
