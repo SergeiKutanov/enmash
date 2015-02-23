@@ -66,3 +66,9 @@ services:
         arguments: [~, Enmash\Bundle\StoreBundle\Entity\SpecialOffer, SonataAdminBundle:CRUD]
         tags:
             - {name: sonata.admin, manager_type: orm, group: Содержание, label: Специальные предложения}
+
+    enmash_store.admin.payment_order:
+        class: Enmash\Bundle\StoreBundle\Admin\PaymentOrderAdmin
+        arguments: [~, Enmash\Bundle\StoreBundle\Entity\PaymentOrder, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: PaymentOrder}

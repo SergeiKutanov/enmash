@@ -179,6 +179,10 @@ sonata_admin:
         layout: EnmashPagesBundle:Admin:standard_layout.html.twig
     dashboard:
         groups:
+            Orders:
+                label: Заказы
+                items:
+                    - enmash_store.admin.payment_order
             Content:
                 label: Содержание
                 items:
@@ -194,6 +198,7 @@ sonata_admin:
             Admin:
                 label: Admin
                 items:
+                    - enmash_store.admin.payment_order
                     - enmash_store.admin.product
                     - enmash_store.admin.category
                     - enmash_store.admin.store
