@@ -9,6 +9,7 @@
 namespace Enmash\Bundle\PagesBundle\Menu;
 
 
+use Doctrine\ORM\EntityManager;
 use Enmash\Bundle\StoreBundle\Entity\Category;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
@@ -21,12 +22,16 @@ class Builder extends ContainerAware {
 
         $menu = $factory->createItem('root');
 
+        /* @var $em EntityManager */
         $em = $this->container->get('doctrine')->getManager();
         $catalog = $em
             ->getRepository('EnmashStoreBundle:Category')
             ->findBy(
                 array(
                     'parentCategory'    => null
+                ),
+                array(
+                    'id'
                 )
             );
 
@@ -145,6 +150,17 @@ class Builder extends ContainerAware {
         $catalog = $em
             ->getRepository('EnmashStoreBundle:Category')
             ->getSortedCategories();
+
+//        $catalog = $em
+//            ->getRepository('EnmashStoreBundle:Category')
+//            ->findBy(
+//                array(
+//                    'parentCategory'    => null,
+//                ),
+//                array(
+//                    'position'  => 'ASC'
+//                )
+//            );
 
         foreach ($catalog as $item) {
             /* @var $item \Enmash\Bundle\StoreBundle\Entity\Category */

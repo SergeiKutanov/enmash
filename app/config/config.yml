@@ -1,10 +1,10 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    # store bundle admin entities
-    - { resource: @EnmashStoreBundle/Resources/config/services.yml  }
     # pages bundle admin entities
     - { resource: @EnmashPagesBundle/Resources/config/services.yml  }
+    # store bundle admin entities
+    - { resource: @EnmashStoreBundle/Resources/config/services.yml  }
     # user bundle admin entities
 #    - { resource: @EnmashUserControlBundle/Resources/config/services.yml  }
 
@@ -92,6 +92,7 @@ stof_doctrine_extensions:
         default:
             tree: true
             timestampable: true # not needed: listeners are not enabled by default
+            sortable: true
 
 
 # Swiftmailer Configuration
