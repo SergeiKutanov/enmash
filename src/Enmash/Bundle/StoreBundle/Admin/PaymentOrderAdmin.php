@@ -60,8 +60,9 @@ class PaymentOrderAdmin extends Admin
     {
 
         $showMapper
-            ->add('confirmed')
+            ->add('confirmed', 'boolean')
             ->add('updated')
+            ->add('user')
             ->add('products')
         ;
     }

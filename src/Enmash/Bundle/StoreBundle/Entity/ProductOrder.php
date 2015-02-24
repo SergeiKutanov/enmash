@@ -48,7 +48,7 @@ class ProductOrder
     private $product;
 
     public function __toString() {
-        return $this->getProduct()->getSku() . ': ' . $this->getProduct()->getName() . ' - ' . $this->getProduct()->getAcronym();
+        return $this->getProduct()->getSku() . ': ' . $this->getProduct()->getName() . ' - ' . $this->getProduct()->getAcronym() . "({$this->quantity} шт.)";
     }
 
     /**
