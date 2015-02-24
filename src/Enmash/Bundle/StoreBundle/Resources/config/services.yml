@@ -9,9 +9,13 @@ services:
 
     enmash_store.admin.category:
         class: Enmash\Bundle\StoreBundle\Admin\CategoryAdmin
-        arguments: [~, Enmash\Bundle\StoreBundle\Entity\Category, EnmashStoreBundle:StoreAdmin]
+        arguments: [~, Enmash\Bundle\StoreBundle\Entity\Category, 'PixSortableBehaviorBundle:SortableAdmin']
         tags:
             - {name: sonata.admin, manager_type: orm, group: admin, label: Category}
+        calls:
+            - [ setTranslationDomain, [EnmashStoreBundle]]
+            - [ setContainer, [ @service_container ] ]
+            - [ setPositionService, [@pix_sortable_behavior.position]]
 
     enmash_store.admin.store:
         class: Enmash\Bundle\StoreBundle\Admin\StoreAdmin

@@ -11,7 +11,28 @@ use Sonata\AdminBundle\Show\ShowMapper;
 
 class CategoryAdmin extends Admin
 {
-    /**
+    public $last_position = 0;
+
+    private $container;
+    private $positionService;
+
+    public function setContainer(\Symfony\Component\DependencyInjection\ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
+    public function setPositionService(\Pix\SortableBehaviorBundle\Services\PositionHandler $positionHandler)
+    {
+        $this->positionService = $positionHandler;
+    }
+
+    protected $datagridValues = array(
+        '_page' => 1,
+        '_sort_order' => 'ASC',
+        '_sort_by' => 'position',
+    );
+
+        /**
      * @param DatagridMapper $datagridMapper
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -19,6 +40,7 @@ class CategoryAdmin extends Admin
         $datagridMapper
             ->add('id')
             ->add('name')
+            ->add('parentCategory')
         ;
     }
 
@@ -27,12 +49,14 @@ class CategoryAdmin extends Admin
      */
     protected function configureListFields(ListMapper $listMapper)
     {
+        $this->last_position = $this->positionService->getLastPosition($this->getRoot()->getClass());
+
         $listMapper
-//            ->add('id')
             ->add('name')
             ->add('parentCategory')
             ->add('_action', 'actions', array(
                 'actions' => array(
+                    'move' => array('template' => 'PixSortableBehaviorBundle:Default:_sort.html.twig'),
                     'show' => array(),
                     'edit' => array(),
                     'delete' => array(),
@@ -91,11 +115,12 @@ class CategoryAdmin extends Admin
     }
 
     protected function configureRoutes(RouteCollection $collection) {
-        parent::configure();
-        //todo think of a way to make this route POST only
-        $collection->add(
-            'api_parameters_for_category',
-            'getParametersForCategory'
-        );
+//        parent::configure();
+//        //todo think of a way to make this route POST only
+//        $collection->add(
+//            'api_parameters_for_category',
+//            'getParametersForCategory'
+//        );
+        $collection->add('move', $this->getRouterIdParameter() . '/move/{position}');
     }
 }
