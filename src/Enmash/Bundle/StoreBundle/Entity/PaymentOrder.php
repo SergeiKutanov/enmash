@@ -13,6 +13,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class PaymentOrder
 {
+
+    const STATUS_PENDING = 1;
+    const STATUS_IN_PROGRESS = 2;
+    const STATUS_FINISHED = 3;
+
     /**
      * @var integer
      *
@@ -48,6 +53,33 @@ class PaymentOrder
      */
     private $updated;
 
+    /**
+     * @var integer
+     * @ORM\Column(name="status", type="smallint", options={"defauts": 1})
+     */
+    private $status;
+
+    /**
+     * @var string
+     * @ORM\Column(name="comments", type="text", nullable=true)
+     */
+    private $comments;
+
+    public static function getChoiceList() {
+        return array(
+            self::STATUS_PENDING => self::getChoiceString(self::STATUS_PENDING),
+            self::STATUS_IN_PROGRESS => self::getChoiceString(self::STATUS_IN_PROGRESS),
+            self::STATUS_FINISHED => self::getChoiceString(self::STATUS_FINISHED)
+        );
+    }
+
+    public static function getChoiceString($choice) {
+        switch ($choice) {
+            case self::STATUS_PENDING: return 'Не обработан';
+            case self::STATUS_IN_PROGRESS: return 'В обработке';
+            case self::STATUS_FINISHED: return 'Закончен';
+        }
+    }
 
     /**
      * Get id
@@ -133,6 +165,7 @@ class PaymentOrder
     public function __construct()
     {
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->setStatus(self::STATUS_PENDING);
     }
 
     /**
@@ -167,5 +200,51 @@ class PaymentOrder
     public function getProducts()
     {
         return $this->products;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     * @return PaymentOrder
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set comments
+     *
+     * @param string $comments
+     * @return PaymentOrder
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Get comments
+     *
+     * @return string 
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

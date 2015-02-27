@@ -75,4 +75,6 @@ services:
         class: Enmash\Bundle\StoreBundle\Admin\PaymentOrderAdmin
         arguments: [~, Enmash\Bundle\StoreBundle\Entity\PaymentOrder, SonataAdminBundle:CRUD]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: PaymentOrder}
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Заказы}
+        calls:
+            - [ setTemplate, [show, EnmashStoreBundle:Admin:payment_order_show.html.twig] ]

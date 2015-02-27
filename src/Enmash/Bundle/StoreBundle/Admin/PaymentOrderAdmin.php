@@ -2,6 +2,7 @@
 
 namespace Enmash\Bundle\StoreBundle\Admin;
 
+use Enmash\Bundle\StoreBundle\Entity\PaymentOrder;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -28,9 +29,29 @@ class PaymentOrderAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
-            ->add('confirmed')
-            ->add('updated')
+            ->add(
+                'confirmed',
+                null,
+                array(
+                    'editable'  => true,
+                    'label'     => 'Оформлен'
+                )
+            )
+            ->add(
+                'updated',
+                'datetime',
+                array(
+                    'label'     => 'Создан'
+                )
+            )
+            ->add(
+                'status',
+                'string',
+                array(
+                    'label'     => 'Статус',
+                    'template'  => 'EnmashStoreBundle:Admin:payment_order_list.html.twig'
+                )
+            )
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -47,9 +68,16 @@ class PaymentOrderAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('id')
             ->add('confirmed')
-            ->add('updated')
+            ->add('updated', 'sonata_type_datetime_picker')
+            ->add(
+                'status',
+                'choice',
+                array(
+                    'choices' => PaymentOrder::getChoiceList()
+                )
+            )
+            ->add('comments')
         ;
     }
 
@@ -61,9 +89,11 @@ class PaymentOrderAdmin extends Admin
 
         $showMapper
             ->add('confirmed', 'boolean')
+            ->add('status')
             ->add('updated')
             ->add('user')
             ->add('products')
+            ->add('comments')
         ;
     }
 }

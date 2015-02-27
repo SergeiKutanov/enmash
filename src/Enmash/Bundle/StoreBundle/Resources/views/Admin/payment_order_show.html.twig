@@ -48,6 +48,13 @@
                                         <li>{{ helper.render_field_with_default_value(user.phone, 'Телефон не указан') }}</li>
                                     </ul>
                                 </td>
+                            {% elseif field_name == 'status' %}
+                                <th>
+                                    Статус
+                                </th>
+                                <td>
+                                    {{ object.getChoiceString(object.status) }}
+                                </td>
                             {% elseif elements[field_name] is defined %}
                                 {{ elements[field_name]|render_view_element(object) }}
                             {% endif %}
