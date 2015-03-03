@@ -1,9 +1,9 @@
 {% extends 'SonataAdminBundle:CRUD:edit.html.twig' %}
 
-{% block form %}
-    {{ parent() }}
-    <input type="hidden" id="category-param-retrieve-endpoint" value="{{ path('admin_enmash_store_category_api_parameters_for_category') }}" />
-{% endblock%}
+{#{% block form %}#}
+    {#{{ parent() }}#}
+    {#<input type="hidden" id="category-param-retrieve-endpoint" value="{{ path('admin_enmash_store_category_api_parameters_for_category') }}" />#}
+{#{% endblock%}#}
 
 {% block javascripts %}
     {{ parent() }}

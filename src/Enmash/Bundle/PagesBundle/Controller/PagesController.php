@@ -11,6 +11,7 @@ namespace Enmash\Bundle\PagesBundle\Controller;
 
 use Application\Sonata\MediaBundle\Entity\GalleryHasMedia;
 use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManager;
 use Enmash\Bundle\PagesBundle\Component\RedirectResponseWithCookie;
 use Enmash\Bundle\PagesBundle\Entity\Article;
 use Enmash\Bundle\PagesBundle\EventListener\LocationChangeEventListener;
@@ -269,6 +270,7 @@ class PagesController extends BaseController{
             'Скидки, специальные предложения, электротехническая компания Энергомаш'
         );
 
+        /* @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
         $discounts = $em
             ->getRepository('EnmashStoreBundle:SpecialOffer')
@@ -285,6 +287,9 @@ class PagesController extends BaseController{
                 array(
                     'type'      => SpecialOffer::TYPE_SPECIAL_OFFER,
                     'publish'   => true
+                ),
+                array(
+                    'startDate' => 'DESC'
                 )
             );
 

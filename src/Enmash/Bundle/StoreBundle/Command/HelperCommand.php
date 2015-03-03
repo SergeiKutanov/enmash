@@ -11,6 +11,7 @@ namespace Enmash\Bundle\StoreBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Enmash\Bundle\StoreBundle\Component\CatalogExporter;
+use Sonata\MediaBundle\Entity\MediaManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,6 +24,7 @@ class HelperCommand extends ContainerAwareCommand {
     const PHOTO_STAMP_PATH = '/web/catalog/photo/raw/stamp/stamp.png';
     const OPTION_HELPER = 'fix-extensions';
     const OPTION_MARK_IMAGES = 'mark-images';
+    const OPTION_REMOVE_ALL_IMAGES = 'clear-images';
 
     protected function configure() {
         $this
@@ -47,6 +49,9 @@ class HelperCommand extends ContainerAwareCommand {
                 break;
             case self::OPTION_MARK_IMAGES:
                 $this->markImages();
+                break;
+            case self::OPTION_REMOVE_ALL_IMAGES:
+                $this->clearImages();
                 break;
         }
 
@@ -78,9 +83,9 @@ class HelperCommand extends ContainerAwareCommand {
         $stampX = imagesx($stamp);
         $stampY = imagesy($stamp);
 
-        foreach ($files as $file) {
+        foreach ($files as $index => $file) {
             if (!is_file($path . $file)) continue;
-
+            echo $index . ": $path $file" . PHP_EOL;
             $fileExtension = pathinfo($path . $file, PATHINFO_EXTENSION);
             $image = null;
             if ($fileExtension == 'png') {
@@ -124,6 +129,59 @@ class HelperCommand extends ContainerAwareCommand {
     {
         $stamp = imagecreatefrompng(realpath('') . self::PHOTO_STAMP_PATH);
         return $stamp;
+    }
+
+    private function clearImages()
+    {
+        /* @var $gm \Sonata\MediaBundle\Entity\GalleryManager */
+        $gm = $this->getContainer()->get('sonata.media.manager.gallery');
+
+        /* @var $mm MediaManager */
+        $mm = $this->getContainer()->get('sonata.media.manager.media');
+
+        /* @var $em EntityManager */
+        $em = $this->getContainer()->get('doctrine')->getManager();
+
+        $products = $em
+            ->getRepository('EnmashStoreBundle:Product')
+            ->createQueryBuilder('p')
+            ->where('p.productImages IS NOT NULL')
+            ->getQuery()
+            ->execute();
+
+        foreach ($products as $index => $product) {
+            /* @var $product \Enmash\Bundle\StoreBundle\Entity\Product */
+            $gallery = $product->getProductImages();
+            echo $index . ": " . $product->getId() . PHP_EOL;
+            echo 'Deleting gallery: ' . $gallery->getId() . PHP_EOL;
+
+            $product->setProductImages();
+
+            $gm->delete($gallery);
+            foreach ($gallery->getGalleryHasMedias() as $galleryHasMedia) {
+                /* @var $galleryHasMedia \Application\Sonata\MediaBundle\Entity\GalleryHasMedia */
+                $media = $galleryHasMedia->getMedia();
+                echo 'Deleting media: ' . $media->getId() . PHP_EOL;
+                try {
+                    $galleriesMediaIsIn = $em
+                        ->getRepository('ApplicationSonataMediaBundle:GalleryHasMedia')
+                        ->findBy(
+                            array(
+                                'media' => $media->getId()
+                            )
+                        );
+                    if (!count($galleriesMediaIsIn)) {
+                        $mm->delete($media);
+                        echo 'Media: ' . $media->getId() . " removed" . PHP_EOL;
+                    }
+                } catch (\Exception $ex) {
+                    echo $ex->getMessage() . PHP_EOL;
+                    echo 'Media is not removed.' . PHP_EOL;
+                }
+            }
+
+        }
+
     }
 
 }

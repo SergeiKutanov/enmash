@@ -83,7 +83,8 @@ class Product
 
     /**
      * @var Gallery
-     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Gallery", cascade={"persist"}, fetch="LAZY")
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Gallery", cascade={"all"}, fetch="LAZY")
+     * @ORM\JoinColumn(name="productimages_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     private $productImages;
 

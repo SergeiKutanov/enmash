@@ -123,9 +123,9 @@
                 {% endif %}
                 {% endif %}
             </dl>
-            <div class="text-center">
-                <a href="{{ path('add-product-to-shopping-cart', {'product': product.id}) }}" class="btn btn-success">Заказать</a>
-            </div>
+            {#<div class="text-center">#}
+                {#<a href="{{ path('add-product-to-shopping-cart', {'product': product.id}) }}" class="btn btn-success">Заказать</a>#}
+            {#</div>#}
         </div>
     </div>
 </div>
@@ -164,7 +164,7 @@
     {% if product.similars | length > 0 %}
     <div class="analogs">
         <hr>
-        <h2>Похожие товары</h2>
+        <h2>Сопутствующие товары</h2>
         {% include 'EnmashPagesBundle:Pages:Catalog/Block/slicksliderforproducts.html.twig' with {products: product.similars, sliderId: 'similarsSlider'} %}
     </div>
     {% endif %}

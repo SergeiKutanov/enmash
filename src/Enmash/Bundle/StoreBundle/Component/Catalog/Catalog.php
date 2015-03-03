@@ -9,8 +9,11 @@
 namespace Enmash\Bundle\StoreBundle\Component\Catalog;
 
 
+use Sonata\MediaBundle\Entity\GalleryManager;
+use Sonata\MediaBundle\Entity\MediaManager;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\DependencyInjection\Container;
 
 class Catalog {
 
@@ -46,8 +49,13 @@ class Catalog {
     const TREE_SUBLEVEL_PARENT_CATEGORY_NAME_COLUMN = 0;
 
     /* @var $em \Doctrine\ORM\EntityManager */
-    protected  $em;
+    protected $em;
+    /* @var $container Container */
     protected $container;
+    /* @var $mm MediaManager */
+    protected $mm;
+    /* @var $gm GalleryManager */
+    protected $gm;
     /* @var $kernel \AppKernel */
     protected $kernel;
 
@@ -55,6 +63,8 @@ class Catalog {
         $this->em = $em;
         $this->container = $container;
         $this->kernel = $kernel;
+        $this->mm = $this->container->get('sonata.media.manager.media');
+        $this->gm = $this->container->get('sonata.media.manager.gallery');
     }
 
     protected function getFile() {

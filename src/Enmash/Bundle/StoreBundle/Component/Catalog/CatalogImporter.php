@@ -111,14 +111,14 @@ class CatalogImporter extends Catalog{
                 throw new NotFoundResourceException('Product -(' . $productCode  .')- not found while working on analogs');
             }
 
-            if (count($good->getAnalogs()) > 0) {
+            if (count($good->getAnalogs())) {
                 foreach ($good->getAnalogs() as $analog) {
                     $good->removeAnalog($analog);
                 }
                 $this->em->flush();
             }
 
-            if (count($good->getSimilars()) > 0) {
+            if (count($good->getSimilars())) {
                 foreach ($good->getSimilars() as $similar) {
                     $good->removeSimilar($similar);
                 }
@@ -407,10 +407,8 @@ class CatalogImporter extends Catalog{
             $photosArray = array();
             if ($fileNames !== null) {
                 $fileNames = explode(',', $fileNames);
-
                 foreach($fileNames as $fileName) {
                     $photo = $this->getPhoto($fileName);
-
                     if ($photo) {
                         $photosArray[] = $photo;
                     }
@@ -418,7 +416,7 @@ class CatalogImporter extends Catalog{
                 }
             }
 
-            if (count($photosArray)) {
+            if ($photosArray) {
                 //create gallery
                 $gallery = $product->getProductImages();
                 if (!$gallery) {
@@ -457,7 +455,7 @@ class CatalogImporter extends Catalog{
 
         }
 
-        $this->importAnalogsAndSimilarGoods($file, $offset, $copyLimit);
+//        $this->importAnalogsAndSimilarGoods($file, $offset, $copyLimit);
 
     }
 
@@ -500,14 +498,13 @@ class CatalogImporter extends Catalog{
                 return $media;
             }
 
-            $app = $this->getConsoleApp();
-            $error = $this->runCommand($app, $fileName);
+            $media = new Media();
+            $filePath = realpath('') . '/' . self::PATH . self::PATH_PHOTO . $fileName;
+            $media->setBinaryContent($filePath);
+            $media->setContext('productimage');
+            $media->setProviderName('sonata.media.provider.image');
 
-            if ($error !== 0) {
-                throw new \Exception('Image ' . $fileName . ' was not added');
-            }
-
-            return $this->getPhoto($fileName);
+            return $media;
 
         }
 
@@ -578,43 +575,43 @@ class CatalogImporter extends Catalog{
             $this->em->remove($category);
         }
         $this->em->flush();
-//        var_dump(count($categories)); die();
     }
 
-    public function fixPhotoFile(\PHPExcel $file, \PHPExcel $noPhotoFile)
+    public function fixPhotoFile(\PHPExcel $file)
     {
 
         $file->setActiveSheetIndex();
-        $noPhotoFile->setActiveSheetIndex();
+
+        $photoFiles = scandir(realpath('') . '/' . self::PATH . self::PATH_PHOTO);
 
         $originalSheet = $file->getActiveSheet();
-        $legacyFileSheet = $noPhotoFile->getActiveSheet();
 
         $rowIndex = 1;
-        while ($legacyFileSheet->cellExistsByColumnAndRow(0, $rowIndex)) {
-            $goodSku = $legacyFileSheet
+        while ($originalSheet->cellExistsByColumnAndRow(0, $rowIndex)) {
+            $goodSku = $originalSheet
                 ->getCellByColumnAndRow(0, $rowIndex)
                 ->getValue();
 
-            $goodPhoto = $legacyFileSheet
-                ->getCellByColumnAndRow(3, $rowIndex)
+            $goodPhoto = $originalSheet
+                ->getCellByColumnAndRow(self::PRODUCT_PHOTO, $rowIndex)
                 ->getValue();
 
-            if (!$goodPhoto) continue;
-
-            $originalIndex = 1;
-            while ($originalSheet->cellExistsByColumnAndRow(0, $originalIndex)) {
-                $originalGoodSku = $originalSheet
-                    ->getCellByColumnAndRow(0, $originalIndex);
-                if ($originalGoodSku->getValue() == $goodSku) {
-                    $photoCell = $originalSheet->getCellByColumnAndRow(self::PRODUCT_PHOTO, $originalIndex);
-                    $photoCell->setValue((string) $goodPhoto);
-                    break;
+            echo $rowIndex . ': ' . $goodSku . PHP_EOL;
+            foreach ($photoFiles as $photo) {
+                if (is_file(realpath('') . '/' . self::PATH . self::PATH_PHOTO . '/' . $photo)) {
+                    $filename = basename($photo);
+                    if ($filename == $goodSku) {
+                        echo 'Found photo file: ' . $filename . PHP_EOL;
+                        $filename = ($goodPhoto) ? $filename . ', ' . $goodPhoto : $filename;
+                        echo 'Stored new value: ' . $filename . PHP_EOL;
+                        $originalSheet
+                            ->getCellByColumnAndRow(self::PRODUCT_PHOTO, $rowIndex)
+                            ->setValue($filename);
+                    }
                 }
-                $originalIndex++;
             }
 
-            echo $rowIndex . '. ' . $goodSku . " --- " . $goodPhoto . PHP_EOL;
+
             $rowIndex++;
         }
 

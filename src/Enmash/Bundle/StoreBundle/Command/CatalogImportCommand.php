@@ -96,6 +96,7 @@ class CatalogImportCommand extends ContainerAwareCommand {
         $mode = $input->getOption('mode');
         $offset = (int) $input->getOption('offset');
         $limit = (int) $input->getOption('limit');
+
         switch ($mode) {
             case self::OPTION_MODE_ALL:
                 $output->writeln('Full catalog import started');
@@ -146,14 +147,13 @@ class CatalogImportCommand extends ContainerAwareCommand {
                 $output->writeln('Storing Photos Only');
                 $this
                     ->catalogImporter
-                    ->importGoods($file, $offset);
+                    ->importGoods($file, $offset, $limit);
                 break;
             case self::OPTION_MODE_FIX_PHOTO_FILE:
                 $this
                     ->catalogImporter
                     ->fixPhotoFile(
-                        $file,
-                        $this->getFile(self::PATH . '/no_photo.ods')
+                        $file
                     );
                 break;
             case self::OPTION_MODE_FIX_ANALOGS:
