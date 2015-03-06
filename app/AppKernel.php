@@ -51,6 +51,9 @@ class AppKernel extends Kernel
 
             //seo staff
             new Sonata\SeoBundle\SonataSeoBundle(),
+
+            //image processing
+            new Liip\ImagineBundle\LiipImagineBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

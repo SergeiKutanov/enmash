@@ -619,6 +619,12 @@ class CatalogImporter extends Catalog{
 
     }
 
+    public function transferPhotosFromLegacyCatalog(\PHPExcel $currentCatalogFile, \PHPExcel $legacyCatalogFile)
+    {
+        $currentCatalogFile->setActiveSheetIndex();
+        $legacyCatalogFile->setActiveSheetIndexByName('catalog');
+    }
+
     public function fixAnalogs(\PHPExcel $file, \PHPExcel $legacyFile) {
         $file->setActiveSheetIndex();
         $legacyFile->setActiveSheetIndexByName('analogs');

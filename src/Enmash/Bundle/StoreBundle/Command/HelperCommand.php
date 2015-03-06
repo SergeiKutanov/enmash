@@ -11,6 +11,7 @@ namespace Enmash\Bundle\StoreBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Enmash\Bundle\StoreBundle\Component\CatalogExporter;
+use Enmash\Bundle\StoreBundle\Entity\Category;
 use Sonata\MediaBundle\Entity\MediaManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -131,7 +132,7 @@ class HelperCommand extends ContainerAwareCommand {
         return $stamp;
     }
 
-    private function clearImages()
+    private function clearImages($category = null)
     {
         /* @var $gm \Sonata\MediaBundle\Entity\GalleryManager */
         $gm = $this->getContainer()->get('sonata.media.manager.gallery');
@@ -142,12 +143,26 @@ class HelperCommand extends ContainerAwareCommand {
         /* @var $em EntityManager */
         $em = $this->getContainer()->get('doctrine')->getManager();
 
-        $products = $em
-            ->getRepository('EnmashStoreBundle:Product')
-            ->createQueryBuilder('p')
-            ->where('p.productImages IS NOT NULL')
-            ->getQuery()
-            ->execute();
+        if ($category) {
+            /** @var $category Category*/
+            $category = $em
+                ->getRepository('EnmashStoreBundle:Category')
+                ->find($category);
+            $allProducts = $category->getAllProducts();
+            $products = array();
+            foreach ($allProducts as $product) {
+                if ($product->getProductImages()) {
+                    $products[] = $product;
+                }
+            }
+        } else {
+            $products = $em
+                ->getRepository('EnmashStoreBundle:Product')
+                ->createQueryBuilder('p')
+                ->where('p.productImages IS NOT NULL')
+                ->getQuery()
+                ->execute();
+        }
 
         foreach ($products as $index => $product) {
             /* @var $product \Enmash\Bundle\StoreBundle\Entity\Product */

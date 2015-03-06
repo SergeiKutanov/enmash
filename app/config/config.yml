@@ -218,6 +218,23 @@ sonata_admin:
                     - sonata.media.admin.gallery_has_media
                 roles: [ROLE_SUPER_ADMIN]
 
+liip_imagine:
+    resolvers:
+        default:
+            web_path:
+                web_root: %kernel.root_dir%/../web
+                cache_prefix: uploads/cache
+
+    filter_sets:
+        add_watermark:
+            filters:
+                auto_rotate: ~
+                watermark:
+                    image: ../web/images/stamp.png
+                    size: 0.5
+                    position: bottomright
+                interlace:
+                    mode: line
 
 # sonata media bundle settings
 sonata_media:
@@ -274,6 +291,7 @@ sonata_media:
         productimage:
             providers:
                 - sonata.media.provider.image
+#                - sonata.media.thumbnail.liip_imagine
 
             formats:
                 small: { width: 50 , quality: 70}

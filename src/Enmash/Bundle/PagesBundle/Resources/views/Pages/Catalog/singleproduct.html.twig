@@ -84,11 +84,13 @@
                 <ul class="list-unstyled">
                     {% for image in product.productImages.galleryHasMedias %}
                     <li>
-                        <a href="{% path image.media, 'big' %}" data-gallery="product-images-{{ product.id }}">
+                        {% set imagePath = image.media | media_relative_path %}
+                        <a href="{{ imagePath | imagine_filter('add_watermark') }}" data-gallery="product-images-{{ product.id }}">
                             {% if loop.index == 1 %}
-                            <img src="{% path image.media, 'big' %}" data-image="{%  path image.media, 'big' %}">
+                                <img src="{{ imagePath | imagine_filter('add_watermark') }}" data-image="{{ imagePath | imagine_filter('add_watermark') }}">
                             {% else %}
-                            <img src="{% path image.media, 'small' %}" data-image="{%  path image.media, 'big' %}">
+                                {% set imagePath = image.media | media_relative_path %}
+                                <img src="{% path image.media, 'small' %}" data-image="{{ imagePath | imagine_filter('add_watermark') }}">
                             {% endif %}
                         </a>
                     </li>

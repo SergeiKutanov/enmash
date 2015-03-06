@@ -52,3 +52,6 @@ gallery:
 media:
     resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
     prefix: /media
+
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"

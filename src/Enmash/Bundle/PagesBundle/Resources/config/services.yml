@@ -37,4 +37,10 @@ services:
 #        tags:
 #            - {name: kernel.event_listener, event: kernel.response, method: onResponseMade}
 
-
+    enmash_pages.twig_extension:
+        class: Enmash\Bundle\PagesBundle\Twig\EnmashExtension
+        public: false
+        arguments:
+            - @service_container
+        tags:
+            - { name: twig.extension, priority: 255 }

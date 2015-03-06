@@ -35,7 +35,8 @@
         "symfony-cmf/seo-bundle": "dev-master",
         "oro/doctrine-extensions": "dev-master",
         "sonata-project/datagrid-bundle": "2.2.*@dev",
-        "stof/doctrine-extensions-bundle": "1.2.*@dev"
+        "stof/doctrine-extensions-bundle": "1.2.*@dev",
+        "liip/imagine-bundle": "1.0.*@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
