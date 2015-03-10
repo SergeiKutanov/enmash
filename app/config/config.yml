@@ -231,7 +231,7 @@ liip_imagine:
                 auto_rotate: ~
                 watermark:
                     image: ../web/images/stamp.png
-                    size: 0.5
+                    size: 0.8
                     position: bottomright
                 interlace:
                     mode: line
