@@ -81,10 +81,9 @@ class Category
     /**
      * @var integer
      *
-     * @Gedmo\SortablePosition
-     * @ORM\Column(name="position", type="integer")
+     * @ORM\Column(type="integer", options={"default": 0})
      */
-    private $position;
+    private $sort;
 
     /**
      * Get id
@@ -288,27 +287,26 @@ class Category
 
     }
 
-
     /**
-     * Set position
+     * Set sort
      *
-     * @param integer $position
+     * @param integer $sort
      * @return Category
      */
-    public function setPosition($position)
+    public function setSort($sort)
     {
-        $this->position = $position;
+        $this->sort = $sort;
 
         return $this;
     }
 
     /**
-     * Get position
+     * Get sort
      *
      * @return integer 
      */
-    public function getPosition()
+    public function getSort()
     {
-        return $this->position;
+        return $this->sort;
     }
 }

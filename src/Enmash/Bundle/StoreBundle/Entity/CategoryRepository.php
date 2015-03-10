@@ -23,7 +23,7 @@ class CategoryRepository extends EntityRepository
                 ->createQuery(
                     'SELECT c, CAST(c.name as INT) as HIDDEN sort_order FROM EnmashStoreBundle:Category c ' .
                     'WHERE c.parentCategory = :parent_category_id ' .
-                    'ORDER BY c.position ASC, sort_order ASC, c.name ASC'
+                    'ORDER BY c.sort ASC, sort_order ASC, c.name ASC'
                 )
                 ->setParameter(
                     'parent_category_id',
@@ -35,7 +35,7 @@ class CategoryRepository extends EntityRepository
                 ->createQuery(
                     'SELECT c, CAST(c.name as INT) as HIDDEN sort_order FROM EnmashStoreBundle:Category c ' .
                     'WHERE c.parentCategory IS NULL ' .
-                    'ORDER BY c.position ASC, sort_order ASC, c.name ASC'
+                    'ORDER BY c.sort ASC, sort_order ASC, c.name ASC'
                 );
         }
 

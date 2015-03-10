@@ -60,13 +60,19 @@ class CatalogImporter extends Catalog{
             $categoryTitle = $sheet
                 ->getCellByColumnAndRow(self::TREE_LEVEL_1_CATEGORY_NAME_COLUMN, $rowIndex)
                 ->getValue();
+            $categorySort = $sheet
+                ->getCellByColumnAndRow(self::TREE_LEVEL_1_SORT_COLUMN, $rowIndex)
+                ->getValue();
             /* @var $category \Enmash\Bundle\StoreBundle\Entity\Category */
-            $category = $categoriesRepository->findByName($categoryTitle);
+            $category = $categoriesRepository->findOneByName($categoryTitle);
             if (!$category) {
                 $category = new Category();
-                $category->setName($categoryTitle);
-                $this->em->persist($category);
             }
+
+            $category->setName($categoryTitle);
+            $category->setSort($categorySort);
+            $this->em->persist($category);
+
             $rowIndex++;
         }
         $this->em->flush();
@@ -183,12 +189,22 @@ class CatalogImporter extends Catalog{
             $categoryTitle = $sheet
                 ->getCellByColumnAndRow(self::TREE_SUBLEVEL_CATEGORY_NAME_COLUMN, $rowIndex)
                 ->getValue();
+            $categorySort = $sheet
+                ->getCellByColumnAndRow(self::TREE_LEVEL_1_SORT_COLUMN, $rowIndex)
+                ->getValue();
 
             $parentCategoryTitle = $sheet
                 ->getCellByColumnAndRow(self::TREE_SUBLEVEL_PARENT_CATEGORY_NAME_COLUMN, $rowIndex)
                 ->getValue();
             $parentCategory = $categoryRepository
                 ->findOneByName($parentCategoryTitle);
+
+            // don't take in consideration categories with the same name
+            if ($parentCategoryTitle == $categoryTitle) {
+                    $rowIndex++;
+                    continue;
+                }
+
             if (!$parentCategory) {
                 throw new NotFoundHttpException('Parent category for ' . $categoryTitle . ' not found');
             }
@@ -197,8 +213,9 @@ class CatalogImporter extends Catalog{
                 ->findOneByName($categoryTitle);
             if (!$category) {
                 $category = new Category();
-                $category->setName($categoryTitle);
             }
+            $category->setName($categoryTitle);
+            $category->setSort($categorySort);
             $category->setParentCategory($parentCategory);
             $this->em->persist($category);
 
@@ -351,10 +368,16 @@ class CatalogImporter extends Catalog{
                 $product->setSku($productCode);
             }
 
+            $productSort = $sheet
+                ->getCellByColumnAndRow(self::PRODUCT_SORT_COLUMN, $rowIndex)
+                ->getValue();
+            $product->setSort($productSort);
+
             //product category
             $productCategoryName = $sheet
                 ->getCellByColumnAndRow(self::PRODUCT_CATEGORY_COLUMN, $rowIndex)
                 ->getValue();
+
             $category = $this
                 ->em
                 ->getRepository('EnmashStoreBundle:Category')

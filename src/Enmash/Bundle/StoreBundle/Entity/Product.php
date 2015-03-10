@@ -109,10 +109,10 @@ class Product
      * @ORM\JoinTable(
      *      name="product_analogs",
      *      joinColumns={
-     *          @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     *          @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
      *      },
      *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="analog_id", referencedColumnName="id")
+     *          @ORM\JoinColumn(name="analog_id", referencedColumnName="id", onDelete="CASCADE")
      *      }
      * )
      */
@@ -123,14 +123,21 @@ class Product
      * @ORM\JoinTable(
      *      name="product_similar",
      *      joinColumns={
-     *          @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     *          @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE")
      *      },
      *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="similar_product_id", referencedColumnName="id")
+     *          @ORM\JoinColumn(name="similar_product_id", referencedColumnName="id", onDelete="CASCADE")
      *      }
      * )
      */
     private $similars;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer", options={"DEFAULT": 0})
+     */
+    private $sort;
 
     public function __toString() {
         if ($this->getId()) {
@@ -478,5 +485,28 @@ class Product
     public function getCertificates()
     {
         return $this->certificates;
+    }
+
+    /**
+     * Set sort
+     *
+     * @param integer $sort
+     * @return Product
+     */
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
+
+        return $this;
+    }
+
+    /**
+     * Get sort
+     *
+     * @return integer 
+     */
+    public function getSort()
+    {
+        return $this->sort;
     }
 }
