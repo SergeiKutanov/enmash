@@ -439,5 +439,5 @@ sonata_seo:
                 route: catalog-single-item
                 parameters:
                     slug: null
-                    product: null
-                query: "SELECT Product.id as product, Category.slug as slug, '28-01-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority FROM Product LEFT JOIN Category ON Category.id = Product.category_id"
+                    product_sku: null
+                query: "SELECT Product.sku as product_sku, Category.slug as slug, '12-03-2015' as lastmod, 'weekly' as changefreq, '0.5' as priority FROM Product LEFT JOIN Category ON Category.id = Product.category_id"
