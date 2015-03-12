@@ -92,9 +92,9 @@ class CatalogController extends BaseController
     }
 
     /**
-     * @Route("/{slug}/{product}", name="catalog-single-item")
+     * @Route("/{slug}/{product_sku}", name="catalog-single-item")
      * @Method("GET")
-     * @ParamConverter("product", class="EnmashStoreBundle:Product")
+     * @ParamConverter("product", class="EnmashStoreBundle:Product", options={"mapping": {"product_sku": "sku"}})
      */
     public function showSingleItemAction(Product $product, Request $request) {
 

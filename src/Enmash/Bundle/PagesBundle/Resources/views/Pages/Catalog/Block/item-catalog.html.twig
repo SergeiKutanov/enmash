@@ -1,5 +1,5 @@
 <div class="catalog-item text-center">
-    <a href="{{ path('catalog-single-item', {product: item.id, slug: item.category.slug}) }}">
+    <a href="{{ path('catalog-single-item', {product_sku: item.sku, slug: item.category.slug}) }}">
         <div class="item-image">
             {% set image = item.productImages %}
             {% if image %}
@@ -20,7 +20,7 @@
         <span class="acronym">Артикул: {{ item.sku }}</span>
         <span class="debug-id">{{ item.id }}</span>
         <div class="text-center buy-btn">
-            <a class="btn btn-primary" href="{{ path('catalog-single-item', {product: item.id, slug: item.category.slug}) }}">Подробнее</a>
+            <a class="btn btn-primary" href="{{ path('catalog-single-item', {product_sku: item.sku, slug: item.category.slug}) }}">Подробнее</a>
         </div>
     </a>
 </div>
