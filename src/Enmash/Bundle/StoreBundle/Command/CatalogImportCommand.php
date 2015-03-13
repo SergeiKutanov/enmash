@@ -172,7 +172,9 @@ class CatalogImportCommand extends ContainerAwareCommand {
 
     protected function getFile($path = null) {
         if (!$path) {
-            $path = self::PATH . self::FILENAME;
+            $path = realpath(
+                dirname(__FILE__) . '/../../../../../' . self::PATH . self::FILENAME
+            );
         }
         /* @var $phpExcelObject PHPExcel */
         try {

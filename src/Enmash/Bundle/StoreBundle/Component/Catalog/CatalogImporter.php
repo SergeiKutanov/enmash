@@ -352,8 +352,7 @@ class CatalogImporter extends Catalog{
             $limit = 9999;
         }
 
-        $copyLimit = $limit;
-
+        $timeCounterStart = time();
         while ($sheet->cellExistsByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex) && $limit > 0) {
             $limit--;
             echo $rowIndex . ' products imported' . PHP_EOL;
@@ -474,9 +473,12 @@ class CatalogImporter extends Catalog{
 
             $this->em->persist($product);
             $this->em->flush();
+            $this->em->clear();
             $rowIndex++;
 
         }
+        $timeCounter = time() - $timeCounterStart;
+        echo "Done in $timeCounter seconds" . PHP_EOL;
 
 //        $this->importAnalogsAndSimilarGoods($file, $offset, $copyLimit);
 
