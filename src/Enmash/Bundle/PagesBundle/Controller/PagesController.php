@@ -426,12 +426,13 @@ class PagesController extends BaseController{
     }
 
     /**
-     * @Route("/test")
+     * @Route("/special-offer-for-murom")
      */
-    public function testAction() {
-
-        die('wrong');
-
+    public function specialOfferForMuromAction(Request $request)
+    {
+        return $this->render(
+            'EnmashPagesBundle:Custom:murom-offer.html.twig'
+        );
     }
 
 } 
