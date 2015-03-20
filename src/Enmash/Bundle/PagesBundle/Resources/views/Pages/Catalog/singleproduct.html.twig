@@ -118,7 +118,13 @@
                 <dd>{{ product.category.name }}</dd>
                 {% if product.manufacturer and constant('NO_NAME', product.manufacturer) != product.manufacturer %}
                 <dt>Производитель</dt>
-                <dd>{{ product.manufacturer.name }}</dd>
+                <dd>
+                    {% if product.manufacturer.website %}
+                        <a href="http://{{ product.manufacturer.website }}" target="_blank">{{ product.manufacturer.name }}</a>
+                    {% else %}
+                        {{ product.manufacturer.name }}
+                    {% endif %}
+                </dd>
                 {% if product.mansku %}
                 <dt>Артикул производителя</dt>
                 <dd>{{ product.mansku }}</dd>

@@ -170,6 +170,7 @@ class CatalogImporter extends Catalog{
 
             $rowIndex++;
             $this->em->flush();
+            $this->em->clear();
         }
     }
 

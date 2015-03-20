@@ -226,8 +226,10 @@ liip_imagine:
                 cache_prefix: uploads/cache
 
     filter_sets:
-        add_watermark:
+        add_watermark_thumb:
             filters:
+                thumbnail: {size: [150, 150], mode: inset}
+                background: {size: [200, 150], color: '#fff'}
                 auto_rotate: ~
                 watermark:
                     image: ../web/images/stamp.png
@@ -235,6 +237,17 @@ liip_imagine:
                     position: bottomright
                 interlace:
                     mode: line
+        add_watermark:
+                filters:
+                    thumbnail: {size: [350, 350], mode: inset}
+                    background: {size: [350, 350], color: '#fff'}
+                    auto_rotate: ~
+                    watermark:
+                        image: ../web/images/stamp.png
+                        size: 0.8
+                        position: bottomright
+                    interlace:
+                        mode: line
 
 # sonata media bundle settings
 sonata_media:

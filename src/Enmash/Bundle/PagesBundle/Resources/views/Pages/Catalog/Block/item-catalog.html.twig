@@ -6,7 +6,7 @@
                 {% set image = image.galleryHasMedias %}
                 {% if image | length > 0 %}
                     {#<img src="{{ asset(image[0].media | media_relative_path) }}">#}
-                    <img src="{{ image[0].media | media_relative_path | imagine_filter('add_watermark') }}">
+                    <img src="{{ image[0].media | media_relative_path | imagine_filter('add_watermark_thumb') }}">
                 {% else %}
                     <img src="{{ asset('bundles/enmashpages/images/noimageyet.jpg') }}">
                 {% endif %}
