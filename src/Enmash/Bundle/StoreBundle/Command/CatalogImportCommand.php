@@ -44,6 +44,7 @@ class CatalogImportCommand extends ContainerAwareCommand {
     const OPTION_MODE_FIX_PHOTO_FILE = 'fix-photo';
     const OPTION_MODE_FIX_ANALOGS = 'fix-analogs';
     const OPTION_MODE_PHOTOS_ONLY = 'photos-only';
+    const OPTION_MODE_CHECK_MISSING_PHOTOS = 'check-missing-photos';
 
     private $em;
     /* @var $catalogImporter CatalogImporter */
@@ -161,6 +162,12 @@ class CatalogImportCommand extends ContainerAwareCommand {
                     ->fixAnalogs(
                         $file,
                         $this->getFile(self::PATH . '/legacy_catalog.ods')
+                    );
+                break;
+            case self::OPTION_MODE_CHECK_MISSING_PHOTOS:
+                $this->catalogImporter
+                    ->checkMissingPhotos(
+                        $file
                     );
                 break;
             default:

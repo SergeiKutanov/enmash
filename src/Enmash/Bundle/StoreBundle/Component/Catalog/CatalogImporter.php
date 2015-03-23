@@ -711,4 +711,52 @@ class CatalogImporter extends Catalog{
         return $result;
     }
 
+    public function checkMissingPhotos(\PHPExcel $file)
+    {
+        if (!$file) $file = $this->getFile();
+
+        $file->setActiveSheetIndexByName(self::GOODS_LIST_NAME);
+        $sheet = $file->getActiveSheet();
+
+        $newFile = new \PHPExcel();
+        $newSheet = $newFile->getActiveSheet();
+
+        $rowIndex = 2;
+        $newSheetCounter = 1;
+        while ($sheet->cellExistsByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex)) {
+
+            $sku = $sheet->getCellByColumnAndRow(self::PRODUCT_CODE_COLUMN, $rowIndex)->getValue();
+            echo "Checking $sku: ";
+
+            $photos = $sheet->getCellByColumnAndRow(self::PRODUCT_PHOTO, $rowIndex)->getValue();
+            if ($photos !== null) {
+                $fileNames = explode(',', $photos);
+                foreach($fileNames as $fileName) {
+                    $photo = $this->getPhotoFilename($fileName);
+                    if (!$photo) {
+                        echo "file $photo not found ";
+                        $newSheet->setCellValueByColumnAndRow(
+                            0,
+                            $newSheetCounter,
+                            $sku
+                        );
+                        $newSheet->setCellValueByColumnAndRow(
+                            1,
+                            $newSheetCounter,
+                            $newSheet->getCellByColumnAndRow(1, $newSheetCounter)->getValue() . ' ' . $fileName
+                        );
+                        $newSheetCounter++;
+                    }
+                }
+                echo PHP_EOL;
+            } else {
+                echo "No photos in the excel file" . PHP_EOL;
+            }
+            $rowIndex++;
+        }
+
+        $this->saveFile($newFile);
+
+    }
+
 } 
