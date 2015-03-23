@@ -1,0 +1,7 @@
+<div class="well" id="sidebar-banner">
+    {% for banner in sidebar_banner %}
+    <div>
+        <img src="{% path banner.image, 'big' %}">
+    </div>
+    {% endfor %}
+</div>

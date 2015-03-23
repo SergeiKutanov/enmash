@@ -24,6 +24,9 @@
             </div>
             {{ knp_menu_render('EnmashPagesBundle:Builder:catalogMobileMenu', {'template': 'EnmashPagesBundle:Menu:mobilecatalogmenu.html.twig'}) }}
             {{ knp_menu_render('EnmashPagesBundle:Builder:catalogSidebarSubMenu', {'template': 'EnmashPagesBundle:Menu:catalogsidebarsubmenu.html.twig'}) }}
+            {% if sidebar_banner is defined %}
+                {% include 'EnmashPagesBundle:Pages:Catalog/Block/sidebar-banner.html.twig' %}
+            {% endif %}
         </div>
 
         <div class="col-sm-12 col-md-8 col-lg-9">

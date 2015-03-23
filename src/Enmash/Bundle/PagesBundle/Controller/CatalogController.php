@@ -82,11 +82,20 @@ class CatalogController extends BaseController
             $category->getName() . ", Энергомаш"
         );
 
+        $em = $this
+            ->getDoctrine()
+            ->getManager();
+
+        $banners = $em
+            ->getRepository('EnmashPagesBundle:CatalogSidebarBanner')
+            ->findBannersForCategory($category);
+
         return $this->render(
             'EnmashPagesBundle:Pages:Catalog/singlecategory.html.twig',
             array(
                 'category'  => $category,
-                'products'  => $this->paginate($products, $request)
+                'products'  => $this->paginate($products, $request),
+                'sidebar_banner'    => $banners
             )
         );
     }

@@ -44,3 +44,9 @@ services:
             - @service_container
         tags:
             - { name: twig.extension, priority: 255 }
+
+    enmash_pages.admin.catalog_sidebar_banner:
+        class: Enmash\Bundle\PagesBundle\Admin\CatalogSidebarBannerAdmin
+        arguments: [~, Enmash\Bundle\PagesBundle\Entity\CatalogSidebarBanner, SonataAdminBundle:CRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: CatalogSidebarBanner}

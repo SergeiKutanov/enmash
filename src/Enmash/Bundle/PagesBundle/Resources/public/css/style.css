@@ -1080,3 +1080,11 @@ ul.breadcrumb a:hover, ol.breadcrumb a:hover {
     right: 50px;
     box-shadow: 3px 3px 3px 0px rgba(0,0,0, .5);
 }
+
+#sidebar-banner {
+    margin-top: 10px;
+}
+
+#sidebar-banner > div > img {
+    width: 100%;
+}

@@ -216,6 +216,7 @@ sonata_admin:
                     - sonata.media.admin.media
                     - sonata.media.admin.gallery
                     - sonata.media.admin.gallery_has_media
+                    - enmash_pages.admin.catalog_sidebar_banner
                 roles: [ROLE_SUPER_ADMIN]
 
 liip_imagine:
@@ -285,6 +286,12 @@ sonata_media:
             formats:
                 small: { width: 50 , quality: 70}
                 big:   { width: 190 , quality: 70}
+
+        sidebar_banner:
+            providers:
+                - sonata.media.provider.image
+            formats:
+                big: {width: 500, quality: 70}
 
         baner:
             providers:
